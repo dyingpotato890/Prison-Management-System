@@ -1,0 +1,21 @@
+JOBID,JOB_DESC,WORK_START,WORK_END
+1,Kitchen Assistant,08:00,12:00
+2,Laundry Worker,09:00,13:00
+3,Library Assistant,10:00,14:00
+4,Janitorial Staff,07:00,11:00
+5,Gardening Helper,06:00,10:00
+6,Workshop Assistant,08:00,12:00
+7,Maintenance Helper,09:00,13:00
+8,Food Preparation,10:00,14:00
+9,Recycling Worker,07:00,11:00
+10,Warehouse Assistant,06:00,10:00
+11,Clerical Assistant,08:00,12:00
+12,Education Tutor,09:00,13:00
+13,Health Clinic Assistant,10:00,14:00
+14,Recreation Assistant,07:00,11:00
+15,Art and Craft Worker,06:00,10:00
+16,Woodshop Assistant,08:00,12:00
+17,Metalshop Assistant,09:00,13:00
+18,Textile Worker,10:00,14:00
+19,Animal Caretaker,07:00,11:00
+20,Groundskeeper,06:00,10:00
