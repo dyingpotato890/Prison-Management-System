@@ -20,6 +20,7 @@ class Tables:
         "PRISONER_DETAILS",
         "STAFF",
         "LOGIN_DETAILS",
+        "VISITOR_DETAILS",
         "CELLS",
         "JOBS",
     ]
@@ -80,5 +81,5 @@ class Tables:
             
             self.conn.commit()
 
-tables = Tables()
+Tables()
 print("Database Created/Checked")
