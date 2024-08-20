@@ -7,7 +7,7 @@ class Tables:
         "CREATE TABLE IF NOT EXISTS PRISONER (PRISONER_ID INT PRIMARY KEY, AADHAR_NUMBER VARCHAR(20), CRIME_ID INT, ENTER_DATE DATE, RELEASE_DATE DATE, FOREIGN KEY (CRIME_ID) REFERENCES CRIME(CRIME_ID));",
         "CREATE TABLE IF NOT EXISTS PRISONER_DETAILS (AADHAR_NUMBER VARCHAR(20) PRIMARY KEY, NAME VARCHAR(50), AGE INT, NUMBER_OF_CONVICTIONS INT);",
         "CREATE TABLE IF NOT EXISTS STAFF (STAFF_ID INT PRIMARY KEY, NAME VARCHAR(50), AGE INT, PHONE_NUMBER VARCHAR(20), ROLE VARCHAR(50));",
-        "CREATE TABLE IF NOT EXISTS LOGIN_DETAILS (STAFF_ID INT PRIMARY KEY, PASSWORD VARCHAR(50), FOREIGN KEY (STAFF_ID) REFERENCES STAFF(STAFF_ID));",
+        "CREATE TABLE IF NOT EXISTS LOGIN_DETAILS (STAFF_ID INT PRIMARY KEY, PASSWORD VARCHAR(255), FOREIGN KEY (STAFF_ID) REFERENCES STAFF(STAFF_ID));",
         "CREATE TABLE IF NOT EXISTS VISITOR_DETAILS (VISITOR_NAME VARCHAR(50), PHONE_NUMBER INT, PRISONER_ID INT, DATE DATE, TIME TIME, PRIMARY KEY (VISITOR_NAME, PRISONER_ID, DATE, TIME), FOREIGN KEY (PRISONER_ID) REFERENCES PRISONER(PRISONER_ID));",
         "CREATE TABLE IF NOT EXISTS CELLS (CELL_NUMBER INT PRIMARY KEY, VACANT CHAR(1), PRISONER_ID INT, FOREIGN KEY (PRISONER_ID) REFERENCES PRISONER(PRISONER_ID));",
         "CREATE TABLE IF NOT EXISTS JOBS (JOBID INT PRIMARY KEY, JOB_DESC VARCHAR(100), WORK_START TIME, WORK_END TIME);",
@@ -26,15 +26,15 @@ class Tables:
     ]
 
     def __init__(self):
-        '''host = input("Enter Your MySQL Host Name: ")
+        host = input("Enter Your MySQL Host Name: ")
         user = input("Enter Your MySQL Username: ")
-        password = input("Enter Your MySQL Password: ")'''
+        password = input("Enter Your MySQL Password: ")
         
         self.conn = mysql.connect(
-            host='localhost',
-            user='root',
-            password='',
-            charset='utf8'
+            host = host,
+            user = user,
+            password = password,
+            charset = 'utf8'
         )
         self.cur = self.conn.cursor()
 
