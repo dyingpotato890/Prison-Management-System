@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './LoginSignUp.css'
 
 
-import email_icon from '../Assets/email.png'
+import person_icon from '../Assets/person.png'
 import password_icon from '../Assets/password.png'
 
 
@@ -16,8 +16,8 @@ const LoginSignUp = () => {
         </div>
         <div className="inputs">
             <div className="input">
-                <img src={email_icon} alt="" />
-                <input type="Email"placeholder='Email' />
+                <img src={person_icon} alt="" />
+                <input type="text"placeholder='Username' />
             </div>
             <div className="input">
                 <img src={password_icon} alt="" />
