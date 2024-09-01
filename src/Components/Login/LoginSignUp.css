@@ -6,6 +6,7 @@
     background : #fff;
     padding-bottom: 30px;   
     width: 600px;
+    border-radius: 10px;
 }
 .header{
     display : flex;
@@ -43,7 +44,7 @@
     margin: auto;
     width: 480px;
     height : 80px;
-    background: #dcdcdc;
+    background: #d4d4d4;
     border-radius: 6px;
 }
 
