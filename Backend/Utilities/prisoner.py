@@ -25,3 +25,17 @@ class Prisoner:
             return True
         except:
             return False
+    def viewPrisoners(self,order_by='PRISONER_ID',order='DESC'):
+        self.cur.execute(f"SELECT * FROM PRISONER ORDER BY {order_by} {order};")
+        row_headers=[x[0] for x in self.cur.description]
+        prisoners=self.cur.fetchall()
+        prisoner_list=[]
+        for p in prisoners:
+            prisoner_list.append(dict(zip(row_headers,p)))
+        return prisoner_list
+    def viewPrisonerDetails(self,aadhar_number:str): # returns a dictionary containing details of the prisoner
+        self.cur.execute(f"SELECT * FROM PRISONER_DETAILS WHERE AADHAR_NUMBER='{aadhar_number}';")
+        row_headers=[x[0] for x in self.cur.description]
+        prisoner=self.cur.fetchall()
+        prisoner_details=(dict(zip(row_headers,p)))
+        return prisoner_details
