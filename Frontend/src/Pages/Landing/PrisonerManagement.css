@@ -1,0 +1,140 @@
+/* Table container styling for scrollable table */
+.table-container {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding-bottom: 10px;  /* Reduced padding to bring elements closer */
+  overflow-x: auto;  /* Enable horizontal scrolling if needed */
+  margin-bottom: 0; /* Removed margin below table */
+
+  height : 500px
+}
+
+/* Scrollable table body */
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container table tbody {
+  display: block;
+  max-height: 300px; /* Set the max height for scrolling */
+  width: 100%;
+}
+
+.table-container table thead,
+.table-container table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* Optional: Styling the scrollbar */
+.table-container table tbody::-webkit-scrollbar {
+  width: 8px;
+}
+
+.table-container table tbody::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+.table-container table tbody::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+/* Search container adjustments */
+.search-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px; /* Further reduced margin between search and list */
+}
+
+/* Search input styles */
+.search-container input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 65%;
+}
+
+/* Filter dropdown styles */
+.search-container select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: rgb(197, 192, 185);
+  color: #494242;
+}
+
+/* Prisoner list adjustments */
+.prisoner-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 0px; /* Removed margin to bring list closer to the table */
+  max-width: 1500px;
+  margin: 0 auto; /* Center-align the list with the table */
+}
+
+/* Prisoner list item styles */
+.prisoner-list li {
+  padding: 15px;
+  background-color: rgb(167, 164, 161);
+  color: #fff;
+  margin-bottom: 10px; /* Reduced margin between list items */
+  border: 1px solid #ddd; 
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for prisoner list items */
+.prisoner-list li:hover {
+  background-color: #252320;
+}
+
+/* Operations button container */
+.Operations {
+  margin-top: 20px; /* Adjusted margin */
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* General button styles */
+.Operations button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Add button styles */
+.Add {
+  background-color: #28a745;
+  color: white;
+}
+
+/* Delete button styles */
+.Delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Update button styles */
+.Update {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Button hover effect */
+.Operations button:hover {
+  opacity: 0.8;
+}
