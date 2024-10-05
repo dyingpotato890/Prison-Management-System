@@ -61,16 +61,21 @@ button {
 
 .signout {
     position: absolute;
+    width: 200px;
     top: 10px; /* Adjust as needed for vertical positioning */
-    right: 10px; /* Adjust as needed for horizontal positioning */
+    right: 20px; /* Adjust as needed for horizontal positioning */
     padding: 10px 20px;
+    margin-top: 15px;
     color: white;
-    border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     border-radius: 15px;
 }
 
-.signout.action-btn:hover {
-    background-color: #161b21;
+.signout-btn {
+    border-radius: 5px;
+    background-color: #f4f4f4;
+}
+.signout-btn:hover{
+    background-color: bisque;
 }
