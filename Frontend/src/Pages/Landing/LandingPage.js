@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import './Main.css';
 import PrisonerManagement from './PrisonerManagement';
-import LoginSignUp from "../Login/LoginSignUp";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
+import VisitorDetails from "./VisitorTable";
+import ErrorPage from "./ErrorPage";
 
-function Main() {
+function LandingPage() {
   const [activeComponent, setActiveComponent] = useState(null); // Manage which component to display
   const navigate = useNavigate(); // Initialize useNavigate
 
@@ -53,12 +54,12 @@ function Main() {
       <div className="content">
         {/* Conditionally render components based on activeComponent */}
         {activeComponent === 'prisonerManagement' && <PrisonerManagement />}
-        {activeComponent === 'visitorTracking' && <div>Visitor and Incident Tracking Content</div>}
-        {activeComponent === 'cellManagement' && <div>Cell and Task Management Content</div>}
-        {activeComponent === 'staffManagement' && <div>Staff Management Content</div>}
+        {activeComponent === 'visitorTracking' && <div><VisitorDetails /></div>}
+        {activeComponent === 'cellManagement' && <div><ErrorPage/></div>}
+        {activeComponent === 'staffManagement' && <div><ErrorPage/></div>}
       </div>
     </div>
   );
 }
 
-export default Main;
+export default LandingPage;

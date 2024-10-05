@@ -1,3 +1,7 @@
+
+
+
+
 .modal-backdrop {
     position: fixed;
     top: 0;
@@ -12,7 +16,7 @@
 }
 
 .modal {
-    background: rgb(167, 164, 161);
+    background: rgb(185, 166, 141);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
@@ -24,7 +28,6 @@
 .modal h2 {
     margin-top: 0;
     font-weight: 700;
-    color: #fff;
 }
 
 .modal-close {
@@ -53,9 +56,10 @@
     box-sizing: border-box;
 }
 
+
 .modal button {
     margin-top: 10px; 
-    background-color: #2a3745;
+    background-color: #2a3745; 
     color: white; 
     border: none;
     border-radius: 5px; 
@@ -69,6 +73,7 @@
 .modal button:hover {
     background-color: #0056b3; 
 }
+
 
 .modal .Add {
     background-color: #28a745; 
@@ -91,5 +96,4 @@
 }
 
 .modal .Update:hover {
-    background-color: #0069d9; 
-}
+    background-color: #0069d9; }

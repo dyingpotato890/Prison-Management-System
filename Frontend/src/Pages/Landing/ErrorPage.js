@@ -7,7 +7,7 @@ const ErrorPage = () => {
   const navigate = useNavigate();
 
   const goHome = () => {
-    navigate('/');
+    navigate('/Landing');
   };
 
   return (
