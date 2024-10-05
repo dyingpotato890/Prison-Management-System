@@ -1,46 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-body{
+body {
     overflow: auto;
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
 }
 
-.main{
-    width:100%;
+.main {
+    width: 100%;
     height: 100%;
     display: flex;
+    padding: 0 20px; /* Add padding to create equal spacing on the sides */
+    box-sizing: border-box; /* Include padding in width calculation */
 }
 
-.sidebar{
-    padding-top:4%;
-    padding-left:3% ;
+.sidebar {
+    padding-top: 4%;
+    padding-left: 3%;
     padding-bottom: 2%;
     width: 22%;
     background-color: rgb(81, 78, 76);
     background: none;
 }
 
-.action-btn{
+.action-btn {
     display: block;
-    margin-bottom: 25%;
+    margin-bottom: 25%; /* Consider changing this for spacing between buttons */
     border-radius: 5px;
-    margin-left: 7%;
+    margin-left: 7%; /* Adjusted for better layout */
     font-family: "Poppins", sans-serif;
     font-weight: 500;
     font-style: italic;
-    
 }
 
-.action-btn:hover{
+.action-btn:hover {
     background-color: bisque;
 }
 
-button{
+button {
     height: 12%;
     width: 70%;
     border: none;
     cursor: pointer;
     padding: 15px 32px;
-
 }
 
 .main-content {
@@ -49,14 +51,15 @@ button{
     align-items: center;
     height: 100%;
     text-align: center;
-  }
-  
-  .welcome h1 {
+}
+
+.welcome h1 {
     font-size: 2.5rem;
     font-family: 'Poppins', sans-serif;
     color: #333;
-  }
-  .signout {
+}
+
+.signout {
     position: absolute;
     top: 10px; /* Adjust as needed for vertical positioning */
     right: 10px; /* Adjust as needed for horizontal positioning */
@@ -66,4 +69,8 @@ button{
     border-radius: 5px;
     cursor: pointer;
     border-radius: 15px;
+}
+
+.signout.action-btn:hover {
+    background-color: #161b21;
 }
