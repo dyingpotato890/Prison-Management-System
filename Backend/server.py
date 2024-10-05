@@ -99,5 +99,5 @@ def get_prisoner_details(prisoner_id):
             db.cursor.close()
             db.conn.close()
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug = True)
