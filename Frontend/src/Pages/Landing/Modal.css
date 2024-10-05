@@ -1,0 +1,95 @@
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: rgb(167, 164, 161);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    max-width: 90%;
+    position: relative;
+}
+
+.modal h2 {
+    margin-top: 0;
+    font-weight: 700;
+    color: #fff;
+}
+
+.modal-close {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #fff;
+    position: absolute;
+    top: 7px; 
+    right: 7px; 
+    height: 40px;
+}
+
+.modal-content {
+    margin: 20px 0;
+}
+
+.modal input,
+.modal select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.modal button {
+    margin-top: 10px; 
+    background-color: #2a3745;
+    color: white; 
+    border: none;
+    border-radius: 5px; 
+    padding: 10px 15px; 
+    cursor: pointer;
+    transition: background-color 0.3s; 
+    width: 20%; 
+    align-items: center;
+}
+
+.modal button:hover {
+    background-color: #0056b3; 
+}
+
+.modal .Add {
+    background-color: #28a745; 
+}
+
+.modal .Add:hover {
+    background-color: #218838; 
+}
+
+.modal .Delete {
+    background-color: #dc3545; 
+}
+
+.modal .Delete:hover {
+    background-color: #c82333; 
+}
+
+.modal .Update {
+    background-color: #007bff; 
+}
+
+.modal .Update:hover {
+    background-color: #0069d9; 
+}

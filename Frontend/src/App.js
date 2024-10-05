@@ -1,12 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
-import LoginSignUp from './Components/Login/LoginSignUp';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LoginSignUp from './Pages/Login/LoginSignUp';
+import PrisonerManagement from './Pages/Landing/PrisonerManagement';
+import LandingPage from './Pages/Landing/LandingPage';
+import ErrorPage from './Pages/Landing/ErrorPage'
 
 function App() {
   return (
-    <div >
-      <LoginSignUp/>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginSignUp />} /> {/* Default route */}
+        <Route path="/prisoner-management" element={<PrisonerManagement />} />
+        <Route path="/Landing" element={<LandingPage />} />
+        <Route path="/Error-404" element={<ErrorPage/>} />
+      </Routes>
+    </Router>
   );
 }
 
