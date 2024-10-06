@@ -95,9 +95,6 @@ button {
 }
 
 .signout-btn {
-    font-family: "Poppins", sans-serif;
-    font-weight: 500;
-    font-style: italic;
     border-radius: 5px;
     background-color: #f4f4f4;
     cursor: pointer;

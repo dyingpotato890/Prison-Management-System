@@ -37,7 +37,6 @@ function LandingPage() {
           onClick={() => setActiveComponent('visitorTracking')} 
           className="action-btn">
           Visitor Tracking
-          Visitor Tracking
         </button>
         
         <button 
@@ -66,7 +65,6 @@ function LandingPage() {
         {activeComponent === 'visitorTracking' && <div><VisitorDetails /></div>}
         {activeComponent === 'cellManagement' && <div><ErrorPage/></div>}
         {activeComponent === 'staffManagement' && <div><StaffDetails /></div>}
-        {activeComponent === 'crimemanagement' && <div><CrimeDetails /></div>}
         {activeComponent === 'crimemanagement' && <div><CrimeDetails /></div>}
       </div>
     </div>
