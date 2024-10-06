@@ -63,7 +63,7 @@ class Tables:
     # TO INSERT VALUES INTO THE TABLES
     def insertValues(self):
         for table in self.table_names:
-            with open(f"./Table_Data/{table}.csv", "r") as file:
+            with open(f"../Table_Data/{table}.csv", "r") as file:
                 csvreader = csv.reader(file)
                 columns = next(csvreader)  # Extract the column headers
                 
