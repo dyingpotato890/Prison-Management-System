@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import PrisonerManagement from './PrisonerManagement';
 import VisitorDetails from "./VisitorTable";
 import ErrorPage from "./ErrorPage";
+import StaffDetails from "./StaffManagement"
 
 function LandingPage() {
   const [activeComponent, setActiveComponent] = useState(null); // Manage which component to display
@@ -56,7 +57,7 @@ function LandingPage() {
         {activeComponent === 'prisonerManagement' && <PrisonerManagement />}
         {activeComponent === 'visitorTracking' && <div><VisitorDetails /></div>}
         {activeComponent === 'cellManagement' && <div><ErrorPage/></div>}
-        {activeComponent === 'staffManagement' && <div><ErrorPage/></div>}
+        {activeComponent === 'staffManagement' && <div><StaffDetails /></div>}
       </div>
     </div>
   );
