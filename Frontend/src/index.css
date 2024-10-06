@@ -6,7 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height :100vh;
-  background: linear-gradient(135deg, #81a5b7, #81a5b7);
+  background: linear-gradient(135deg, #b0e0f7, #5f9ea0);
 }
 
 code {
@@ -20,4 +20,10 @@ code {
   background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background for content */
   border-radius: 8px; /* Rounded corners for the container */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+.head h1 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+  padding-bottom: 10px;
 }
