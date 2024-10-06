@@ -306,6 +306,34 @@ def get_staff():
         print(f"Error getting staff: {e}")
         return jsonify({"error": str(e)}), 500
     
+@app.route('/add_staff', methods=['POST'])
+def add_staff():
+    staff=Staff()
+    data = request.get_json()
+    staff_id = data.get('id')
+    staff_name = data.get('name')
+    age = data.get('age')
+    phone_number = data.get('phonenumber')
+    role = data.get('role')
+    try:
+        staff.add_staff(staff_id,staff_name,age,phone_number,role)
+        return jsonify({"message": "Staff added successfully!"}), 200
+    except Exception as e:
+        print(f"Error adding staff: {e}")
+        return jsonify({"message": "Failed to add staff"}), 500
+    
+@app.route('/remove_staff', methods=['DELETE'])
+def remove_staff():
+    staff=Staff()
+    data = request.get_json()
+    staff_id = data.get('staff_id')
+    if not staff_id:
+        return jsonify({'message': 'Staff ID is required'}), 400
+    if staff.remove_staff(staff_id):
+        return jsonify({'message': 'Staff removed successfully!'}), 200
+    else:
+        return jsonify({'message': 'Staff not found'}), 404
+    
 
 if __name__ == "__main__":
     app.run(debug = True)

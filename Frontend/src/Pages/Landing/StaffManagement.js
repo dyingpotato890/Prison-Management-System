@@ -2,11 +2,16 @@ import React, { useMemo, useState, useEffect } from "react";
 import { useTable } from 'react-table'; 
 import axios from 'axios'; // Make sure to install axios
 import './StaffManagement.css';
+import Modal from './Modal';
+import AddStaff from './AddStaff';
+import DeleteStaff from './DeleteStaff';
 
 function StaffDetails() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [activeOperation, setActiveOperation] = useState(null); // State to manage the current operation (add, delete, update)
+    const [showModal, setShowModal] = useState(false); // State to control modal visibility
 
     useEffect(() => {
         const fetchData = async () => {
@@ -48,6 +53,17 @@ function StaffDetails() {
         return <div className="error">{error}</div>;
     }
 
+
+    const handleOpenModal = (operation) => {
+      setActiveOperation(operation); // Set the active operation
+      setShowModal(true); // Open the modal
+    };
+
+    const handleCloseModal = () => {
+      setShowModal(false); // Close the modal
+      setActiveOperation(null); // Reset the active operation
+    };  
+
     return (
         <div className="App">
             <div className="table-container">
@@ -76,6 +92,19 @@ function StaffDetails() {
                     </tbody>
                 </table>
             </div>
+            {/* Operations */}
+      <div className="Operations">
+        <button className="Add" onClick={() => handleOpenModal('add')}>Add Staff</button>
+        <button className="Delete" onClick={() => handleOpenModal('delete')}>Delete Staff</button>
+        
+      </div>
+
+      {showModal && (
+        <Modal onClose={handleCloseModal}>
+          {activeOperation === 'add' && <AddStaff />}
+          {activeOperation === 'delete' && <DeleteStaff />}
+        </Modal>
+      )}
         </div>
     );
 }

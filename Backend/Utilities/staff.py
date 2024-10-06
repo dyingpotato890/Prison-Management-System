@@ -10,8 +10,11 @@ class Staff:
 
     def remove_staff(self,staff_id):
         self.db.cursor.execute(f"DELETE FROM STAFF WHERE STAFF_ID={staff_id};")
+        if self.db.cursor.rowcount==0:
+            return False
         self.db.conn.commit()
         self.db.conn.close()
+        return True
 
     def view_staff(self,order_by='STAFF_ID'):
         self.db.cursor.execute(f"SELECT * FROM STAFF ORDER BY {order_by};")
