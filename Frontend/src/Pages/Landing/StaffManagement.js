@@ -11,7 +11,7 @@ function StaffDetails() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/staff');
+                const response = await axios.get('http://localhost:5000/staff');
                 setData(response.data);
             } catch (error) {
                 setError("Error fetching data. Please try again.");
@@ -25,9 +25,11 @@ function StaffDetails() {
     }, []);
 
     const columns = useMemo(() => [
-        { Header: "Staff Name", accessor: "staff_name" },
+        { Header: "Staff ID", accessor: "staff_id" },
+        { Header: "Staff Name", accessor: "name" },
         { Header: "Phone Number", accessor: "phone_number" },
-        { Header: "Staff ID", accessor: "staff_id" }
+        { Header: "Age", accessor: "age" },
+        { Header: "Role", accessor: "role" }
     ], []);
 
     const {

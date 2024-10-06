@@ -14,11 +14,11 @@ class Staff:
         self.db.conn.close()
 
     def view_staff(self,order_by='STAFF_ID'):
-        self.db.cursor.execute("SELECT * FROM STAFF ORDER BY {order_by};")
-        row_headers=[x[0] for x in self.db.cursor.description]
+        self.db.cursor.execute(f"SELECT * FROM STAFF ORDER BY {order_by};")
+        row_headers=['staff_id','name','age','phone_number','role']
         staff=self.db.cursor.fetchall()
         staff_list=[]
         for s in staff:
             staff_list.append(dict(zip(row_headers,s)))
         self.db.conn.close()
-        return staff
+        return staff_list

@@ -296,5 +296,16 @@ def delete_visitor():
             db.cursor.close()
             db.conn.close()
 
+@app.route('/staff', methods=['GET'])
+def get_staff():
+    staff=Staff()
+    try:
+        staff_list=staff.view_staff()
+        return jsonify(staff_list)
+    except Exception as e:
+        print(f"Error getting staff: {e}")
+        return jsonify({"error": str(e)}), 500
+    
+
 if __name__ == "__main__":
     app.run(debug = True)
