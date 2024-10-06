@@ -1,5 +1,6 @@
 
-from connector import Connector
+from Utilities.connector import Connector
+
 class Prisoner:
     #Prisoner related funtions
 
@@ -33,4 +34,3 @@ class Prisoner:
         prisoner=self.db.cursor.fetchall()
         for p in prisoner:
             return (dict(zip(row_headers,p)))
-        

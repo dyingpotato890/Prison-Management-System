@@ -1,4 +1,4 @@
-from connector import Connector
+from Utilities.connector import Connector
 class Visitor:
     #Visitor related funtions
 

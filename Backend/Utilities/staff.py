@@ -1,4 +1,4 @@
-from connector import Connector
+from Utilities.connector import Connector
 class Staff:
     #Staff related funtions
 
@@ -17,7 +17,7 @@ class Staff:
         row_headers=[x[0] for x in db.cursor.description]
         staff=self.db.cursor.fetchall()
         staff_list=[]
-        for s in staff
+        for s in staff:
             staff_list.append(dict(zip(row_headers,s)))
         self.db.conn.close()
         return staff

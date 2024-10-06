@@ -3,6 +3,10 @@ from flask_cors import CORS
 from Utilities.login import Login
 from Utilities.connector import Connector
 from Utilities.prisoner import Prisoner
+from Utilities.crime import Crime
+from Utilities.staff import Staff
+from Utilities.visitor import Visitor
+
 
 app = Flask(__name__)
 CORS(app)
@@ -99,7 +103,7 @@ def get_prisoner_details(prisoner_id):
         if db.conn.is_connected():
             db.cursor.close()
             db.conn.close()
-            
+
 @app.route('/add_prisoner', methods=['POST'])
 def add_prisoner():
     p=Prisoner()
