@@ -5,6 +5,8 @@ import './StaffManagement.css';
 import Modal from './Modal';
 import AddStaff from './AddStaff';
 import DeleteStaff from './DeleteStaff';
+import AddUser from './AddUser';
+import DeleteUser from './DeleteUser';
 
 function StaffDetails() {
     const [data, setData] = useState([]);
@@ -95,7 +97,9 @@ function StaffDetails() {
             {/* Operations */}
       <div className="Operations">
         <button className="Add" onClick={() => handleOpenModal('add')}>Add Staff</button>
-        <button className="Delete" onClick={() => handleOpenModal('delete')}>Delete Staff</button>
+        <button className="Delete" onClick={() => handleOpenModal('delete')}>Delete Staff</button>   
+        <button className="Add" onClick={() => handleOpenModal('addUser')}>Add User</button>
+        <button className="Delete" onClick={() => handleOpenModal('deleteUser')}>Delete User</button>   
         
       </div>
 
@@ -103,6 +107,8 @@ function StaffDetails() {
         <Modal onClose={handleCloseModal}>
           {activeOperation === 'add' && <AddStaff />}
           {activeOperation === 'delete' && <DeleteStaff />}
+          {activeOperation === 'addUser' && <AddUser />}
+          {activeOperation === 'deleteUser' && <DeleteUser />}
         </Modal>
       )}
         </div>

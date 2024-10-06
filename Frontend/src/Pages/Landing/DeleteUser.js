@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './Modal.css';
 
-const DeleteStaff= () => {
+const DeleteUser= () => {
   const [staff_id, setStaffID] = useState('');
   const [message, setMessage] = useState('');
 
@@ -9,7 +9,7 @@ const DeleteStaff= () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('http://localhost:5000/remove_staff', {
+      const response = await fetch('http://localhost:5000/remove_user', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -18,26 +18,26 @@ const DeleteStaff= () => {
       });
 
       if (response.ok) {
-        setMessage('Staff deleted successfully!');
+        setMessage('User deleted successfully!');
       } else {
-        setMessage('Failed to delete staff. Please check the staff id.');
+        setMessage('Failed to delete staff. Please check the user id.');
       }
     } catch (error) {
       console.error('Error deleting staff:', error);
-      setMessage('An error occurred while deleting the staff.');
+      setMessage('An error occurred while deleting the user.');
     }
   };
 
   return (
     <div className="modal-content">
-      <h2>Delete Staff</h2>
+      <h2>Delete User</h2>
       <form onSubmit={handleSubmit}>
         <label>Staff ID:</label>
         <input
           type="number"
           value={staff_id}
           onChange={(e) => setStaffID(e.target.value)}
-          placeholder="Enter Staff ID of staff member to delete"
+          placeholder="Enter Staff ID of user to delete"
         />
         <button type="submit">Delete</button>
       </form>
@@ -46,4 +46,4 @@ const DeleteStaff= () => {
   );
 };
 
-export default DeleteStaff;
+export default DeleteUser;

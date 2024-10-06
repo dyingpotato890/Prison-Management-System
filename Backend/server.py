@@ -334,6 +334,36 @@ def remove_staff():
     else:
         return jsonify({'message': 'Staff not found'}), 404
     
-
+@app.route('/add_user', methods=['POST'])
+def add_user():
+    staff=Staff()
+    data = request.get_json()
+    staff_id = data.get('id')
+    password = data.get('password')
+    if not all([staff_id, password]):
+        return jsonify({'message': 'All fields are required'}), 400
+    try:
+        if staff.add_user(staff_id,password):
+            return jsonify({'message': 'User added successfully!'}), 200
+        else:
+            return jsonify({'message': 'Staff not found'}), 404
+    except Exception as e:
+        print(f"Error adding user: {e}")
+        return jsonify({"message": "Failed to add user"}), 500
+    
+@app.route('/remove_user', methods=['DELETE'])
+def remove_user():
+    staff=Staff()
+    data = request.get_json()
+    staff_id = data.get('staff_id')
+    if not staff_id:
+        return jsonify({'message': 'Staff ID is required'}), 400
+    try:
+        if not staff.remove_user(staff_id):
+            return jsonify({'message': 'User does not exist'}), 404
+        return jsonify({'message': 'User removed successfully!'}), 200
+    except Exception as e:
+        print(f"Error removing user: {e}")
+        return jsonify({"message": "Failed to remove user"}), 500
 if __name__ == "__main__":
     app.run(debug = True)

@@ -1,4 +1,5 @@
 from Utilities.connector import Connector
+from Utilities.login import Login
 class Staff:
     def __init__(self) -> None:
         self.db=Connector()
@@ -25,3 +26,19 @@ class Staff:
             staff_list.append(dict(zip(row_headers,s)))
         self.db.conn.close()
         return staff_list
+    def add_user(self,staff_id,password):
+        hashedpass=Login().hashPassword(password)
+        self.db.cursor.execute(f"SELECT * FROM STAFF WHERE STAFF_ID={staff_id};")
+        if not self.db.cursor.fetchone():
+            return False
+        self.db.cursor.execute(f"INSERT INTO LOGIN_DETAILS VALUES('{staff_id}','{hashedpass}');")
+        self.db.conn.commit()
+        self.db.conn.close()
+        return True
+    def remove_user(self,staff_id):
+        self.db.cursor.execute(f"DELETE FROM LOGIN_DETAILS WHERE STAFF_ID={staff_id};")
+        if self.db.cursor.rowcount==0:
+            return False
+        self.db.conn.commit()
+        self.db.conn.close()
+        return True
