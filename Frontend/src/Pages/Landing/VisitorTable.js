@@ -2,11 +2,16 @@ import React, { useMemo, useState, useEffect } from "react";
 import { useTable } from 'react-table'; 
 import axios from 'axios'; // Make sure to install axios
 import './VisitorTable.css'; // Import the CSS file
+import AddVisitor from "./AddVisitor";
+import DeleteVisitor from "./DeleteVisitor";
+import Modal from "./Modal";
 
 function VisitorDetails() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [showModal, setShowModal] = useState(false); // State to show/hide modal
+    const [activeOperation, setActiveOperation] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -48,6 +53,16 @@ function VisitorDetails() {
         return <div className="error">{error}</div>;
     }
 
+    const handleOpenModal = (operation) => {
+        setActiveOperation(operation);
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setActiveOperation(null);
+    };
+
     return (
         <div className="App">
             <div className="table-container">
@@ -76,6 +91,17 @@ function VisitorDetails() {
                     </tbody>
                 </table>
             </div>
+            <div className="Operations">
+                <button className="Add" onClick={() => handleOpenModal('add')}>Add Visitor</button>
+                <button className="Delete" onClick={() => handleOpenModal('delete')}>Delete Visitor</button>
+            </div>
+
+            {showModal && (
+                <Modal onClose={handleCloseModal}>
+                    {activeOperation === 'add' && <div><AddVisitor/></div>}
+                    {activeOperation === 'delete' && <div><DeleteVisitor/></div>}
+                </Modal>
+            )}
         </div>
     );
 }

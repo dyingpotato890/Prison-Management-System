@@ -7,7 +7,6 @@ from Utilities.crime import Crime
 from Utilities.staff import Staff
 from Utilities.visitor import Visitor
 
-
 app = Flask(__name__)
 CORS(app)
 
@@ -228,6 +227,69 @@ def delete_prisoner_details():
     except Exception as e:
         print(f"Error adding prisoner: {e}")
         return jsonify({"message": "Failed to add prisoner"}), 500
+
+    finally:
+        if db.conn.is_connected():
+            db.cursor.close()
+            db.conn.close()
+
+@app.route('/add_visitor', methods=['POST'])
+def add_visitor():
+    db = Connector()
+    visitor = Visitor()
+
+    data = request.get_json()
+    name = data.get('name')
+    phone_number = data.get('phoneNumber')
+    prisoner_id = data.get('prisonerId')
+    date = data.get('date')
+    time = data.get('time')
+
+    if not all([name, phone_number, prisoner_id, date, time]):
+        return jsonify({"message": "All fields are required."}), 400
+
+    try:
+        success = visitor.add_visitor(name, phone_number, prisoner_id, date, time)
+        if success:
+            return jsonify({"message": "Visitor added successfully!"}), 201
+        else:
+            return jsonify({"message": "Failed to add visitor."}), 500
+
+    except Exception as e:
+        print(f"Error adding visitor: {e}")
+        return jsonify({"message": "Failed to add visitor"}), 500
+
+    finally:
+        if db.conn.is_connected():
+            db.cursor.close()
+            db.conn.close()
+
+@app.route('/delete_visitor', methods=['DELETE'])
+def delete_visitor():
+    db = Connector()
+    visitor = Visitor()
+    data = request.get_json()
+
+    visitor_name = data.get('visitorName')
+    prisoner_id = data.get('prisonerId')
+    date = data.get('date')
+    time = data.get('time')
+
+    if not visitor_name or not prisoner_id or not date or not time:
+        return jsonify({'message': 'All fields are required'}), 400
+
+    try:
+        check = visitor.delete_visitor(visitor_name, prisoner_id, date, time)
+        db.conn.commit()
+
+        if not check:
+            return jsonify({'message': 'Visitor not found'}), 404
+        
+        return jsonify({'message': 'Visitor deleted successfully!'}), 200
+
+    except Exception as e:
+        print(f"Error deleting visitor: {e}")
+        return jsonify({"message": "Failed to delete visitor"}), 500
 
     finally:
         if db.conn.is_connected():
