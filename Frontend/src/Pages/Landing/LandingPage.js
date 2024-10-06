@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './Main.css';
+import { useNavigate } from "react-router-dom";
 import PrisonerManagement from './PrisonerManagement';
-import { useNavigate } from "react-router-dom"; // Import useNavigate
 import VisitorDetails from "./VisitorTable";
 import ErrorPage from "./ErrorPage";
 

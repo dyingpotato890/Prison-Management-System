@@ -11,7 +11,7 @@ function VisitorDetails() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/visitors');
+                const response = await axios.get('http://localhost:5000/visitors');
                 setData(response.data);
             } catch (error) {
                 setError("Error fetching data. Please try again.");

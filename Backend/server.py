@@ -129,5 +129,33 @@ def add_prisoner_details():
         return jsonify({"message": "Prisoner details added successfully"})
     else:
         return jsonify({"message": "Failed to add prisoner details"}), 500
+    
+@app.route('/visitors', methods=['GET'])
+def get_visitors():
+    db = Connector()
+    try:
+        db.cursor.execute("""SELECT * FROM visitor_details""")
+        visitors = db.cursor.fetchall()
+
+        visitor_list = []
+        for visitor in visitors:
+            visitor_list.append({
+                "visitor_name": visitor[0],
+                "phone_number": visitor[1],
+                "prisoner_id": visitor[2],
+                "date": str(visitor[3]),
+                "time": str(visitor[4])
+            })
+
+        return jsonify(visitor_list)
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        if db.conn.is_connected():
+            db.cursor.close()
+            db.conn.close()
+
 if __name__ == "__main__":
     app.run(debug = True)
