@@ -1,4 +1,4 @@
 Backend/Password Hashing/updateDB.py
 Backend/Utilities/connector.py
 Backend/.venv/
-./Backend/Utilities/__pycache__
+Backend/Utilities/__pycache__
