@@ -8,7 +8,7 @@ body {
 
 .content {
     flex-grow: 1;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 20%, 30cfd0(81, 78, 76) 90%, #330867 100%);
+    background: linear-gradient(to bottom, rgba(211, 211, 211, 0.9) 0%, rgba(255, 255, 255, 0.9) 100%);
     padding: 2% 4%; /* Internal padding, 2% for top/bottom and 4% for left/right */
     display: flex;
     justify-content: center;
