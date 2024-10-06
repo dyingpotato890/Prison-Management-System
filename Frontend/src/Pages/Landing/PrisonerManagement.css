@@ -48,6 +48,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px; /* Further reduced margin between search and list */
+  color: #252320;
 }
 
 /* Search input styles */
@@ -65,8 +66,8 @@
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  background-color: rgb(197, 192, 185);
-  color: #494242;
+  background-color: rgb(10, 10, 9);
+  color: #985151;
 }
 
 /* Prisoner list adjustments */
