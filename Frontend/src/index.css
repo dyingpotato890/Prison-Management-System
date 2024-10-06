@@ -6,10 +6,18 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height :100vh;
-  background: linear-gradient(#b0b0b3,#050007);
+  background: linear-gradient(135deg, #b0e0f7, #5f9ea0);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.App {
+  width: 100%; /* Full width of the container */
+  padding: 20px; /* Add some padding around the content */
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background for content */
+  border-radius: 8px; /* Rounded corners for the container */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
