@@ -1,0 +1,201 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[
+backend=biber,
+style=alphabetic,
+sorting=ynt]{biblatex}
+\usetheme{Copenhagen}
+\usecolortheme{beaver}
+\addbibresource{ref.bib}
+\title{Prison Management System}
+\author{Nihar Niranjan S \and Nikith T Rajan \and Niranjay Ajayan \and Varun Raj R}
+\institute{
+	Department of Computer Engineering\\
+	Model Engineering College\\
+	Thrikkakara, Kochi 682021\\
+}
+\begin{document}
+\begin{frame}[plain]
+    \maketitle
+\end{frame}
+\begin{frame}{Table Of Contents}
+    \tableofcontents
+    
+\end{frame}
+\section{Introduction}
+\begin{frame}
+    \frametitle{Introduction}
+    The Prison Management System (PMS) provides a complete solution to modernize the administration of prisons in a state of the art manner. The traditional manual methods of record keeping and management used in correctional facilities can often cause errors, inefficiency, and security risks. PMS does away with the need for all these processes by moving them to a secured, centralized, and user-friendly platform and presenting significant improvements in accuracy, efficiency in day-to-day operations, and safety for the inmates and the prison staff.
+\end{frame}
+\section{SRS}
+\subsection{Functional Requirements}
+\begin{frame}{Functional Requirements}
+    \textbf{Staff Management}
+    \begin{itemize}
+        \item Login: Staff can securely log in using their staff ID and password.
+        \item View/Manage Staff: Ability to view, register, update roles, or remove staff members.
+    \end{itemize}
+    \textbf{Prisoner Management}
+    \begin{itemize}
+        \item Add/Release Prisoners: Functions to add new prisoners and release them when required.
+        \item Update Prisoner Information: Modify prisoner details, including reassignment to cells.
+        \item Generate Prisoner Reports: Access comprehensive information on prisoners.
+    \end{itemize}   
+    
+\end{frame}
+\begin{frame}{Functional Requirements}
+    \textbf{Cell and Task Management}
+    \begin{itemize}
+        \item Allocate/Change Cells: Assign prisoners to cells or reassign them.
+        \item Assign/Record Work: Assign jobs to prisoners and track their work hours
+
+    \end{itemize}
+    \textbf{Visitor and Incident Tracking}
+    \begin{itemize}
+        \item  Register a new visitor and keep the visitors history
+        \item Filter the records of prisoners by crime and generate statistics on the type of crime
+    \end{itemize}
+    
+\end{frame}
+\begin{frame}{Functional Requirements}
+    \begin{itemize}
+        \item \textbf{Frontend:} The user interface is built using React and styled with CSS, making it responsive and easy to navigate. This ensures users can interact with the system smoothly, whether on desktop or mobile.
+        \item \textbf{Backend:} Python powers the backend, managing all the logic and API communication to keep everything running efficiently behind the scenes.
+        \item \textbf{Database:} MySQL is used to securely store all critical data, including prisoners, staff, and visitors.
+        \item \textbf{Security:} For added safety, hashlib encrypts sensitive information, ensuring data integrity and secure access.
+    \end{itemize}
+\end{frame}
+\subsection{Non-Functional Requirements}
+\begin{frame}{Non-Functional Requirements}
+    \textbf{Performance Requirements}
+    \begin{itemize}
+        \item Handle access by multiple staff users 
+        \item Quick data retrieval 
+    \end{itemize}
+    \textbf{Security Requirements}
+    \begin{itemize}
+        \item Ensure role-based access control for staff roles (admin, staff)
+        \item Encrypt sensitive data (e.g., login credentials) using secure hashing techniques like hashlib.
+    \end{itemize}
+    \textbf{Usability Requirements}
+    \begin{itemize}
+        \item User-friendly React-based interface with smooth navigation.
+        \item Mobile-responsive design using CSS
+    \end{itemize}
+    
+\end{frame}
+\section{Architecture}
+\subsection{Architecture Description}
+\begin{frame}{Architecture Description}
+The prison management system is a modular, multi-functional system divided into subsystems that manage various aspects of the prison, such as staff, prisoners, cells, tasks, visitors, and crime tracking. Each subsystem handles a specific set of responsibilities, allowing for seamless coordination between them to achieve the overall functionality.\cite{designdoc}
+    
+\end{frame}
+\subsection{UML Diagrams}
+\begin{frame}{Use-Case Diagram}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.2]{usecase.png}
+        \caption{Use-Case Diagram}
+        \label{fig:use-case}
+    \end{figure}
+\end{frame}
+\begin{frame}{Class Diagram}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.1]{class.png}
+        \caption{Class Diagram}
+        \label{fig:class}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{ER Diagram}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.23]{er.png}
+        \caption{ER Diagram}
+        \label{fig:er}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Activity Diagram}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.05]{activity.png}
+        \caption{Activity Diagram}
+        \label{fig:activity}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Sequence Diagram}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.15]{sequence.png}
+        \caption{Sequence Diagram}
+        \label{fig:sequence}
+    \end{figure}
+\end{frame}
+\section{Result Screenshots}
+\begin{frame}{Screenshots}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{login.png}
+        \caption{Login Screen}
+        \label{fig:login}
+    \end{figure}
+\end{frame}
+\begin{frame}{Screenshots}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{prisonermgmt.png}
+        \caption{Prisoner Management}
+        \label{fig:pmgmt}
+    \end{figure}
+\end{frame}
+\begin{frame}{Screenshots}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{prisonerdet.png}
+        \caption{Prisoner Details}
+        \label{fig:pdet}
+    \end{figure}
+\end{frame}
+\begin{frame}{Screenshots}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{addprisoner.png}
+        \caption{Add Prisoner Dialog}
+        \label{fig:addp}
+    \end{figure}
+\end{frame}
+\begin{frame}{Screenshots}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{visitor.png}
+        \caption{Visitor Management}
+        \label{fig:visitor}
+    \end{figure}
+\end{frame}
+\begin{frame}{Screenshots}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{staff.png}
+        \caption{Staff Management}
+        \label{fig:staff}
+    \end{figure}
+\end{frame}
+\begin{frame}{Screenshots}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{crime.png}
+        \caption{Crime Management}
+        \label{fig:crime}
+    \end{figure}
+\end{frame}
+
+\section{References}
+\begin{frame}{References}
+    \printbibliography
+    
+\end{frame}
+
+\end{document}
