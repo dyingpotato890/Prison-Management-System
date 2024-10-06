@@ -6,15 +6,12 @@ import './ErrorPage.css';
 const ErrorPage = () => {
   const navigate = useNavigate();
 
-  const goHome = () => {
-    navigate('/Landing');
-  };
-
+ 
   return (
     <div className="error-page">
       <h1>404 - Page Not Found</h1>
       <p>The page you are looking for does not exist.</p>
-      <button onClick={goHome}>Go Home</button>
+      <p>Kindly click on other functions ,Thank You </p>
     </div>
   );
 };
