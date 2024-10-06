@@ -3,7 +3,8 @@ import { useTable, useGlobalFilter } from 'react-table';
 import './PrisonerManagement.css';
 import UpdatePrisoner from "./UpdatePrisoner";
 import AddPrisoner from "./AddPrisoner";
-import DeletePrisoner from"./DeletePrisoner";
+import DeletePrisoner from "./DeletePrisoner";
+import DeletePrisonerDetails from "./DeletePrisonerDetails";
 import Modal from './Modal';
 
 function Prisoner_Management() {
@@ -13,24 +14,30 @@ function Prisoner_Management() {
   const [selectedPrisoner, setSelectedPrisoner] = useState(null); // State for selected prisoner details
   const [globalFilter, setGlobalFilter] = useState(''); // State for search
 
+  const [searchTerm, setSearchTerm] = useState(''); // Search term state
+  const [searchBy, setSearchBy] = useState('id'); // Either 'name' or 'id'
+
   // Fetch prisoner data
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/prisoners");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const result = await response.json();
-        setData(result); // Set the data state
-      } catch (error) {
-        setError(error.message); // Set error state
-      } finally {
-        setLoading(false); // Set loading to false
+  const fetchData = async () => {
+    setLoading(true); // Set loading to true
+    try {
+      // Adjust the fetch URL based on the search criteria
+      const response = await fetch(`http://localhost:5000/prisoners?${searchBy}=${searchTerm}`);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
-    fetchData();
-  }, []);
+      const result = await response.json();
+      setData(result); // Set the data state
+    } catch (error) {
+      setError(error.message); // Set error state
+    } finally {
+      setLoading(false); // Set loading to false
+    }
+  };
+
+  useEffect(() => {
+    fetchData(); // Fetch data on component mount
+  }, [searchTerm, searchBy]); // Refetch when search term or search criteria change
 
   // Fetch specific prisoner details when a row is clicked
   const fetchPrisonerDetails = async (prisonerId) => {
@@ -88,25 +95,19 @@ function Prisoner_Management() {
     setTableGlobalFilter(globalFilter);
   }, [globalFilter, setTableGlobalFilter]);
 
-  // Handle search input change
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
   // Handle filter selection change (name or id)
   const handleSearchByChange = (event) => {
     setSearchBy(event.target.value);
+    setSearchTerm(''); // Reset search term when changing criteria
   };
-
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchBy, setSearchBy] = useState('name'); // Either 'name' or 'id'
-  const [activeOperation, setActiveOperation] = useState(null); // State to manage the current operation (add, delete, update)
-  const [showModal, setShowModal] = useState(false); // State to control modal visibility
 
   // Handle row click
   const handleRowClick = (row) => {
     fetchPrisonerDetails(row.original.prisoner_id); // Fetch prisoner details when a row is clicked
   };
+
+  const [activeOperation, setActiveOperation] = useState(null); // State to manage the current operation (add, delete, update)
+  const [showModal, setShowModal] = useState(false); // State to control modal visibility
 
   const handleOpenModal = (operation) => {
     setActiveOperation(operation); // Set the active operation
@@ -127,12 +128,17 @@ function Prisoner_Management() {
         {/* Search Bar */}
         <input
           type="text"
-          placeholder="Search prisoners..."
-          value={globalFilter}
-          onChange={(e) => setGlobalFilter(e.target.value)}
+          placeholder={`Search by ${searchBy === 'id' ? 'ID' : 'Aadhar Number'}...`}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           className="search-input"
         />
-
+        <select value={searchBy} onChange={handleSearchByChange} className="options">
+          <option value="id">ID</option>
+          <option value="aadhar">Aadhar Number</option>
+        </select>
+        <button className="search-button" onClick={fetchData}>Search</button>
+        
         <table {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
@@ -147,7 +153,7 @@ function Prisoner_Management() {
             {rows.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} onClick={() => handleRowClick(row)}>
+                <tr key={row.id} {...row.getRowProps()} onClick={() => handleRowClick(row)}>
                   {row.cells.map((cell) => (
                     <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                   ))}
@@ -162,6 +168,7 @@ function Prisoner_Management() {
       <div className="Operations">
         <button className="Add" onClick={() => handleOpenModal('add')}>Add Prisoner</button>
         <button className="Delete" onClick={() => handleOpenModal('delete')}>Delete Prisoner</button>
+        <button className="Delete" onClick={() => handleOpenModal('deleteDetails')}>Delete Prisoner Details</button>
         <button className="Update" onClick={() => handleOpenModal('update')}>Update details</button>
       </div>
 
@@ -169,8 +176,10 @@ function Prisoner_Management() {
         <Modal onClose={handleCloseModal}>
           {activeOperation === 'add' && <AddPrisoner />}
           {activeOperation === 'delete' && <DeletePrisoner />}
+          {activeOperation === 'deleteDetails' && <DeletePrisonerDetails />}
           {activeOperation === 'update' && <UpdatePrisoner />}
-        </Modal>)}
+        </Modal>
+      )}
 
       {/* Selected Prisoner Details */}
       <div className="prisonermanagement">

@@ -1,17 +1,40 @@
 import React, { useState } from "react";
 import './Modal.css';
+import axios from 'axios';
 
 const AddPrisoner = () => {
-  const [name, setName] = useState('');
   const [id, setId] = useState('');
-  const [aadhar, setAadhar] = useState('');
+  const [name, setName] = useState('');
   const [age, setAge] = useState('');
+  const [aadhar, setAadhar] = useState('');
   const [crimeId, setCrimeId] = useState('');
+  const [entryDate, setEntryDate] = useState('');
+  const [releaseDate, setReleaseDate] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add prisoner logic here
-    console.log('Adding prisoner', { id, name, aadhar, age, crimeId });
+    
+    const prisonerData = { id, name, age, aadhar, crimeId, entryDate, releaseDate };
+
+    try {
+      const response = await axios.post('http://localhost:5000/add_prisoner', prisonerData);
+      if (response.status === 200) {
+        alert('Prisoner added successfully!');
+        // Clear form fields after success
+        setId('');
+        setName('');
+        setAge('');
+        setAadhar('');
+        setCrimeId('');
+        setEntryDate('');
+        setReleaseDate('');
+      } else {
+        alert('Failed to add prisoner.');
+      }
+    } catch (error) {
+      console.error("Error adding prisoner: ", error);
+      alert('Failed to add prisoner.');
+    }
   };
 
   return (
@@ -23,23 +46,7 @@ const AddPrisoner = () => {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Enter name"
-        />
-
-        <label>ID:</label>
-        <input
-          type="text"
-          value={id}
-          onChange={(e) => setId(e.target.value)}
-          placeholder="Enter ID"
-        />
-
-        <label>Aadhar No:</label>
-        <input
-          type="text"
-          value={aadhar}
-          onChange={(e) => setAadhar(e.target.value)}
-          placeholder="Enter Aadhar No"
+          placeholder="Enter Name"
         />
 
         <label>Age:</label>
@@ -50,12 +57,34 @@ const AddPrisoner = () => {
           placeholder="Enter Age"
         />
 
+        <label>Aadhar No:</label>
+        <input
+          type="text"
+          value={aadhar}
+          onChange={(e) => setAadhar(e.target.value)}
+          placeholder="Enter Aadhar No"
+        />
+
         <label>Crime ID:</label>
         <input
           type="text"
           value={crimeId}
           onChange={(e) => setCrimeId(e.target.value)}
           placeholder="Enter Crime ID"
+        />
+
+        <label>Entry Date:</label>
+        <input
+          type="date"
+          value={entryDate}
+          onChange={(e) => setEntryDate(e.target.value)}
+        />
+
+        <label>Release Date:</label>
+        <input
+          type="date"
+          value={releaseDate}
+          onChange={(e) => setReleaseDate(e.target.value)}
         />
 
         <button type="submit">Add</button>

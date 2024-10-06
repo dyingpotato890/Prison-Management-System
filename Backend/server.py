@@ -103,32 +103,6 @@ def get_prisoner_details(prisoner_id):
         if db.conn.is_connected():
             db.cursor.close()
             db.conn.close()
-
-@app.route('/add_prisoner', methods=['POST'])
-def add_prisoner():
-    p=Prisoner()
-    data = request.get_json()
-    aadhar_number = data.get('aadhar_number')
-    crime_id = data.get('crime_id')
-    enter_date = data.get('enter_date')
-    release_date = data.get('release_date')
-    if p.insertPrisoner(aadhar_number,crime_id,enter_date,release_date):
-        return jsonify({"message": "Prisoner added successfully"})
-    else:
-        return jsonify({"message": "Failed to add prisoner"}), 500 
-
-@app.route('/add_prisoner_details', methods=['POST'])
-def add_prisoner_details():
-    p=Prisoner()
-    data = request.get_json()
-    aadhar_number = data.get('aadhar_number')
-    name = data.get('name')
-    age = data.get('age')
-    noOfConvictions = data.get('noOfConvictions')
-    if p.insertPrisonerDetails(aadhar_number,name,age,noOfConvictions):
-        return jsonify({"message": "Prisoner details added successfully"})
-    else:
-        return jsonify({"message": "Failed to add prisoner details"}), 500
     
 @app.route('/visitors', methods=['GET'])
 def get_visitors():
@@ -151,6 +125,109 @@ def get_visitors():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+    finally:
+        if db.conn.is_connected():
+            db.cursor.close()
+            db.conn.close()
+
+@app.route('/add_prisoner', methods=['POST'])
+def add_prisoner():
+    db = Connector()
+    p = Prisoner()
+    data = request.get_json()
+
+    name = data.get('name')
+    age = data.get('age')
+    aadhar = data.get('aadhar')
+    crime_id = data.get('crimeId')
+    entry_date = data.get('entryDate')
+    release_date = data.get('releaseDate')
+
+    try:
+        db.cursor.execute("SELECT NUMBER_OF_CONVICTIONS FROM PRISONER_DETAILS WHERE AADHAR_NUMBER = %s", (aadhar,))
+        result = db.cursor.fetchone()
+
+        if result:
+            number_of_convictions = result[0] + 1
+            db.cursor.execute("""
+                UPDATE PRISONER_DETAILS
+                SET NUMBER_OF_CONVICTIONS = %s
+                WHERE AADHAR_NUMBER = %s
+            """, (number_of_convictions, aadhar))
+            db.conn.commit()
+        else:
+            p.insertPrisonerDetails(aadhar, name, age, 1)
+
+        db.cursor.execute("SELECT PRISONER_ID FROM PRISONER ORDER BY PRISONER_ID DESC LIMIT 1")
+        lastPID = db.cursor.fetchone()
+        if lastPID is not None:
+            lastPID = lastPID[0] + 1
+        else:
+            lastPID = 1
+
+        p.insertPrisoner(lastPID, aadhar, crime_id, entry_date, release_date)
+
+        return jsonify({"message": "Prisoner added/updated successfully!"}), 200
+    
+    except Exception as e:
+        print(f"Error adding prisoner: {e}")
+        return jsonify({"message": "Failed to add prisoner"}), 500
+
+    finally:
+        if db.conn.is_connected():
+            db.cursor.close()
+            db.conn.close()
+
+@app.route('/delete-prisoner', methods=['DELETE'])
+def delete_prisoner():
+    try:
+        db = Connector()
+        p = Prisoner()
+
+        data = request.get_json()
+        aadhar_number = data.get('aadharNumber')
+
+        if not aadhar_number:
+            return jsonify({'message': 'Aadhar Number is required'}), 400
+
+        check = p.deletePrisoner(aadhar_number)
+        if check:
+            return jsonify({'message': 'Prisoner deleted successfully!'}), 200
+        else:
+            return jsonify({'message': 'Prisoner not found'}), 404
+        
+    except Exception as e:
+        print(f"Error adding prisoner: {e}")
+        return jsonify({"message": "Failed to add prisoner"}), 500
+
+    finally:
+        if db.conn.is_connected():
+            db.cursor.close()
+            db.conn.close()
+
+@app.route('/delete-prisoner-details', methods=['DELETE'])
+def delete_prisoner_details():
+    try:
+        db = Connector()
+        p = Prisoner()
+
+        data = request.get_json()
+        aadhar_number = data.get('aadharNumber')
+
+        if not aadhar_number:
+            return jsonify({'message': 'Aadhar Number is required'}), 400
+
+        check = p.deletePrisoner(aadhar_number)
+        if check:
+            p.deletePrisonerDetails(aadhar_number)
+            return jsonify({'message': 'Prisoner deleted successfully!'}), 200
+        else:
+            return jsonify({'message': 'Prisoner not found'}), 404
+        
+    except Exception as e:
+        print(f"Error adding prisoner: {e}")
+        return jsonify({"message": "Failed to add prisoner"}), 500
 
     finally:
         if db.conn.is_connected():
