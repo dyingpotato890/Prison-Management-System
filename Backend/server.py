@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from Utilities.login import Login
 from Utilities.connector import Connector
+from Utilities.prisoner import Prisoner
 
 app = Flask(__name__)
 CORS(app)
@@ -98,6 +99,31 @@ def get_prisoner_details(prisoner_id):
         if db.conn.is_connected():
             db.cursor.close()
             db.conn.close()
+            
+@app.route('/add_prisoner', methods=['POST'])
+def add_prisoner():
+    p=Prisoner()
+    data = request.get_json()
+    aadhar_number = data.get('aadhar_number')
+    crime_id = data.get('crime_id')
+    enter_date = data.get('enter_date')
+    release_date = data.get('release_date')
+    if p.insertPrisoner(aadhar_number,crime_id,enter_date,release_date):
+        return jsonify({"message": "Prisoner added successfully"})
+    else:
+        return jsonify({"message": "Failed to add prisoner"}), 500 
 
+@app.route('/add_prisoner_details', methods=['POST'])
+def add_prisoner_details():
+    p=Prisoner()
+    data = request.get_json()
+    aadhar_number = data.get('aadhar_number')
+    name = data.get('name')
+    age = data.get('age')
+    noOfConvictions = data.get('noOfConvictions')
+    if p.insertPrisonerDetails(aadhar_number,name,age,noOfConvictions):
+        return jsonify({"message": "Prisoner details added successfully"})
+    else:
+        return jsonify({"message": "Failed to add prisoner details"}), 500
 if __name__ == "__main__":
     app.run(debug = True)
