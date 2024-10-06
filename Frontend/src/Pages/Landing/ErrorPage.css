@@ -2,6 +2,11 @@
 .error-page {
     text-align: center;
     padding: 50px;
+    margin-left: 200px;
+    margin-top : 100px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: italic;
   }
   
   .error-page h1 {

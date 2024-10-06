@@ -84,3 +84,25 @@
   .table-container table tbody::-webkit-scrollbar-thumb:hover {
     background-color: #555;
   }
+  .loading{
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: italic;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh; /* Full viewport height */
+  font-size: 100px;
+  margin-left: 400px;
+}  
+.error{
+  font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: italic;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh; /* Full viewport height */
+  font-size: 50px;
+  margin-left: 350px;
+}  
