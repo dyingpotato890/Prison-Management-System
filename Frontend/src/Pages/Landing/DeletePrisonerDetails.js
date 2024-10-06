@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import './Modal.css';
 
-const DeletePrisoner = () => {
+const DeletePrisonerDetails = () => {
   const [aadharNumber, setAadharNumber] = useState('');
-  const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,13 +17,14 @@ const DeletePrisoner = () => {
       });
 
       if (response.ok) {
-        setMessage('Prisoner deleted successfully!');
+        alert('Prisoner deleted successfully!');  // Alert on success
       } else {
-        setMessage('Failed to delete prisoner. Please check the Aadhar Number.');
+        const errorData = await response.json();
+        alert(errorData.message || 'Failed to delete prisoner. Please check the Aadhar Number.');  // Alert on failure
       }
     } catch (error) {
       console.error('Error deleting prisoner:', error);
-      setMessage('An error occurred while deleting the prisoner.');
+      alert('An error occurred while deleting the prisoner.');  // Alert on catch error
     }
   };
 
@@ -41,9 +41,8 @@ const DeletePrisoner = () => {
         />
         <button type="submit">Delete</button>
       </form>
-      {message && <p>{message}</p>} {/* Display success/error message */}
     </div>
   );
 };
 
-export default DeletePrisoner;
+export default DeletePrisonerDetails;

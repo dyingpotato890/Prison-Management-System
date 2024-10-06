@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './Modal.css';
 
 const DeletePrisoner = () => {
-  const [aadharNumber, setAadharNumber] = useState('');
+  const [prisonerID, setPrisonerId] = useState('');
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
@@ -14,7 +14,7 @@ const DeletePrisoner = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ aadharNumber }), // Send Aadhar Number in the request body
+        body: JSON.stringify({ prisonerID }),
       });
 
       if (response.ok) {
@@ -32,12 +32,12 @@ const DeletePrisoner = () => {
     <div className="modal-content">
       <h2>Delete Prisoner</h2>
       <form onSubmit={handleSubmit}>
-        <label>Aadhar Number:</label>
+        <label>Prisoner ID:</label>
         <input
           type="text"
-          value={aadharNumber}
-          onChange={(e) => setAadharNumber(e.target.value)}
-          placeholder="Enter Aadhar Number of prisoner to delete"
+          value={prisonerID}
+          onChange={(e) => setPrisonerId(e.target.value)}
+          placeholder="Enter Prisoner ID of Prisoner to Delete"
         />
         <button type="submit">Delete</button>
       </form>

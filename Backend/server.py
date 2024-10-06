@@ -185,20 +185,20 @@ def delete_prisoner():
         p = Prisoner()
 
         data = request.get_json()
-        aadhar_number = data.get('aadharNumber')
+        prisonerID = data.get('prisonerID')
 
-        if not aadhar_number:
-            return jsonify({'message': 'Aadhar Number is required'}), 400
+        if not prisonerID:
+            return jsonify({'message': 'Prisoner ID is required'}), 400
 
-        check = p.deletePrisoner(aadhar_number)
+        check = p.deletePrisoner(prisonerID)
         if check:
-            return jsonify({'message': 'Prisoner deleted successfully!'}), 200
+            return jsonify({'message': 'Prisoner Deleted Successfully!'}), 200
         else:
-            return jsonify({'message': 'Prisoner not found'}), 404
+            return jsonify({'message': 'Prisoner Not Found'}), 404
         
     except Exception as e:
-        print(f"Error adding prisoner: {e}")
-        return jsonify({"message": "Failed to add prisoner"}), 500
+        print(f"Error Deleting Prisoner: {e}")
+        return jsonify({"message": "Failed to Delete Prisoner"}), 500
 
     finally:
         if db.conn.is_connected():
@@ -217,16 +217,15 @@ def delete_prisoner_details():
         if not aadhar_number:
             return jsonify({'message': 'Aadhar Number is required'}), 400
 
-        check = p.deletePrisoner(aadhar_number)
+        check = p.deletePrisonerDetails(aadhar_number)
         if check:
-            p.deletePrisonerDetails(aadhar_number)
             return jsonify({'message': 'Prisoner deleted successfully!'}), 200
         else:
-            return jsonify({'message': 'Prisoner not found'}), 404
+            return jsonify({'message': 'Prisoner Either Not Found or Has Records Existing In Prison Table'}), 404
         
     except Exception as e:
-        print(f"Error adding prisoner: {e}")
-        return jsonify({"message": "Failed to add prisoner"}), 500
+        print(f"Error Deleting prisoner: {e}")
+        return jsonify({"message": "Failed to Delete Prisoner"}), 500
 
     finally:
         if db.conn.is_connected():
@@ -365,5 +364,30 @@ def remove_user():
     except Exception as e:
         print(f"Error removing user: {e}")
         return jsonify({"message": "Failed to remove user"}), 500
+    
+@app.route('/crime-details', methods=['GET'])
+def get_crimes():
+    db = Connector()
+    try:
+        db.cursor.execute("SELECT * FROM crime")
+        crimes = db.cursor.fetchall()
+
+        crimes_list = []
+        for crime in crimes:
+            crimes_list.append({
+                "crime_id": crime[0],
+                "crime_description": crime[1],
+            })
+
+        return jsonify(crimes_list)
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        if db.conn.is_connected():
+            db.cursor.close()
+            db.conn.close()
+
 if __name__ == "__main__":
     app.run(debug = True)

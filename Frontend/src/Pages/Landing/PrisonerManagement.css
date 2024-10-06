@@ -9,6 +9,10 @@
   height : 500px
 }
 
+.content{
+  padding-right: 2%;
+}
+
 /* Scrollable table body */
 .table-container table {
   width: 100%;

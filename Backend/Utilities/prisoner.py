@@ -40,21 +40,32 @@ class Prisoner:
         for p in prisoner:
             return dict(zip(row_headers, p))
 
-    def deletePrisoner(self, aadhar_number: str) -> bool:
+    def deletePrisoner(self, prisonerID: str) -> bool:
         try:
-            self.db.cursor.execute(f"DELETE FROM PRISONER_DETAILS WHERE AADHAR_NUMBER='{aadhar_number}';")
-            self.db.cursor.execute(f"DELETE FROM PRISONER WHERE AADHAR_NUMBER='{aadhar_number}';")
+            self.db.cursor.execute(f"DELETE FROM PRISONER WHERE PRISONER_ID='{prisonerID}';")    
             self.db.conn.commit()
             return True
+        
         except Exception as e:
             print("Error deleting prisoner:", e)
             return False
 
     def deletePrisonerDetails(self, aadhar_number: str) -> bool:
         try:
-            self.db.cursor.execute(f"DELETE FROM PRISONER_DETAILS WHERE AADHAR_NUMBER='{aadhar_number}';")
-            self.db.conn.commit()
-            return True
+            self.db.cursor.execute("SELECT COUNT(*) FROM PRISONER WHERE AADHAR_NUMBER = %s", (aadhar_number,))
+            prisoner_count = self.db.cursor.fetchone()[0]
+
+            if prisoner_count > 0:
+                return False
+
+            self.db.cursor.execute("SELECT COUNT(*) FROM PRISONER_DETAILS WHERE AADHAR_NUMBER = %s", (aadhar_number,))
+            details_count = self.db.cursor.fetchone()[0]
+
+            if details_count > 0:
+                self.db.cursor.execute("DELETE FROM PRISONER_DETAILS WHERE AADHAR_NUMBER = %s", (aadhar_number,))
+                self.db.conn.commit()
+                return True
+            
         except Exception as e:
-            print("Error deleting prisoner details:", e)
+            print(f"Error deleting prisoner details: {e}")
             return False

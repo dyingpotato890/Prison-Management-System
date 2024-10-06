@@ -5,6 +5,7 @@ import PrisonerManagement from './PrisonerManagement';
 import VisitorDetails from "./VisitorTable";
 import ErrorPage from "./ErrorPage";
 import StaffDetails from "./StaffManagement"
+import CrimeDetails from "./CrimeDetails";
 
 function LandingPage() {
   const [activeComponent, setActiveComponent] = useState(null); // Manage which component to display
@@ -35,19 +36,25 @@ function LandingPage() {
         <button 
           onClick={() => setActiveComponent('visitorTracking')} 
           className="action-btn">
-          Visitor And Incident Tracking
+          Visitor Tracking
         </button>
         
         <button 
           onClick={() => setActiveComponent('cellManagement')} 
           className="action-btn">
-          Cell And Task Management
+          Cell Management
         </button>
         
         <button 
           onClick={() => setActiveComponent('staffManagement')} 
           className="action-btn">
           Staff Management
+        </button>
+
+        <button 
+          onClick={() => setActiveComponent('crimemanagement')} 
+          className="action-btn">
+          Crime Management
         </button>
 
       </div>
@@ -58,6 +65,7 @@ function LandingPage() {
         {activeComponent === 'visitorTracking' && <div><VisitorDetails /></div>}
         {activeComponent === 'cellManagement' && <div><ErrorPage/></div>}
         {activeComponent === 'staffManagement' && <div><StaffDetails /></div>}
+        {activeComponent === 'crimemanagement' && <div><CrimeDetails /></div>}
       </div>
     </div>
   );
