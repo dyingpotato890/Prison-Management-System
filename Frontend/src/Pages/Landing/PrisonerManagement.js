@@ -132,7 +132,7 @@ function Prisoner_Management() {
           onChange={(e) => setGlobalFilter(e.target.value)}
           className="search-input"
         />
-
+        <button className="search-button">Search</button>
         <table {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
@@ -188,7 +188,7 @@ function Prisoner_Management() {
             <li><strong>Release Date:</strong> {selectedPrisoner.release_date}</li>
           </ul>
         ) : (
-          <p>Select a prisoner to view details</p>
+          <p className="para1">Please select a prisoner to view details</p>
         )}
       </div>
     </div>
