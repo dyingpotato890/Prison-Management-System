@@ -2,7 +2,7 @@ from Utilities.connector import Connector
 class Staff:
     def __init__(self) -> None:
         self.db=Connector()
-        
+
     def add_staff(self,staff_id,staff_name,age,phone_number,role):
         self.db.cursor.execute(f"INSERT INTO STAFF VALUES({staff_id},'{staff_name}',{age},'{phone_number}','{role}');")
         self.db.conn.commit()
@@ -15,7 +15,7 @@ class Staff:
 
     def view_staff(self,order_by='STAFF_ID'):
         self.db.cursor.execute("SELECT * FROM STAFF ORDER BY {order_by};")
-        row_headers=[x[0] for x in db.cursor.description]
+        row_headers=[x[0] for x in self.db.cursor.description]
         staff=self.db.cursor.fetchall()
         staff_list=[]
         for s in staff:
