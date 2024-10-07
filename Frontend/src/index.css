@@ -1,17 +1,15 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-height :100vh;
-  background: rgb(211, 211, 211, 0.9);
+  min-height: 100vh;
+  background: rgba(211, 211, 211, 0.9);
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 .App {
@@ -21,3 +19,23 @@ code {
   border-radius: 8px; /* Rounded corners for the container */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
+
+.imageicon img {
+  width:150px;  /* Set the desired width for the image */
+  height: auto; /* Automatically adjust height to keep the aspect ratio */
+}
+
+.header-container {
+  display: flex;
+  align-items: center; /* Vertically center align */
+  justify-content: space-between; /* Horizontally aligned with space between */
+  padding: 20px; /* Add padding around the content */
+}
+
+.underline {
+  background-color: #000; /* Optional: to give the underline a visible color */
+}
+.head{
+  margin-right: 610px;
+  font-size: 140%;
+}   
