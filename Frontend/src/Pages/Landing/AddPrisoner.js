@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './Modal.css';
 import axios from 'axios';
 
-const AddPrisoner = () => {
+const AddPrisoner = () => { //testing
   const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
