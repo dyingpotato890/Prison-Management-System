@@ -107,7 +107,7 @@ def get_prisoner_details(prisoner_id):
 def get_visitors():
     db = Connector()
     try:
-        db.cursor.execute("""SELECT * FROM visitor_details""")
+        db.cursor.execute("SELECT * FROM visitor_details ORDER BY date,time;")
         visitors = db.cursor.fetchall()
 
         visitor_list = []
