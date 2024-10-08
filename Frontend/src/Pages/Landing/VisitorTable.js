@@ -32,7 +32,7 @@ function VisitorDetails() {
     const columns = useMemo(() => [
         { Header: "Visitor Name", accessor: "visitor_name" },
         { Header: "Phone Number", accessor: "phone_number" },
-        { Header: "Prisoner ID", accessor: "prisoner_id" },
+        { Header: "Prisoner Name", accessor: "prisoner_name" },
         { Header: "Date", accessor: "date" },
         { Header: "Time", accessor: "time" },
     ], []);

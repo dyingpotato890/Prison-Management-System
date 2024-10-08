@@ -28,13 +28,21 @@ def get_prisoners():
     try:
         db.cursor.execute("""
             SELECT 
-                prisoner_id, 
-                aadhar_number, 
-                crime_id, 
-                enter_date, 
-                release_date 
+                p.prisoner_id, 
+                pd.name, 
+                c.description, 
+                p.enter_date, 
+                p.release_date 
             FROM 
-                prisoner
+                prisoner p,
+                prisoner_details pd,
+                crime c
+            WHERE
+                pd.aadhar_number = p.aadhar_number
+                and
+                c.crime_id = p.crime_id
+            ORDER BY
+                p.prisoner_id
         """)
         prisoners = db.cursor.fetchall()
 
@@ -42,8 +50,8 @@ def get_prisoners():
         for prisoner in prisoners:
             prisoner_list.append({
                 "prisoner_id": prisoner[0],
-                "aadhar_number": prisoner[1],
-                "crime_id": prisoner[2],
+                "name": prisoner[1],
+                "description": prisoner[2],
                 "enter_date": str(prisoner[3]),
                 "release_date": str(prisoner[4])
             })
@@ -107,7 +115,24 @@ def get_prisoner_details(prisoner_id):
 def get_visitors():
     db = Connector()
     try:
-        db.cursor.execute("SELECT * FROM visitor_details ORDER BY date,time;")
+        db.cursor.execute("""
+            SELECT 
+                vd.visitor_name,
+                vd.phone_number, 
+                pd.name,
+                vd.date,
+                vd.time
+            FROM 
+                visitor_details vd,
+                prisoner_details pd,
+                prisoner p
+            WHERE
+                vd.prisoner_id = p.prisoner_id
+                and
+                p.aadhar_number = pd.aadhar_number
+            ORDER BY
+                vd.date desc, vd.time
+        """)
         visitors = db.cursor.fetchall()
 
         visitor_list = []
@@ -115,7 +140,7 @@ def get_visitors():
             visitor_list.append({
                 "visitor_name": visitor[0],
                 "phone_number": visitor[1],
-                "prisoner_id": visitor[2],
+                "prisoner_name": visitor[2],
                 "date": str(visitor[3]),
                 "time": str(visitor[4])
             })
@@ -388,6 +413,7 @@ def get_crimes():
         if db.conn.is_connected():
             db.cursor.close()
             db.conn.close()
+
 @app.route('/add_crime', methods=['POST'])
 def addCrime():
     crime=Crime()
@@ -418,5 +444,6 @@ def deleteCrime():
     except Exception as e:
         print(f"Error deleting crime: {e}")
         return jsonify({"message": "Failed to delete crime"}), 500
+    
 if __name__ == "__main__":
     app.run(debug = True)

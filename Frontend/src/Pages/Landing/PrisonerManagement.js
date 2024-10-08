@@ -61,12 +61,12 @@ function Prisoner_Management() {
         accessor: "prisoner_id", // Match the field names
       },
       {
-        Header: "AADHAR NUMBER",
-        accessor: "aadhar_number",
+        Header: "NAME",
+        accessor: "name",
       },
       {
-        Header: "CRIME ID",
-        accessor: "crime_id",
+        Header: "CRIME DESCRIPTION",
+        accessor: "description",
       },
       {
         Header: "ENTER DATE",
