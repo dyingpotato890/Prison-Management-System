@@ -6,7 +6,7 @@ class Crime:
         self.db=Connector()
     def insertCrime(self,crime_id:int,description:str) -> bool:
         try:
-            self.db.cursor.execute(f"INSERT INTO CRIME(CRIME_NAME,DESCRIPTION) VALUES('{crime_id}','{description}');")
+            self.db.cursor.execute(f"INSERT INTO CRIME(CRIME_ID,DESCRIPTION) VALUES('{crime_id}','{description}');")
             self.db.conn.commit()
             return True
         except:
@@ -25,3 +25,10 @@ class Crime:
         crime=self.db.cursor.fetchall()
         for c in crime:
             return (dict(zip(row_headers,c)))
+    def deleteCrime(self,crime_id:int) -> bool:
+        try:
+            self.db.cursor.execute(f"DELETE FROM CRIME WHERE CRIME_ID={crime_id};")
+            self.db.conn.commit()
+            return True
+        except:
+            return False

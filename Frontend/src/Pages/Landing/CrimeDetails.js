@@ -2,8 +2,8 @@ import React, { useMemo, useState, useEffect } from "react";
 import { useTable } from 'react-table'; 
 import axios from 'axios'; // Make sure to install axios
 import './CrimeDetails.css'; // Import the CSS file
-import AddCrime from "./AddVisitor";
-import DeleteCrime from "./DeleteVisitor";
+import AddCrime from "./AddCrime";
+import DeleteCrime from "./DeleteCrime";
 import Modal from "./Modal";
 
 function CrimeDetails() {

@@ -388,6 +388,35 @@ def get_crimes():
         if db.conn.is_connected():
             db.cursor.close()
             db.conn.close()
+@app.route('/add_crime', methods=['POST'])
+def addCrime():
+    crime=Crime()
+    data = request.get_json()
+    crime_id = data.get('crimeID')
+    description = data.get('desc')
+    if not all([crime_id, description]):
+        return jsonify({'message': 'All fields are required'}), 400
+    try:
+        crime.insertCrime(crime_id,description)
+        return jsonify({"message": "Crime added successfully!"}), 200
+    except Exception as e:
+        print(f"Error adding crime: {e}")
+        return jsonify({"message": "Failed to add crime"}), 500
 
+@app.route('/delete_crime', methods=['DELETE'])
+def deleteCrime():
+    crime=Crime()
+    data = request.get_json()
+    crime_id = data.get('crimeID')
+    if not crime_id:
+        return jsonify({'message': 'Crime ID is required'}), 400
+    try:
+        if crime.deleteCrime(crime_id):
+            return jsonify({'message': 'Crime removed successfully!'}), 200
+        else:
+            return jsonify({'message': 'Crime not found'}), 404
+    except Exception as e:
+        print(f"Error deleting crime: {e}")
+        return jsonify({"message": "Failed to delete crime"}), 500
 if __name__ == "__main__":
     app.run(debug = True)
