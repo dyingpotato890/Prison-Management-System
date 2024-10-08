@@ -1,15 +1,15 @@
 /* Table container styling for scrollable table */
 .table-container {
+  overflow:hidden;
   max-width: 1500px;
   margin: 0 auto;
   padding-bottom: 10px;
   /* Reduced padding to bring elements closer */
-  overflow-x: auto;
-  /* Enable horizontal scrolling if needed */
   margin-bottom: 0;
   /* Removed margin below table */
-  margin-top:10px;
-  height: 500px
+  margin-top:5px;
+  height: 600px
+
 }
 
 .content {
