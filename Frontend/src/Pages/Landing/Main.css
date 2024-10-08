@@ -84,25 +84,51 @@ body {
 /* Signout Button */
 .signout {
     position: absolute;
-    right: 20px;
-    top: 20px;
+    top: 10px; /* Adjust as needed for vertical positioning */
+    right: 20px; /* Adjust as needed for horizontal positioning */
+    margin-top: 55px; /* Adjusts positioning relative to the rest of the layout */
+
+}
+
+.signout-container {
+    position: absolute;        /* Position relative to viewport */
+    top: 10px;                 /* Adjust as needed */
+    right: 20px;               /* Adjust as needed */
+    z-index: 1000;            /* Ensures it's on top of other elements */
+    margin-top:15px;
 }
 
 .signout-btn {
-    background-color: #e74c3c;
-    color: white;
+    display: flex;             /* Enables Flexbox for horizontal alignment */
+    align-items: center;       /* Vertically aligns icon and text */
+    padding: 10px 15px;
     border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
+    background-color: #bdb8b8;
     cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    gap: 8px;                  /* Adds space between icon and text */
+    width: 150px;              /* Set a fixed width for the button */
+    justify-content: center;   /* Centers content within the button */
+    margin-top: 50px;
+}
+
+.signout-btn img {
+    width: 20px;               /* Sets the icon size */
+    height: auto;              /* Maintains aspect ratio */
+    display: inline-block;      /* Ensures the image stays inline */
+}
+
+.signout-text {
+    display: inline-block;      /* Ensures text stays inline */
 }
 
 .signout-btn:hover {
-    background-color: #c0392b;
-    transform: scale(1.05);
+    background-color: #ff3333; /* Darker red on hover */
+    transform: scale(1.05);    /* Slight grow on hover */
 }
+
 
 /* Welcome Message */
 .welcome h1 {
