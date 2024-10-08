@@ -12,17 +12,15 @@ function Prisoner_Management() {
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
   const [selectedPrisoner, setSelectedPrisoner] = useState(null); // State for selected prisoner details
-  const [globalFilter, setGlobalFilter] = useState(''); // State for search
-
   const [searchTerm, setSearchTerm] = useState(''); // Search term state
   const [searchBy, setSearchBy] = useState('id'); // Either 'name' or 'id'
 
   // Fetch prisoner data
   const fetchData = async () => {
     setLoading(true); // Set loading to true
+    setError(null); // Clear previous errors
     try {
-      // Adjust the fetch URL based on the search criteria
-      const response = await fetch(`http://localhost:5000/prisoners?${searchBy}=${searchTerm}`);
+      const response = await fetch(`http://localhost:5000/prisoners`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -37,7 +35,37 @@ function Prisoner_Management() {
 
   useEffect(() => {
     fetchData(); // Fetch data on component mount
-  }, [searchTerm, searchBy]); // Refetch when search term or search criteria change
+  }, []);
+
+  // Filter data based on search term, allowing progressive filtering
+  // Filter data based on search term
+// Filter data based on search term
+const filteredData = useMemo(() => {
+  if (!searchTerm) return data; // If no search term, return all data
+
+  return data.filter((prisoner) => {
+    const prisonerId = parseInt(prisoner.prisoner_id, 10); // Convert prisoner_id to a number
+
+    if (searchBy === 'id') {
+      const searchId = parseInt(searchTerm, 10); // Convert searchTerm to a number
+
+      // If searchTerm is less than 10, show only the exact match
+      if (searchId < 10) {
+        return prisonerId === searchId; // Exact match for IDs less than 10
+      }
+
+      // If searchTerm is greater than or equal to 10, show only IDs greater than or equal to 10
+      return prisonerId >= 10 && prisonerId.toString().startsWith(searchTerm);
+    } else if (searchBy === 'name') {
+      // Match if the name contains the search term, ignoring case
+      return prisoner.name.toLowerCase().startsWith(searchTerm.toLowerCase());
+    }
+
+    return true;
+  });
+}, [data, searchTerm, searchBy]);
+
+
 
   // Fetch specific prisoner details when a row is clicked
   const fetchPrisonerDetails = async (prisonerId) => {
@@ -87,23 +115,11 @@ function Prisoner_Management() {
     headerGroups,
     rows,
     prepareRow,
-    setGlobalFilter: setTableGlobalFilter, // Use react-table's global filter
-  } = useTable({ columns, data }, useGlobalFilter);
-
-  // Sync search input with table's global filter
-  useEffect(() => {
-    setTableGlobalFilter(globalFilter);
-  }, [globalFilter, setTableGlobalFilter]);
-
-  // Handle filter selection change (name or id)
-  const handleSearchByChange = (event) => {
-    setSearchBy(event.target.value);
-    setSearchTerm(''); // Reset search term when changing criteria
-  };
+  } = useTable({ columns, data: filteredData }); // Use the filtered data for the table
 
   // Handle row click
   const handleRowClick = (row) => {
-    fetchPrisonerDetails(row.original.prisoner_id); // Fetch prisoner details when a row is clicked
+    fetchPrisonerDetails(row.original.prisoner_id);
   };
 
   const [activeOperation, setActiveOperation] = useState(null); // State to manage the current operation (add, delete, update)
@@ -113,55 +129,58 @@ function Prisoner_Management() {
     setActiveOperation(operation); // Set the active operation
     setShowModal(true); // Open the modal
   };
-  
+
   const handleCloseModal = () => {
     setShowModal(false); // Close the modal
     setActiveOperation(null); // Reset the active operation
-  };  
+  };
 
   return (
     <div className="App">
-      {/* Prisoner Table */}
       <div className="table-container">
         <h1>Prisoner Table</h1>
-        
+
         {/* Search Bar */}
         <input
           type="text"
-          placeholder={`Search by ${searchBy === 'id' ? 'ID' : 'Aadhar Number'}...`}
+          placeholder={`Search by ${searchBy === 'id' ? 'ID' : 'Name'}...`}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search-input"
         />
-        <select value={searchBy} onChange={handleSearchByChange} className="options">
-          <option value="id">ID</option>
-          <option value="aadhar">Aadhar Number</option>
-        </select>
-        <button className="search-button" onClick={fetchData}>Search</button>
-        
-        <table {...getTableProps()}>
-          <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>{column.render("Header")}</th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr key={row.id} {...row.getRowProps()} onClick={() => handleRowClick(row)}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+       
+
+      
+
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p style={{ color: 'red' }}>Error: {error}</p>
+        ) : (
+          <table {...getTableProps()}>
+            <thead>
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th {...column.getHeaderProps()}>{column.render("Header")}</th>
                   ))}
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr key={row.id} {...row.getRowProps()} onClick={() => handleRowClick(row)}>
+                    {row.cells.map((cell) => (
+                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
       </div>
 
       {/* Operations */}
@@ -184,7 +203,6 @@ function Prisoner_Management() {
       {/* Selected Prisoner Details */}
       <div className="prisonermanagement">
         <h1>Selected Prisoner Details</h1>
-
         {selectedPrisoner ? (
           <ul className="prisoner-list">
             <li><strong>Prisoner ID:</strong> {selectedPrisoner.prisoner_id}</li>

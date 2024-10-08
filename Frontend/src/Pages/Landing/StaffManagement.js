@@ -48,7 +48,7 @@ function StaffDetails() {
     } = useTable({ columns, data });
 
     if (loading) {
-        return <div className="loading">Loading...</div>; // Consider using a spinner here
+        return <div className="loader"></div>; // Consider using a spinner here
     }
 
     if (error) {
