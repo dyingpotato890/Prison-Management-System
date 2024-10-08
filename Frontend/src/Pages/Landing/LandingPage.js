@@ -6,7 +6,7 @@ import VisitorDetails from "./VisitorTable";
 import ErrorPage from "./ErrorPage";
 import StaffDetails from "./StaffManagement";
 import CrimeDetails from "./CrimeDetails";
-
+import logout_icon from "../../Components/Assets/logout.svg"
 function LandingPage() {
   const [activeComponent, setActiveComponent] = useState('prisonerManagement'); // Default to prisonerManagement
   const navigate = useNavigate(); // Initialize useNavigate
@@ -18,11 +18,13 @@ function LandingPage() {
 
   return (
     <div className="main">
-      <div className="signout">
+      <div className="signout-container">
         <button 
-          onClick={goto}  // Call goto to sign out and redirect
-          className="signout-btn">
-          Sign Out
+         onClick={goto}  // Call goto to sign out and redirect
+        className="signout-btn">
+          <img src={logout_icon} alt="Logout Icon" />
+          <span className="signout-text">Sign Out</span>
+   
         </button>
       </div>
       
