@@ -129,7 +129,24 @@
   background-color: #dc3545;
   color: white;
 }
+/* HTML: <div class="loader"></div> */
 
+.loader {
+  width: fit-content;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 30px;
+  padding-bottom: 8px;
+  background: linear-gradient(currentColor 0 0) 0 100%/0% 3px no-repeat;
+  animation: l2 2s linear infinite;
+  margin-top:200px;
+  margin-left:400px
+}
+.loader:before {
+  content:"Loading..."
+}
+@keyframes l2 {to{background-size: 100% 3px}}
+@keyframes l3 {to{transform: rotate(1turn)}}
 /* Update button styles */
 .Update {
   background-color: #007bff;
