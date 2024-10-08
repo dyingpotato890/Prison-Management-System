@@ -1,64 +1,129 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
 
+/* Body */
 body {
     overflow: auto;
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f4f6f9;
 }
 
-.content {
-    flex-grow: 1;
-    background: linear-gradient(to bottom, rgba(211, 211, 211, 0.9) 0%, rgba(255, 255, 255, 0.9) 100%);
-    padding: 2% 4%; /* Internal padding, 2% for top/bottom and 4% for left/right */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    border-radius: 8px;
-    margin: 20px; /* External margin for spacing */
-    margin-left: 3%; /* Adjust left margin to match the spacing on the right */
-}
-
+/* Main Container */
 .main {
     width: 100%;
     height: 100%;
     display: flex;
-    padding: 0 20px; /* Equal padding on both left and right */
-    box-sizing: border-box; /* Include padding in width calculation */
+    padding: 0;
+    box-sizing: border-box;
 }
 
+/* Sidebar */
 .sidebar {
-    padding-top: 4%;
-    padding-left: 3%;
-    padding-bottom: 2%;
-    width: 22%;
-    background-color: rgb(81, 78, 76);
-    background: none;
-    margin-right: 3%; /* Added margin to the right to match the left side of the content */
+    padding: 4% 3% 2%;
+    width: 18%;
+    background-color: #2c3e50;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Sidebar button */
+/* Sidebar button: Default state */
 .action-btn {
     display: block;
-    margin-bottom: 25%; /* Spacing between buttons */
-    border-radius: 5px;
-    margin-left: 7%; /* Adjusted for better layout */
-    font-family: "Poppins", sans-serif;
-    font-weight: 500;
-    font-style: italic;
+    margin-bottom: 20%;
+    border-radius: 8px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    color: white;
+    background-color: #34495e; 
+    padding: 15px;
+    text-align: center;
+    width: 90%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
 
 .action-btn:hover {
-    background-color: bisque;
+    background-color: #185f65ec; 
+    transform: scale(1.05);
 }
 
-button {
-    height: 12%;
-    width: 70%;
+
+.action-btn.active {
+    background-color: #1abc9cd4; 
+}
+
+
+.action-btn:active {
+    background-color: #18ceaade; 
+}
+
+
+/* Content Area */
+.content {
+    flex-grow: 1;
+    background-color: #ecf0f1;
+    padding: 3% 5%;
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.table-container {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+/* Signout Button */
+.signout {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.signout-btn {
+    background-color: #e74c3c;
+    color: white;
     border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    padding: 15px 32px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
+.signout-btn:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+}
+
+/* Welcome Message */
+.welcome h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* Button Global */
+button {
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* Main Content */
 .main-content {
     display: flex;
     justify-content: center;
@@ -67,40 +132,26 @@ button {
     text-align: center;
 }
 
-.table-container {
-    background-color: #444;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin-right: 10px;
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
-.welcome h1 {
-    font-size: 2.5rem;
-    font-family: 'Poppins', sans-serif;
-    color: #333;
-}
-
-.signout {
-    position: absolute;
-    width: 200px;
-    top: 10px; /* Adjust as needed for vertical positioning */
-    right: 20px; /* Adjust as needed for horizontal positioning */
-    padding: 10px 20px;
-    margin-top: 15px;
+table thead {
+    background-color: #34495e;
     color: white;
-    border-radius: 10px;
-    cursor: pointer;
-    border-radius: 15px;
 }
 
-.signout-btn {
-    border-radius: 5px;
-    background-color: #f4f4f4;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+table th,
+table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
 }
-.signout-btn:hover {
-    background-color: #ff3333; /* Darker red on hover */
-    transform: scale(1.05); /* Slight grow on hover */
+
+table tbody tr:hover {
+    background-color: #f9f9f9;
 }
+
