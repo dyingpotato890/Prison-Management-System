@@ -6,6 +6,7 @@ from Utilities.prisoner import Prisoner
 from Utilities.crime import Crime
 from Utilities.staff import Staff
 from Utilities.visitor import Visitor
+from Utilities.cell import Cells
 
 app = Flask(__name__)
 CORS(app)
@@ -444,6 +445,74 @@ def deleteCrime():
     except Exception as e:
         print(f"Error deleting crime: {e}")
         return jsonify({"message": "Failed to delete crime"}), 500
+    
+@app.route('/cells', methods = ['GET'])
+def get_cells():
+    db = Connector()
+    try:
+        db.cursor.execute("""
+            SELECT 
+                c.cell_number, 
+                c.vacant, 
+                c.prisoner_id, 
+                pd.name
+            FROM 
+                cells c
+            LEFT JOIN 
+                prisoner p ON c.prisoner_id = p.prisoner_id
+            LEFT JOIN 
+                prisoner_details pd ON pd.aadhar_number = p.aadhar_number
+            ORDER BY 
+                c.cell_number;
+        """)
+        cells = db.cursor.fetchall()
+
+        cells_list = []
+        for crime in cells:
+            cells_list.append({
+                "cell_no": crime[0],
+                "vacant": crime[1],
+                "prisoner_id": crime[2],
+                "name": crime[3]
+            })
+
+        return jsonify(cells_list)
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        if db.conn.is_connected():
+            db.cursor.close()
+            db.conn.close()
+
+@app.route('/add_cell', methods=['POST'])
+def add_cell():
+    c = Cells()
+    try:
+        c.addCell()
+        return jsonify({"message": "Cell added successfully!"}), 200
+    
+    except Exception as e:
+        print(f"Error Adding New Cell: {e}")
+        return jsonify({"message": "Failed to Add New Cell"}), 500
+    
+@app.route('/delete_cell', methods=['POST'])
+def delete_cell():
+    c = Cells()
+    data = request.get_json()
+
+    cellNo = data.get('cell_number')
+    try:
+        check = c.deleteCell(cellNo)
+        if check == 0:
+            return jsonify({"message": "Cell Deleted successfully!"}), 200
+        else:
+            return jsonify({"message": "Cell Contains A Prisoner!"}), 200
+    
+    except Exception as e:
+        print(f"Error Adding New Cell: {e}")
+        return jsonify({"message": "Failed to Delete New Cell"}), 500
     
 if __name__ == "__main__":
     app.run(debug = True)

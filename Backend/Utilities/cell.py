@@ -4,6 +4,32 @@ class Cells:
     def __init__(self) -> None:
         self.db = Connector()
 
+    def addCell(self):
+        try:
+            self.db.cursor.execute("SELECT CELL_NUMBER FROM CELLS ORDER BY CELL_NUMBER DESC LIMIT 1")
+            lastCell = self.db.cursor.fetchone()[0]
+            self.db.cursor.execute(f"INSERT INTO CELLS(CELL_NUMBER, VACANT) VALUES({lastCell + 1}, 'Y')")
+            self.db.conn.commit()
+        
+        except Exception as e:
+            print(f"Error adding prisoner: {e}")
+        
+    def deleteCell(self, cell_number: int) -> bool:
+        try:
+            self.db.cursor.execute(f"SELECT * FROM CELLS WHERE CELL_NUMBER = {cell_number} AND VACANT = 'Y'")
+            empty = self.db.cursor.fetchone()
+
+            if empty:
+                self.db.cursor.execute(f"DELETE FROM CELLS WHERE CELL_NUMBER = {cell_number}")
+                self.db.conn.commit()
+                return 0
+            else:
+                print("Cell Holds A Prisoner!")
+                return 1
+        
+        except Exception as e:
+            print(f"Error Deleting prisoner: {e}")
+
     def assignCell(self, prisoner_id: int) -> None:
         self.db.cursor.execute(f"SELECT CELL_NUMBER FROM CELLS WHERE PRISONER_ID = {prisoner_id};")
         check = self.db.cursor.fetchall()

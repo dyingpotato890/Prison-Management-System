@@ -3,8 +3,8 @@ import { useTable } from 'react-table';
 import axios from 'axios'; // Make sure to install axios
 import './CellManagement.css'; // Import the CSS file
 import Modal from "./Modal";
-import AddCell from "./AddCell";
 import DeleteCell from "./DeleteCell";
+
 function CellDetails() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -15,7 +15,7 @@ function CellDetails() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/visitors');
+                const response = await axios.get('http://localhost:5000/cells');
                 setData(response.data);
             } catch (error) {
                 setError("Error fetching data. Please try again.");
@@ -29,10 +29,10 @@ function CellDetails() {
     }, []);
 
     const columns = useMemo(() => [
-        { Header: "Cell No.", accessor: "CELL_NUMBER" },
-        { Header: "Vacant", accessor: "VACANT" },
-        { Header: "Prisoner ID", accessor: "PRISONER_ID" },
-    
+        { Header: "Cell No.", accessor: "cell_no" },
+        { Header: "Vacant", accessor: "vacant" },
+        { Header: "Prisoner ID", accessor: "prisoner_id" },
+        { Header: "Name", accessor: "name" }
     ], []);
 
     const {
@@ -41,7 +41,11 @@ function CellDetails() {
         headerGroups,
         rows,
         prepareRow,
-    } = useTable({ columns, data });
+    } = useTable({
+        columns,
+        data,
+        getSubRows: () => undefined, // Explicitly tell react-table that there are no subRows
+    });    
 
     if (loading) {
         return <div className="loader"></div>; // Consider using a spinner here
@@ -59,6 +63,18 @@ function CellDetails() {
     const handleCloseModal = () => {
         setShowModal(false);
         setActiveOperation(null);
+    };
+
+    // Function to add a new cell directly
+    const handleAddCell = async () => {
+        try {
+            const response = await axios.post('http://localhost:5000/add_cell'); // Adjust according to your backend requirements
+            alert(response.data.message); // Success message
+            setData(prevData => [...prevData, response.data.newCell]); // Update the table data if the response contains new cell info
+        } catch (error) {
+            console.error("Error adding cell:", error);
+            setError("Failed to add cell. Please try again.");
+        }
     };
 
     return (
@@ -90,13 +106,12 @@ function CellDetails() {
                 </table>
             </div>
             <div className="Operations">
-                <button className="Add" onClick={() => handleOpenModal('add')}>Add Cell</button>
+                <button className="Add" onClick={handleAddCell}>Add Cell</button> {/* Directly calls the function */}
                 <button className="Delete" onClick={() => handleOpenModal('delete')}>Delete Cell</button>
             </div>
 
             {showModal && (
                 <Modal onClose={handleCloseModal}>
-                    {activeOperation === 'add' && <div><AddCell/></div>}
                     {activeOperation === 'delete' && <div><DeleteCell/></div>}
                 </Modal>
             )}

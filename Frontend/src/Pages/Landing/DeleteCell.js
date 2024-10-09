@@ -10,15 +10,17 @@ const DeleteCell = () => {
     
     try {
       const response = await fetch('http://localhost:5000/delete_cell', {
-        method: 'DELETE',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ CellName }),
+        body: JSON.stringify({ cell_number: CellName }),
       });
 
+      const data = await response.json();  // Get the message from the backend
+
       if (response.ok) {
-        setMessage('Cell deleted successfully!');
+        setMessage(data.message);  // Set the message based on the backend response
       } else {
         setMessage('Failed to delete cell. Please check the cell name.');
       }
@@ -35,13 +37,13 @@ const DeleteCell = () => {
         <label>Cell Name:</label>
         <input
           type="text"
-          value={setCellName}
+          value={CellName}
           onChange={(e) => setCellName(e.target.value)}
-          placeholder="Enter Cell Name  to Delete"
+          placeholder="Enter Cell Name to Delete"
         />
         <button type="submit">Delete</button>
       </form>
-      {message && <p>{message}</p>} {/* Display success/error message */}
+      {message && <p>{message}</p>}  {/* Display success/error message */}
     </div>
   );
 };
