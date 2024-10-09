@@ -7,6 +7,7 @@ import ErrorPage from "./ErrorPage";
 import StaffDetails from "./StaffManagement";
 import CrimeDetails from "./CrimeDetails";
 import logout_icon from "../../Components/Assets/logout.svg"
+import CellDetails from "./CellManagement";
 function LandingPage() {
   const [activeComponent, setActiveComponent] = useState('prisonerManagement'); // Default to prisonerManagement
   const navigate = useNavigate(); // Initialize useNavigate
@@ -64,7 +65,7 @@ function LandingPage() {
       <div className="content">
         {activeComponent === 'prisonerManagement' && <PrisonerManagement />}
         {activeComponent === 'visitorTracking' && <VisitorDetails />}
-        {activeComponent === 'cellManagement' && <ErrorPage />}
+        {activeComponent === 'cellManagement' && <CellDetails />}
         {activeComponent === 'staffManagement' && <StaffDetails />}
         {activeComponent === 'crimemanagement' && <CrimeDetails />}
       </div>

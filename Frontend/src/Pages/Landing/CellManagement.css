@@ -1,0 +1,95 @@
+.table-container {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding-bottom: 10px;
+    overflow-x: auto;
+    margin-bottom: 0;
+    height: 500px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #fff; /* Background color for the container */
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333; /* Header color */
+  }
+  
+  .table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px; /* Rounded corners for the table */
+    overflow: hidden; /* Prevent overflow from rounding */
+  }
+  
+  .table-container table thead {
+    background-color: #f5f5f5; /* Light background for header */
+  }
+  
+  .table-container table thead th {
+    padding: 10px;
+    text-align: left;
+    color: #555; /* Header text color */
+    border-bottom: 2px solid #ddd; /* Bottom border for header */
+  }
+  
+  .table-container table tbody {
+    display: block;
+    max-height: 300px; 
+    width: 100%;
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+  
+  .table-container table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  .table-container table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9; /* Alternate row color for better readability */
+  }
+  
+  .table-container table tbody tr:hover {
+    background-color: #f1f1f1; /* Hover effect */
+  }
+  
+  .table-container table tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd; /* Bottom border for rows */
+  }
+  
+  /* HTML: <div class="loader"></div> */
+  .loader {
+    width: fit-content;
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: 30px;
+    padding-bottom: 8px;
+    background: linear-gradient(currentColor 0 0) 0 100%/0% 3px no-repeat;
+    animation: l2 2s linear infinite;
+  }
+  .loader:before {
+    content:"Loading..."
+  }
+  
+  .error {
+    text-align: center;
+    color: red; /* Color for error message */
+    font-size: 18px;
+  }
+  
+  /* Optional: Styling the scrollbar */
+  .table-container table tbody::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .table-container table tbody::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+  }
+  
+  .table-container table tbody::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  
