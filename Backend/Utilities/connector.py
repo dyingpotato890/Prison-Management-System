@@ -5,7 +5,7 @@ class Connector:
         self.conn = mysql.connect(
             host = 'localhost',
             user = 'root',
-            password = '',
+            password = '2105DCFHN01Z',
             database = 'PRISON_MANAGEMENT_SYSTEM',
             charset = 'utf8'
         )

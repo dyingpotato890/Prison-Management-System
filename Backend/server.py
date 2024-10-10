@@ -1,6 +1,7 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session, redirect, url_for
 from flask_cors import CORS
-from Utilities.login import Login
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from Utilities.user import Login, User
 from Utilities.connector import Connector
 from Utilities.prisoner import Prisoner
 from Utilities.crime import Crime
@@ -10,21 +11,36 @@ from Utilities.cell import Cells
 
 app = Flask(__name__)
 CORS(app)
+app.config['SECRET_KEY']='192b9bdd22ab9ed4d12e236c78afcb9a393ec15f71bbf5dc987d54727423bcbf'
+app.config['SESSION_COOKIE_DOMAIN'] = None
+app.config['SESSION_COOKIE_SECURE'] = False
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
+
 
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
-
-    login_obj = Login()
-    if login_obj.checkPass(username, password):
+    user = User.get(username)
+    if user and user.password == User.hashPassword(password):
+        login_user(user, remember=True)
+        print("Logged in: ",current_user.is_authenticated, current_user.id)
         return jsonify({"message": "Login Successful"})
     else:
         return jsonify({"message": "Login Failed"}), 401
 
 @app.route('/prisoners', methods=['GET'])
 def get_prisoners():
+    print(current_user.is_authenticated)
     db = Connector()
     try:
         db.cursor.execute("""
