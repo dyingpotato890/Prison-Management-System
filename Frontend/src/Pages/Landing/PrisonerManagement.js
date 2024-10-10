@@ -20,7 +20,7 @@ function Prisoner_Management() {
     setLoading(true); // Set loading to true
     setError(null); // Clear previous errors
     try {
-      const response = await fetch(`http://localhost:5000/prisoners`);
+      const response = await fetch(`/prisoners`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -70,7 +70,7 @@ const filteredData = useMemo(() => {
   // Fetch specific prisoner details when a row is clicked
   const fetchPrisonerDetails = async (prisonerId) => {
     try {
-      const response = await fetch(`http://localhost:5000/prisoner_details/${prisonerId}`);
+      const response = await fetch(`/prisoner_details/${prisonerId}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
