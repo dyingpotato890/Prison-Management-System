@@ -12,20 +12,21 @@ function CellDetails() {
     const [error, setError] = useState('');
     const [showModal, setShowModal] = useState(false); // State to show/hide modal
     const [activeOperation, setActiveOperation] = useState(null);
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('/cells');
+            setData(response.data);
+        } catch (error) {
+            setError("Error fetching data. Please try again.");
+            console.error("Error fetching data:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('/cells');
-                setData(response.data);
-            } catch (error) {
-                setError("Error fetching data. Please try again.");
-                console.error("Error fetching data:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
+        
         fetchData();
     }, []);
 
@@ -115,8 +116,8 @@ function CellDetails() {
 
             {showModal && (
                 <Modal onClose={handleCloseModal}>
-                    {activeOperation === 'delete' && <div><DeleteCell/></div>}
-                    {activeOperation === 'reallocate' && <div><ReallocateCell/></div>}
+                    {activeOperation === 'delete' && <div><DeleteCell fetchData={fetchData}/></div>}
+                    {activeOperation === 'reallocate' && <div><ReallocateCell fetchData={fetchData}/></div>}
                 </Modal>
             )}
         </div>

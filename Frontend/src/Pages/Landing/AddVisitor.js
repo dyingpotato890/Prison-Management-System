@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './Modal.css';
 
-const AddVisitor = () => {
+const AddVisitor = ({ fetchData }) => {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState(''); // New state for Phone Number
   const [prisonerId, setPrisonerId] = useState(''); // New state for Prisoner ID
@@ -23,6 +23,7 @@ const AddVisitor = () => {
 
       const result = await response.json();
       if (response.ok) {
+        fetchData();
         alert(result.message); // Show success message
         // Reset form fields to initial state after successful addition
         setName('');

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './Modal.css';
 
-const DeleteVisitor = () => {
+const DeleteVisitor = ({ fetchData }) => {
   const [visitorName, setVisitorName] = useState('');
   const [prisonerId, setPrisonerId] = useState('');
   const [date, setDate] = useState('');
@@ -25,6 +25,7 @@ const DeleteVisitor = () => {
 
     if (response.ok) {
       // Reset the fields after successful deletion
+      fetchData();
       setVisitorName('');
       setPrisonerId('');
       setDate('');

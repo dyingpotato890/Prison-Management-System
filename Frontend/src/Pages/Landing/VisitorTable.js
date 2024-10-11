@@ -13,19 +13,18 @@ function VisitorDetails() {
     const [showModal, setShowModal] = useState(false); // State to show/hide modal
     const [activeOperation, setActiveOperation] = useState(null);
 
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('/visitors');
+            setData(response.data);
+        } catch (error) {
+            setError("Error fetching data. Please try again.");
+            console.error("Error fetching data:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('/visitors');
-                setData(response.data);
-            } catch (error) {
-                setError("Error fetching data. Please try again.");
-                console.error("Error fetching data:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchData();
     }, []);
 
@@ -98,8 +97,8 @@ function VisitorDetails() {
 
             {showModal && (
                 <Modal onClose={handleCloseModal}>
-                    {activeOperation === 'add' && <div><AddVisitor/></div>}
-                    {activeOperation === 'delete' && <div><DeleteVisitor/></div>}
+                    {activeOperation === 'add' && <div><AddVisitor fetchData={fetchData}/></div>}
+                    {activeOperation === 'delete' && <div><DeleteVisitor fetchData={fetchData}/></div>}
                 </Modal>
             )}
         </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './Modal.css';
 
-const DeleteCell = () => {
+const DeleteCell = ({ fetchData }) => {
   const [CellName, setCellName] = useState('');
   const [message, setMessage] = useState('');
 
@@ -20,6 +20,7 @@ const DeleteCell = () => {
       const data = await response.json();  // Get the message from the backend
 
       if (response.ok) {
+        fetchData();
         setMessage(data.message);  // Set the message based on the backend response
       } else {
         setMessage('Failed to delete cell. Please check the cell name.');
