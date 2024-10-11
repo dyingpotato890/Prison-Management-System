@@ -9,6 +9,7 @@ import CrimeDetails from "./CrimeDetails";
 import logout_icon from "../../Components/Assets/logout.svg"
 import CellDetails from "./CellManagement";
 import JobDetails from "./JobManagement";
+import WorkDetails from "./WorkManagement";
 function LandingPage() {
   const [activeComponent, setActiveComponent] = useState('prisonerManagement'); // Default to prisonerManagement
   const navigate = useNavigate(); // Initialize useNavigate
@@ -96,8 +97,13 @@ function LandingPage() {
         </button>
         <button 
           onClick={() => setActiveComponent('jobmanagement')} 
-          className={`action-btn ${activeComponent === 'crimemanagement' ? 'active' : ''}`}>
+          className={`action-btn ${activeComponent === 'jobmanagement' ? 'active' : ''}`}>
           Job Management
+        </button>
+        <button 
+          onClick={() => setActiveComponent('jobmanagement')} 
+          className={`action-btn ${activeComponent === 'workmanagement' ? 'active' : ''}`}>
+          Work Management
         </button>
       </div>
 
@@ -108,6 +114,7 @@ function LandingPage() {
         {activeComponent === 'staffManagement' && <StaffDetails />}
         {activeComponent === 'crimemanagement' && <CrimeDetails />}
         {activeComponent === 'jobmanagement' && <JobDetails />}
+        {activeComponent === 'workmanagement' && <WorkDetails />}
       </div>
     </div>
   );
