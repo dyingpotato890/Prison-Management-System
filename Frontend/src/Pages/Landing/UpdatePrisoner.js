@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './Modal.css';
 
-const UpdatePrisoner = () => {
+const UpdatePrisoner = ({ fetchData }) => {
   const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [age, setAge] = useState('');

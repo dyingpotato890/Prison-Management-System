@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './Modal.css';
 
-const DeletePrisonerDetails = () => {
+const DeletePrisonerDetails = ({ fetchData }) => {
   const [aadharNumber, setAadharNumber] = useState('');
 
   const handleSubmit = async (e) => {
@@ -17,6 +17,7 @@ const DeletePrisonerDetails = () => {
       });
 
       if (response.ok) {
+        fetchData();
         alert('Prisoner deleted successfully!');  // Alert on success
       } else {
         const errorData = await response.json();

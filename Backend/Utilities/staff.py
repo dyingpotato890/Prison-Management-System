@@ -1,5 +1,5 @@
 from Utilities.connector import Connector
-from Utilities.user import Login
+from Utilities.user import User
 class Staff:
     def __init__(self) -> None:
         self.db=Connector()
@@ -27,7 +27,7 @@ class Staff:
         self.db.conn.close()
         return staff_list
     def add_user(self,staff_id,password):
-        hashedpass=Login().hashPassword(password)
+        hashedpass=User.hashPassword(password)
         self.db.cursor.execute(f"SELECT * FROM STAFF WHERE STAFF_ID={staff_id};")
         if not self.db.cursor.fetchone():
             return False

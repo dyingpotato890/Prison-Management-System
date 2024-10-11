@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './Modal.css';
 
-const DeletePrisoner = () => {
+const DeletePrisoner = ({ fetchData }) => {
   const [prisonerID, setPrisonerId] = useState('');
   const [message, setMessage] = useState('');
 
@@ -18,6 +18,7 @@ const DeletePrisoner = () => {
       });
 
       if (response.ok) {
+        fetchData();
         setMessage('Prisoner deleted successfully!');
       } else {
         setMessage('Failed to delete prisoner. Please check the Aadhar Number.');

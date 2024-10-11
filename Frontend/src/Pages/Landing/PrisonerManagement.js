@@ -193,10 +193,10 @@ const filteredData = useMemo(() => {
 
       {showModal && (
         <Modal onClose={handleCloseModal}>
-          {activeOperation === 'add' && <AddPrisoner />}
-          {activeOperation === 'delete' && <DeletePrisoner />}
-          {activeOperation === 'deleteDetails' && <DeletePrisonerDetails />}
-          {activeOperation === 'update' && <UpdatePrisoner />}
+          {activeOperation === 'add' && <AddPrisoner fetchData={fetchData}/>}
+          {activeOperation === 'delete' && <DeletePrisoner fetchData={fetchData}/>}
+          {activeOperation === 'deleteDetails' && <DeletePrisonerDetails fetchData={fetchData}/>}
+          {activeOperation === 'update' && <UpdatePrisoner fetchData={fetchData}/>}
         </Modal>
       )}
 
