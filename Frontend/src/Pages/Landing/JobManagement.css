@@ -1,0 +1,231 @@
+/* Table container styling for scrollable table */
+.table-container {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding-bottom: 10px;  /* Reduced padding to bring elements closer */
+    overflow-x: auto;  /* Enable horizontal scrolling if needed */
+    margin-bottom: 0; /* Removed margin below table */
+  
+    height : 500px
+  }
+  
+  /* Scrollable table body */
+  .table-container table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table-container table tbody {
+    display: block;
+    max-height: 300px; /* Set the max height for scrolling */
+    width: 100%;
+  }
+  
+  .table-container table thead,
+  .table-container table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  /* Optional: Styling the scrollbar */
+  .table-container table tbody::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .table-container table tbody::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+  }
+  
+  .table-container table tbody::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  
+  /* Search container adjustments */
+  .search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px; /* Further reduced margin between search and list */
+    color: #252320;
+  }
+  
+  /* Search input styles */
+  .search-container input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 65%;
+  }
+  
+  /* Filter dropdown styles */
+  .search-container select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: rgb(10, 10, 9);
+    color: #985151;
+  }
+  
+  /* Prisoner list adjustments */
+  .prisoner-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 0px; /* Removed margin to bring list closer to the table */
+    max-width: 1500px;
+    margin: 0 auto; /* Center-align the list with the table */
+  }
+  
+  /* Prisoner list item styles */
+  .prisoner-list li {
+    padding: 15px;
+    background-color: rgb(167, 164, 161);
+    color: #fff;
+    margin-bottom: 10px; /* Reduced margin between list items */
+    border: 1px solid #ddd; 
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Hover effect for prisoner list items */
+  .prisoner-list li:hover {
+    background-color: #252320;
+  }
+  
+  /* Operations button container */
+  .Operations {
+    margin-top: 20px; /* Adjusted margin */
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Space between buttons */
+  }
+  
+  /* General button styles */
+  .Operations button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    white-space: nowrap; /* Prevent button text from wrapping */
+  }
+  
+  /* Add button styles */
+  .Add {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .Reallocate {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  /* Delete button styles */
+  .Delete {
+    background-color: #dc3545;
+    color: white;
+  }
+  /* HTML: <div class="loader"></div> */
+  
+  .loader {
+    width: fit-content;
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: 30px;
+    padding-bottom: 8px;
+    background: linear-gradient(currentColor 0 0) 0 100%/0% 3px no-repeat;
+    animation: l2 2s linear infinite;
+    margin-top:200px;
+    margin-left:400px
+  }
+  .loader:before {
+    content:"Loading..."
+  }
+  @keyframes l2 {to{background-size: 100% 3px}}
+  @keyframes l3 {to{transform: rotate(1turn)}}
+  /* Update button styles */
+  .Update {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  /* Button hover effect */
+  .Operations button:hover {
+    opacity: 0.8;
+  }
+  
+  .search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+  }
+  
+  /* Search input field */
+  .search-input {
+    width: 300px;
+    height: 40px;
+    padding: 0 15px;
+    border: 2px solid #e4e4e4;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  /* Add a subtle shadow to input for a modern look */
+  .search-input:focus {
+    border-color: #007bff;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Search button */
+  .search-button {
+    margin-left: 10px;
+    width: 120px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: #5b8cc0;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.5s ease-in-out;
+  }
+  
+  /* Hover effect for button */
+  .search-button:hover {
+    background-color: #0056b3;
+  }
+  .para1{
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: italic;
+  }
+  .options {
+    width: 120px;
+    height: 50px;
+    border-radius: 20px; /* Rounded corners to match the search button */
+    background-color: #f8f9fa; /* Light background color for a clean look */
+    border: 2px solid #e4e4e4; /* Same border style as the input field */
+    padding: 10px; /* Add padding for spacing */
+    font-size: 16px; /* Make the text size consistent with the rest */
+    cursor: pointer; /* Indicate that this is clickable */
+    transition: all 0.3s ease-in-out; /* Smooth transition effect */
+  }
+  
+  /* Hover effect for .options */
+  .options:hover {
+    background-color: #007bff; /* Change background to the same color as the button */
+    color: white; /* Change text color to white when hovered */
+    border-color: #007bff; /* Border changes to match the background */
+  }
