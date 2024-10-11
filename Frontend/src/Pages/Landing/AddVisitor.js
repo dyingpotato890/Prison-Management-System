@@ -13,7 +13,7 @@ const AddVisitor = () => {
     const visitorData = { name, phoneNumber, prisonerId, date, time };
 
     try {
-      const response = await fetch('http://localhost:5000/add_visitor', {
+      const response = await fetch('/add_visitor', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

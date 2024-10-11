@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, session, redirect, url_for
+from flask import Flask, request, jsonify, session, redirect
 from flask_cors import CORS
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from Utilities.user import Login, User
@@ -12,9 +12,7 @@ from Utilities.cell import Cells
 app = Flask(__name__)
 CORS(app)
 app.config['SECRET_KEY']='192b9bdd22ab9ed4d12e236c78afcb9a393ec15f71bbf5dc987d54727423bcbf'
-app.config['SESSION_COOKIE_DOMAIN'] = None
-app.config['SESSION_COOKIE_SECURE'] = False
-app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -24,6 +22,10 @@ login_manager.login_view = 'login'
 def load_user(user_id):
     return User.get(user_id)
 
+@login_manager.unauthorized_handler
+def unauthorized():
+    redirect('/')
+    return jsonify({"message": "Unauthorized"}), 401
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -38,9 +40,22 @@ def login():
     else:
         return jsonify({"message": "Login Failed"}), 401
 
+@app.route('/logout', methods=['GET'])
+@login_required
+def logout():
+    logout_user()
+    return jsonify({"message": "Logged Out"})
+
+@app.route('/check_login', methods=['GET'])
+def check_login():
+    if current_user.is_authenticated:
+        return jsonify({"message": "Logged In"})
+    else:
+        return jsonify({"message": "Not Logged In"}), 401
+
 @app.route('/prisoners', methods=['GET'])
+@login_required
 def get_prisoners():
-    print(current_user.is_authenticated)
     db = Connector()
     try:
         db.cursor.execute("""
@@ -84,6 +99,7 @@ def get_prisoners():
             db.conn.close()
 
 @app.route('/prisoner_details/<int:prisoner_id>', methods=['GET'])
+@login_required
 def get_prisoner_details(prisoner_id):
     db = Connector()
     try:
@@ -129,6 +145,7 @@ def get_prisoner_details(prisoner_id):
             db.conn.close()
     
 @app.route('/visitors', methods=['GET'])
+@login_required
 def get_visitors():
     db = Connector()
     try:
@@ -173,6 +190,7 @@ def get_visitors():
             db.conn.close()
 
 @app.route('/add_prisoner', methods=['POST'])
+@login_required
 def add_prisoner():
     db = Connector()
     p = Prisoner()
@@ -221,6 +239,7 @@ def add_prisoner():
             db.conn.close()
 
 @app.route('/delete-prisoner', methods=['DELETE'])
+@login_required
 def delete_prisoner():
     try:
         db = Connector()
@@ -248,6 +267,7 @@ def delete_prisoner():
             db.conn.close()
 
 @app.route('/delete-prisoner-details', methods=['DELETE'])
+@login_required
 def delete_prisoner_details():
     try:
         db = Connector()
@@ -275,6 +295,7 @@ def delete_prisoner_details():
             db.conn.close()
 
 @app.route('/add_visitor', methods=['POST'])
+@login_required
 def add_visitor():
     db = Connector()
     visitor = Visitor()
@@ -306,6 +327,7 @@ def add_visitor():
             db.conn.close()
 
 @app.route('/delete_visitor', methods=['DELETE'])
+@login_required
 def delete_visitor():
     db = Connector()
     visitor = Visitor()
@@ -338,6 +360,7 @@ def delete_visitor():
             db.conn.close()
 
 @app.route('/staff', methods=['GET'])
+@login_required
 def get_staff():
     staff=Staff()
     try:
@@ -348,6 +371,7 @@ def get_staff():
         return jsonify({"error": str(e)}), 500
     
 @app.route('/add_staff', methods=['POST'])
+@login_required
 def add_staff():
     staff=Staff()
     data = request.get_json()
@@ -364,6 +388,7 @@ def add_staff():
         return jsonify({"message": "Failed to add staff"}), 500
     
 @app.route('/remove_staff', methods=['DELETE'])
+@login_required
 def remove_staff():
     staff=Staff()
     data = request.get_json()
@@ -376,6 +401,7 @@ def remove_staff():
         return jsonify({'message': 'Staff not found'}), 404
     
 @app.route('/add_user', methods=['POST'])
+@login_required
 def add_user():
     staff=Staff()
     data = request.get_json()
@@ -393,6 +419,7 @@ def add_user():
         return jsonify({"message": "Failed to add user"}), 500
     
 @app.route('/remove_user', methods=['DELETE'])
+@login_required
 def remove_user():
     staff=Staff()
     data = request.get_json()
@@ -408,6 +435,7 @@ def remove_user():
         return jsonify({"message": "Failed to remove user"}), 500
     
 @app.route('/crime-details', methods=['GET'])
+@login_required
 def get_crimes():
     db = Connector()
     try:
@@ -432,6 +460,7 @@ def get_crimes():
             db.conn.close()
 
 @app.route('/add_crime', methods=['POST'])
+@login_required
 def addCrime():
     crime=Crime()
     data = request.get_json()
@@ -447,6 +476,7 @@ def addCrime():
         return jsonify({"message": "Failed to add crime"}), 500
 
 @app.route('/delete_crime', methods=['DELETE'])
+@login_required
 def deleteCrime():
     crime=Crime()
     data = request.get_json()
@@ -463,6 +493,7 @@ def deleteCrime():
         return jsonify({"message": "Failed to delete crime"}), 500
     
 @app.route('/cells', methods = ['GET'])
+@login_required
 def get_cells():
     db = Connector()
     try:
@@ -503,6 +534,7 @@ def get_cells():
             db.conn.close()
 
 @app.route('/add_cell', methods=['POST'])
+@login_required
 def add_cell():
     c = Cells()
     try:
@@ -514,6 +546,7 @@ def add_cell():
         return jsonify({"message": "Failed to Add New Cell"}), 500
     
 @app.route('/delete_cell', methods=['POST'])
+@login_required
 def delete_cell():
     c = Cells()
     data = request.get_json()

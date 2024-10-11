@@ -12,7 +12,7 @@ const AddUser = () => {
     const staffData = { id, password };
 
     try {
-      const response = await axios.post('http://localhost:5000/add_user', staffData);
+      const response = await axios.post('/add_user', staffData);
       if (response.status === 200) {
         alert('User added successfully!');
         // Clear form fields after success

@@ -11,7 +11,7 @@ const DeleteVisitor = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const response = await fetch('http://localhost:5000/delete_visitor', {
+    const response = await fetch('/delete_visitor', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

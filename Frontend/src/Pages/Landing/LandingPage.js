@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './Main.css';
 import { useNavigate } from "react-router-dom";
 import PrisonerManagement from './PrisonerManagement';
@@ -13,9 +13,42 @@ function LandingPage() {
   const navigate = useNavigate(); // Initialize useNavigate
 
   // Function to handle sign out and redirect to login
-  const goto = () => {
-    navigate('/'); // Use navigate to programmatically redirect
+  const goto = async () => {
+    try {
+      const response = await fetch('/logout', {
+        method: 'GET',
+        credentials: 'include' // Include credentials for authentication
+      });
+
+      if (response.ok) {
+        navigate('/'); // Use navigate to programmatically redirect
+      } else {
+        console.error('Logout failed');
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
   }
+
+  const checkLogin = async () => {
+    try {
+      const response = await fetch('/check_login', {
+        method: 'GET',
+        credentials: 'include' // Include credentials for authentication
+      });
+
+      if (!response.ok) {
+        navigate('/'); // Redirect to login if not authenticated
+      }
+    } catch (error) {
+      console.error('Error during login check:', error);
+      navigate('/login'); // Redirect to login on error
+    }
+  }
+
+  useEffect(() => {
+    checkLogin(); // Check login status on component load
+  }, []);
 
   return (
     <div className="main">
