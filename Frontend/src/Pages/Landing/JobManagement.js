@@ -31,6 +31,8 @@ function JobDetails() {
     const columns = useMemo(() => [
         { Header: "Job ID", accessor: "job_id" },
         { Header: "Job Description", accessor: "job_description" },
+        { Header: "Work Start", accessor: "work_start" },
+        { Header: "Work End", accessor: "work_end" },
     ], []);
     
 
