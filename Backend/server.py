@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, session, redirect
 from flask_cors import CORS
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from Utilities.user import Login, User
+from Utilities.user import User
 from Utilities.connector import Connector
 from Utilities.prisoner import Prisoner
 from Utilities.crime import Crime
