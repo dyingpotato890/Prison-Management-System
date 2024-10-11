@@ -21,7 +21,7 @@ const DeletePrisoner = ({ fetchData }) => {
         fetchData();
         setMessage('Prisoner deleted successfully!');
       } else {
-        setMessage('Failed to delete prisoner. Please check the Aadhar Number.');
+        setMessage('Failed to delete prisoner. Please check the Prisoner ID.');
       }
     } catch (error) {
       console.error('Error deleting prisoner:', error);

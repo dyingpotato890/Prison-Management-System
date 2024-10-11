@@ -42,7 +42,27 @@ class Prisoner:
 
     def deletePrisoner(self, prisonerID: str) -> bool:
         try:
-            self.db.cursor.execute(f"DELETE FROM PRISONER WHERE PRISONER_ID='{prisonerID}';")    
+            self.db.cursor.execute(f"""
+                SELECT
+                    PD.NUMBER_OF_CONVICTIONS,
+                    PD.AADHAR_NUMBER
+                FROM
+                    PRISONER_DETAILS PD,
+                    PRISONER P
+                WHERE
+                    PD.AADHAR_NUMBER = P.AADHAR_NUMBER
+                    AND
+                    P.PRISONER_ID = {prisonerID}
+                """)
+            result = self.db.cursor.fetchone()
+            convictions = result[0]
+            aadhar = result[1]
+
+            self.db.cursor.execute(f"DELETE FROM PRISONER WHERE PRISONER_ID='{prisonerID}';")
+
+            if convictions == 1:
+                self.db.cursor.execute(f"DELETE FROM PRISONER_DETAILS WHERE AADHAR_NUMBER = {aadhar}")
+    
             self.db.conn.commit()
             return True
         
