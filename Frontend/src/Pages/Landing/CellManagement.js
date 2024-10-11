@@ -4,6 +4,7 @@ import axios from 'axios'; // Make sure to install axios
 import './CellManagement.css'; // Import the CSS file
 import Modal from "./Modal";
 import DeleteCell from "./DeleteCell";
+import ReallocateCell from "./RellocateCell";
 
 function CellDetails() {
     const [data, setData] = useState([]);
@@ -108,11 +109,14 @@ function CellDetails() {
             <div className="Operations">
                 <button className="Add" onClick={handleAddCell}>Add Cell</button> {/* Directly calls the function */}
                 <button className="Delete" onClick={() => handleOpenModal('delete')}>Delete Cell</button>
+                <button className="Reallocate" onClick={() => handleOpenModal('reallocate')}>Reallocate Prisoner</button> {/* New button */}
             </div>
+
 
             {showModal && (
                 <Modal onClose={handleCloseModal}>
                     {activeOperation === 'delete' && <div><DeleteCell/></div>}
+                    {activeOperation === 'reallocate' && <div><ReallocateCell/></div>}
                 </Modal>
             )}
         </div>

@@ -124,6 +124,11 @@
   color: white;
 }
 
+.Reallocate {
+  background-color: #28a745;
+  color: white;
+}
+
 /* Delete button styles */
 .Delete {
   background-color: #dc3545;

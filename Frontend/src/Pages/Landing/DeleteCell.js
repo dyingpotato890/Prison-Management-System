@@ -34,12 +34,12 @@ const DeleteCell = () => {
     <div className="modal-content">
       <h2>Delete Cell</h2>
       <form onSubmit={handleSubmit}>
-        <label>Cell Name:</label>
+        <label>Cell Number:</label>
         <input
           type="text"
           value={CellName}
           onChange={(e) => setCellName(e.target.value)}
-          placeholder="Enter Cell Name to Delete"
+          placeholder="Enter Cell Number to Delete"
         />
         <button type="submit">Delete</button>
       </form>
