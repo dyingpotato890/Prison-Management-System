@@ -63,7 +63,7 @@ code {
 }
 
 .imageicon img {
-  width:150px;  /* Set the desired width for the image */
+  width:100px;  /* Set the desired width for the image */
   height: auto; /* Automatically adjust height to keep the aspect ratio */
 }
 
@@ -72,14 +72,26 @@ code {
   align-items: center; /* Vertically center align */
   justify-content: space-between; /* Horizontally aligned with space between */
   padding: 20px; /* Add padding around the content */
+  height:80px;
  
 
 }
 
 .underline {
   background-color: #000; /* Optional: to give the underline a visible color */
+
 }
-.head{
-  margin-right: 400px;
-  font-size: 140%;
+.head {
+  margin-right: 465px;
+  font-size: 110%;
+}
+
+.head h1 {
+  margin-bottom: 5px; /* Reduces space below the heading */
+}
+
+.head p {
+  margin-top: 0; /* Removes any space above the paragraph */
+  margin-left: 150px; /* Resets margin-left to align with the heading */
+  font-family: Roboto;
 }

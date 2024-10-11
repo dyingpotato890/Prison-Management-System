@@ -95,7 +95,7 @@ body {
     top: 10px;                 /* Adjust as needed */
     right: 20px;               /* Adjust as needed */
     z-index: 1000;            /* Ensures it's on top of other elements */
-    margin-top:15px;
+    margin-top:20px;
 }
 
 .signout-btn {
@@ -111,7 +111,6 @@ body {
     gap: 8px;                  /* Adds space between icon and text */
     width: 150px;              /* Set a fixed width for the button */
     justify-content: center;   /* Centers content within the button */
-    margin-top: 50px;
 }
 
 .signout-btn img {
