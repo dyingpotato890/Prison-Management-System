@@ -586,5 +586,37 @@ def reallocate_prisoner():
         print(f"Error reallocating prisoner: {e}")
         return jsonify({"success": False, "message": "Failed to Reallocate New Cell"}), 500
     
+@app.route('/job_details', methods=['POST'])
+@login_required
+def get_jobs():
+    db = Connector()
+    try:
+        db.cursor.execute("SELECT * FROM JOBS")
+        jobs = db.cursor.fetchall()
+        
+        if not jobs:
+            print("No jobs found in the database.")
+            return jsonify({"error": "No jobs found"}), 404
+        
+        jobs_list = []
+        for job in jobs:
+            jobs_list.append({
+                "job_id": job[0],
+                "job_desc": job[1],
+                "work_start": str(job[2]),
+                "work_end": str(job[3])
+            })
+
+        return jsonify(jobs_list)
+
+    except Exception as e:
+        print(f"Error while fetching jobs: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        if db.conn.is_connected():
+            db.cursor.close()
+            db.conn.close()
+
 if __name__ == "__main__":
     app.run(debug = True)

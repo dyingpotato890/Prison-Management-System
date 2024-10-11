@@ -15,7 +15,7 @@ function JobDetails() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('/job-details');
+            const response = await axios.post('/job_details');
             setData(response.data);
         } catch (error) {
             setError("Error fetching data. Please try again.");
@@ -24,13 +24,14 @@ function JobDetails() {
             setLoading(false);
         }
     };
+
     useEffect(() => {
         fetchData();
     }, []);
 
     const columns = useMemo(() => [
         { Header: "Job ID", accessor: "job_id" },
-        { Header: "Job Description", accessor: "job_description" },
+        { Header: "Job Description", accessor: "job_desc" },
         { Header: "Work Start", accessor: "work_start" },
         { Header: "Work End", accessor: "work_end" },
     ], []);
