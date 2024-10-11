@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import './Main.css';
 import { useNavigate } from "react-router-dom";
-import PrisonerManagement from './PrisonerManagement';
-import VisitorDetails from "./VisitorTable";
-import ErrorPage from "./ErrorPage";
-import StaffDetails from "./StaffManagement";
-import CrimeDetails from "./CrimeDetails";
+import PrisonerManagement from '../Prisoner Management/PrisonerManagement';
+import VisitorDetails from "../Visitor Management/VisitorTable";
+import ErrorPage from "../Error Page/ErrorPage";
+import StaffDetails from "../Staff Management/StaffManagement";
+import CrimeDetails from "../Cell Management/CellManagement";
 import logout_icon from "../../Components/Assets/logout.svg"
-import CellDetails from "./CellManagement";
-import JobDetails from "./JobManagement";
-import WorkDetails from "./WorkManagement";
+import CellDetails from "../Cell Management/CellManagement";
+import JobDetails from "../Job Management/JobManagement";
+import WorkDetails from "../Work Management/WorkManagement";
+
 function LandingPage() {
   const [activeComponent, setActiveComponent] = useState('prisonerManagement'); // Default to prisonerManagement
   const navigate = useNavigate(); // Initialize useNavigate
