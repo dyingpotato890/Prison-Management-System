@@ -24,7 +24,6 @@ def load_user(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    redirect('/')
     return jsonify({"message": "Unauthorized"}), 401
 
 @app.route('/login', methods=['POST'])
