@@ -18,7 +18,7 @@ function StaffDetails() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/staff');
+                const response = await axios.get('/staff');
                 setData(response.data);
             } catch (error) {
                 setError("Error fetching data. Please try again.");

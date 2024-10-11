@@ -15,7 +15,7 @@ const AddStaff = () => {
     const staffData = { id, name, age, phonenumber, role };
 
     try {
-      const response = await axios.post('http://localhost:5000/add_staff', staffData);
+      const response = await axios.post('/add_staff', staffData);
       if (response.status === 200) {
         alert('Staff added successfully!');
         // Clear form fields after success

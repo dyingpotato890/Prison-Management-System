@@ -10,7 +10,7 @@ const AddCell = () => {
     const cellData = {CellName,  prisonerId};
 
     try {
-      const response = await fetch('http://localhost:5000/add_cell', {
+      const response = await fetch('/add_cell', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

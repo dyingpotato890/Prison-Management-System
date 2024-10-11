@@ -15,7 +15,7 @@ function CellDetails() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/cells');
+                const response = await axios.get('/cells');
                 setData(response.data);
             } catch (error) {
                 setError("Error fetching data. Please try again.");
@@ -68,7 +68,7 @@ function CellDetails() {
     // Function to add a new cell directly
     const handleAddCell = async () => {
         try {
-            const response = await axios.post('http://localhost:5000/add_cell'); // Adjust according to your backend requirements
+            const response = await axios.post('/add_cell'); // Adjust according to your backend requirements
             alert(response.data.message); // Success message
             setData(prevData => [...prevData, response.data.newCell]); // Update the table data if the response contains new cell info
         } catch (error) {

@@ -1,5 +1,5 @@
 from Utilities.connector import Connector
-from Utilities.login import Login
+from Utilities.user import Login
 class Staff:
     def __init__(self) -> None:
         self.db=Connector()

@@ -9,7 +9,7 @@ const DeleteCell = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('http://localhost:5000/delete_cell', {
+      const response = await fetch('/delete_cell', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

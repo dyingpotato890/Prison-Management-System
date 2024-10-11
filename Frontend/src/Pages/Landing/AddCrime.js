@@ -12,7 +12,7 @@ const AddCrime = () => {
     const crimeData = { crimeID, desc };
 
     try {
-      const response = await axios.post('http://localhost:5000/add_crime', crimeData);
+      const response = await axios.post('/add_crime', crimeData);
       if (response.status === 200) {
         alert('Crime added successfully!');
         // Clear form fields after success

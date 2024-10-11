@@ -8,7 +8,7 @@ const DeletePrisonerDetails = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('http://localhost:5000/delete-prisoner-details', {
+      const response = await fetch('/delete-prisoner-details', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

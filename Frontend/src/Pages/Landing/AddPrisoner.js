@@ -17,7 +17,7 @@ const AddPrisoner = () => { //testing
     const prisonerData = { id, name, age, aadhar, crimeId, entryDate, releaseDate };
 
     try {
-      const response = await axios.post('http://localhost:5000/add_prisoner', prisonerData);
+      const response = await axios.post('/add_prisoner', prisonerData);
       if (response.status === 200) {
         alert('Prisoner added successfully!');
         // Clear form fields after success

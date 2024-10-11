@@ -16,7 +16,7 @@ function CrimeDetails() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/crime-details');
+                const response = await axios.get('/crime-details');
                 setData(response.data);
             } catch (error) {
                 setError("Error fetching data. Please try again.");
