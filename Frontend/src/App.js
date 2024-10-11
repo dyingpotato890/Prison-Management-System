@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginSignUp from './Pages/Login/LoginSignUp';
-import PrisonerManagement from './Pages/Landing/PrisonerManagement';
+import PrisonerManagement from './Pages/Prisoner Management/PrisonerManagement';
 import LandingPage from './Pages/Landing/LandingPage';
-import ErrorPage from './Pages/Landing/ErrorPage'
+import ErrorPage from './Pages/Error Page/ErrorPage'
 
 function App() {
   return (
