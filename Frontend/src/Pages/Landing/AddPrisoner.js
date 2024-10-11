@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './Modal.css';
 import axios from 'axios';
 
-const AddPrisoner = () => { //testing
+const AddPrisoner = ({ fetchData }) => { //testing
   const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
@@ -19,6 +19,7 @@ const AddPrisoner = () => { //testing
     try {
       const response = await axios.post('/add_prisoner', prisonerData);
       if (response.status === 200) {
+        fetchData();
         alert('Prisoner added successfully!');
         // Clear form fields after success
         setId('');
