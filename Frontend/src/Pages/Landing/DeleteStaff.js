@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './Modal.css';
 
-const DeleteStaff= () => {
+const DeleteStaff= ({ fetchData }) => {
   const [staff_id, setStaffID] = useState('');
   const [message, setMessage] = useState('');
 
@@ -18,6 +18,7 @@ const DeleteStaff= () => {
       });
 
       if (response.ok) {
+        fetchData();
         setMessage('Staff deleted successfully!');
       } else {
         setMessage('Failed to delete staff. Please check the staff id.');

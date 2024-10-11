@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './Modal.css';
 import axios from 'axios';
 
-const AddStaff = () => {
+const AddStaff = ({ fetchData }) => {
   const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
@@ -17,6 +17,7 @@ const AddStaff = () => {
     try {
       const response = await axios.post('/add_staff', staffData);
       if (response.status === 200) {
+        fetchData();
         alert('Staff added successfully!');
         // Clear form fields after success
         setId('');

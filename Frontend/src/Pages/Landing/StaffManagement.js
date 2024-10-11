@@ -14,9 +14,7 @@ function StaffDetails() {
     const [error, setError] = useState('');
     const [activeOperation, setActiveOperation] = useState(null); // State to manage the current operation (add, delete, update)
     const [showModal, setShowModal] = useState(false); // State to control modal visibility
-
-    useEffect(() => {
-        const fetchData = async () => {
+    const fetchData = async () => {
             try {
                 const response = await axios.get('/staff');
                 setData(response.data);
@@ -27,7 +25,7 @@ function StaffDetails() {
                 setLoading(false);
             }
         };
-
+    useEffect(() => {
         fetchData();
     }, []);
 
@@ -105,10 +103,10 @@ function StaffDetails() {
 
       {showModal && (
         <Modal onClose={handleCloseModal}>
-          {activeOperation === 'add' && <AddStaff />}
-          {activeOperation === 'delete' && <DeleteStaff />}
-          {activeOperation === 'addUser' && <AddUser />}
-          {activeOperation === 'deleteUser' && <DeleteUser />}
+          {activeOperation === 'add' && <AddStaff fetchData={fetchData} />}
+          {activeOperation === 'delete' && <DeleteStaff fetchData={fetchData}/>}
+          {activeOperation === 'addUser' && <AddUser fetchData={fetchData}/>}
+          {activeOperation === 'deleteUser' && <DeleteUser fetchData={fetchData}/>}
         </Modal>
       )}
         </div>

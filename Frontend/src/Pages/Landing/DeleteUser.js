@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './Modal.css';
 
-const DeleteUser= () => {
+const DeleteUser= (fetchData) => {
   const [staff_id, setStaffID] = useState('');
   const [message, setMessage] = useState('');
 
@@ -18,6 +18,7 @@ const DeleteUser= () => {
       });
 
       if (response.ok) {
+        fetchData();
         setMessage('User deleted successfully!');
       } else {
         setMessage('Failed to delete staff. Please check the user id.');
