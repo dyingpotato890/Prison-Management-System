@@ -49,24 +49,40 @@ class Cells:
         else:
             print("Cell already Allocated for Prisoner")
 
-    def deallocateCell(self, cellNumber: int) -> None:
+    def deallocateCell(self, prisonerID: int) -> None:
         #TODO: Need to set threshold to check if the cell request has gone beyond the maximum number of cells
 
-        self.db.cursor.execute(f"UPDATE CELLS SET VACANT = 'Y', PRISONER_ID = NULL WHERE CELL_NUMBER = {cellNumber};")
-        print(f"Cell {cellNumber} is now vacant.")
+        self.db.cursor.execute(f"UPDATE CELLS SET VACANT = 'Y', PRISONER_ID = NULL WHERE PRISONER_ID = {prisonerID};")
+        print(f"Cell is now vacant.")
         self.db.conn.commit()
 
-    def reallocateCell(self, prisoner_id: int, new_cell_number: int) -> None:
-        self.db.cursor.execute(f"SELECT CELL_NUMBER FROM CELLS WHERE PRISONER_ID = {prisoner_id};")
+    def reallocateCell(self, prisoner_id: int, new_cell_number: int) -> dict:
+        self.db.cursor.execute("SELECT CELL_NUMBER FROM CELLS WHERE PRISONER_ID = %s;", (prisoner_id,))
         currentCell = self.db.cursor.fetchone()
-        
-        if currentCell:
-            current_cell_number = currentCell[0]
-            
-            self.deallocateCell(current_cell_number)
-            self.db.cursor.execute(f"UPDATE CELLS SET VACANT = 'N', PRISONER_ID = {prisoner_id} WHERE CELL_NUMBER = {new_cell_number};")
-            print(f"Prisoner {prisoner_id} reallocated to cell {new_cell_number}.")
 
-            self.db.conn.commit()
+        self.db.cursor.execute("SELECT VACANT FROM CELLS WHERE CELL_NUMBER = %s;", (new_cell_number,))
+        check = self.db.cursor.fetchone()
+        print(check)
+
+        if check is None:
+            print("Cell number does not exist.")
+            return {"success": False, "message": "Cell number does not exist."}
+
+        isVacant = check[0]
+
+        if isVacant == 'Y':
+            if currentCell:              
+                self.deallocateCell(prisoner_id)
+                self.db.cursor.execute("UPDATE CELLS SET VACANT = 'N', PRISONER_ID = %s WHERE CELL_NUMBER = %s;",
+                                       (prisoner_id, new_cell_number))
+
+                print(f"Prisoner {prisoner_id} reallocated to cell {new_cell_number}.")
+                self.db.conn.commit()
+                return {"success": True, "message": "Prisoner reallocated successfully!"}
+            
+            else:
+                print(f"Prisoner {prisoner_id} Does Not Exist.")
+                return {"success": False, "message": "Prisoner Does Not Exist."}
         else:
-            print(f"Prisoner {prisoner_id} is not currently assigned to any cell.")
+            print("Cell is not vacant!")
+            return {"success": False, "message": "Cell is not vacant."}

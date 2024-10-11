@@ -192,6 +192,7 @@ def get_visitors():
 def add_prisoner():
     db = Connector()
     p = Prisoner()
+    c = Cells()
     data = request.get_json()
 
     name = data.get('name')
@@ -224,6 +225,7 @@ def add_prisoner():
             lastPID = 1
 
         p.insertPrisoner(lastPID, aadhar, crime_id, entry_date, release_date)
+        c.assignCell(lastPID)
 
         return jsonify({"message": "Prisoner added/updated successfully!"}), 200
     
@@ -242,6 +244,7 @@ def delete_prisoner():
     try:
         db = Connector()
         p = Prisoner()
+        c = Cells()
 
         data = request.get_json()
         prisonerID = data.get('prisonerID')
@@ -249,11 +252,13 @@ def delete_prisoner():
         if not prisonerID:
             return jsonify({'message': 'Prisoner ID is required'}), 400
 
+        c.deallocateCell(prisonerID)
         check = p.deletePrisoner(prisonerID)
         if check:
             return jsonify({'message': 'Prisoner Deleted Successfully!'}), 200
         else:
             return jsonify({'message': 'Prisoner Not Found'}), 404
+        
         
     except Exception as e:
         print(f"Error Deleting Prisoner: {e}")
@@ -560,6 +565,26 @@ def delete_cell():
     except Exception as e:
         print(f"Error Adding New Cell: {e}")
         return jsonify({"message": "Failed to Delete New Cell"}), 500
+    
+@app.route('/reallocate_prisoner', methods=['POST'])
+@login_required
+def reallocate_prisoner():
+    data = request.get_json()
+    c = Cells()
+
+    prisonerId = data.get('prisonerId')
+    newCellNo = data.get('newCellNo')
+
+    try:
+        # Call the reallocateCell method and capture the response
+        response = c.reallocateCell(prisoner_id=prisonerId, new_cell_number=newCellNo)
+
+        # Return the response directly
+        return jsonify(response), 200  # Properly return the JSON response
+
+    except Exception as e:
+        print(f"Error reallocating prisoner: {e}")
+        return jsonify({"success": False, "message": "Failed to Reallocate New Cell"}), 500
     
 if __name__ == "__main__":
     app.run(debug = True)

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Modal.css'
 
-function ReallocateCell({ onClose }) {
+function ReallocateCell({ fetchData }) {
     const [prisonerId, setPrisonerId] = useState('');
     const [newCellNo, setNewCellNo] = useState('');
     const [error, setError] = useState('');
@@ -12,23 +12,24 @@ function ReallocateCell({ onClose }) {
         e.preventDefault();
         setError('');
         setSuccessMessage('');
-
+    
         try {
-            const response = await axios.put('/reallocate_prisoner', {
-                prisoner_id: prisonerId,
-                new_cell_no: newCellNo
+            const response = await axios.post('/reallocate_prisoner', {
+                prisonerId: prisonerId,
+                newCellNo: newCellNo
             });
-            
+    
             if (response.data.success) {
+                fetchData();
                 setSuccessMessage('Prisoner reallocated successfully!');
             } else {
-                setError('Failed to reallocate prisoner. Please try again.');
+                setError(response.data.message || 'Failed to reallocate prisoner. Please try again.');
             }
         } catch (error) {
             console.error("Error reallocating prisoner:", error);
             setError('Error reallocating prisoner. Please check the inputs or try again later.');
         }
-    };
+    };    
 
     return (
         <div className="reallocate-cell-form">
