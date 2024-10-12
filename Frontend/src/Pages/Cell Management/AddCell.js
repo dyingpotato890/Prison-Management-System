@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import '../Modal/Modal';
 
-const AddCell = () => {
+const AddCell = (fetchData) => {
   const [CellName, setCellName] = useState('');
   const [prisonerId, setPrisonerId] = useState(''); // New state for Prisoner ID
 
@@ -20,6 +20,7 @@ const AddCell = () => {
 
       const result = await response.json();
       if (response.ok) {
+        fetchData(); // Fetch data again
         alert(result.message); // Show success message
         // Reset form fields to initial state after successful addition
         setCellName('');
