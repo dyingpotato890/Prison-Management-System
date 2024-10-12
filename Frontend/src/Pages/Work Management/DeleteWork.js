@@ -2,19 +2,20 @@ import React, { useState } from "react";
 import '../Modal/Modal';
 
 const DeleteWork= ({ fetchData }) => {
-  const [JobID, setJobID] = useState('');
+  const [jobID, setJobID] = useState('');
+  const [prisonerID, setPID] = useState('');
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     try {
-      const response = await fetch('/delete_job', {
+      const response = await fetch('/delete_work', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ JobID }),
+        body: JSON.stringify({ JobID: jobID, PrisonerID: prisonerID }),
       });
 
       if (response.ok) {
@@ -33,12 +34,19 @@ const DeleteWork= ({ fetchData }) => {
     <div className="modal-content">
       <h2>Delete Job</h2>
       <form onSubmit={handleSubmit}>
-        <label>WorkID:</label>
+        <label>Job ID:</label>
         <input
-          type="text"
-          value={JobID}
+          type="number"
+          value={jobID}
           onChange={(e) => setJobID(e.target.value)}
-          placeholder="Enter WorkID of Workto Delete"
+          placeholder="Enter Job ID"
+        />
+        <label>Prisoner ID:</label>
+        <input
+          type="number"
+          value={prisonerID}
+          onChange={(e) => setPID(e.target.value)}
+          placeholder="Enter Prisoner ID"
         />
         <button type="submit">Delete</button>
       </form>

@@ -644,6 +644,28 @@ def addWorkHours():
     except Exception as e:
         print(f"Error adding work hours: {e}")
         return jsonify({"message": "Failed to add hours"}), 500
+    finally:
+        if work.db.conn.is_connected():
+            work.db.cursor.close()
+            work.db.conn.close()
+    
+@app.route('/delete_work', methods=['DELETE'])
+@login_required
+def deleteWork():
+    work = Work()
+    data = request.get_json()
+    jobID = data.get('JobID')
+    prisonerID = data.get('PrisonerID')
+    try:
+        work.deleteWork(jobID, prisonerID)
+        return jsonify({"message": "Work deleted successfully!"}), 200
+    except Exception as e:
+        print(f"Error deleting work: {e}")
+        return jsonify({"message": "Failed to delete work"}), 500
+    finally:
+        if work.db.conn.is_connected():
+            work.db.cursor.close()
+            work.db.conn.close()
 
 if __name__ == "__main__":
     app.run(debug = True)
