@@ -682,6 +682,23 @@ def get_jobs():
             db.cursor.close()
             db.conn.close()
 
+@app.route('/job-update/<int:job_id>', methods=['PUT'])
+@login_required
+def update_job(job_id):
+    job=Job()
+    data = request.get_json()
+    start_time = data.get('startHour')
+    end_time = data.get('endHour')
+    print(f"Updating job {job_id} with data: {data}")
+    if not all([start_time, end_time]):
+        return jsonify({'message': 'All fields are required'}), 400
+    try:
+        job.updateJob(job_id, start_time, end_time)
+        return jsonify({"message": "Job updated successfully!"}), 200
+    except Exception as e:
+        print(f"Error updating job: {e}")
+        return jsonify({"message": "Failed to update job"}), 500
+
 @app.route('/work-details', methods=['GET'])
 @login_required
 def getWork():
@@ -744,6 +761,7 @@ def totalWork():
     except Exception as e:
         print(f"Error fetching total work hours: {e}")
         return jsonify({"message": "Failed to fetch work hours"}), 500
+
 
 if __name__ == "__main__":
     app.run(debug = True)

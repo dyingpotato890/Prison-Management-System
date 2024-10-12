@@ -10,10 +10,10 @@ class Job:
             (job_desc, work_start, work_end))
         self.db.conn.commit()
 
-    def updateJob(self, job_id: int, job_desc: str, work_start: str, work_end: str) -> None:
+    def updateJob(self, job_id: int, work_start: str, work_end: str) -> None:
         self.db.cursor.execute(
-            "UPDATE JOBS SET JOB_DESC = %s, WORK_START = %s, WORK_END = %s WHERE JOBID = %s",
-            (job_desc, work_start, work_end, job_id))
+            "UPDATE JOBS SET WORK_START = %s, WORK_END = %s WHERE JOBID = %s",
+            (work_start, work_end, job_id))
         self.db.conn.commit()
 
     def deleteJob(self, job_id: int) -> None:

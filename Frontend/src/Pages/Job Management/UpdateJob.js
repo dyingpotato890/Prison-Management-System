@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../Modal/Modal';
 
-const UpdateJob = () => {
+const UpdateJob = ({ fetchData }) => {
   const [jobID, setJobID] = useState('');
   const [showHours, setShowHours] = useState(false);
   const [startHour, setStartHour] = useState('');
@@ -12,10 +12,27 @@ const UpdateJob = () => {
     setShowHours(true);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would handle the submission of new hours
-    alert(`Job ID: ${jobID}, Start Hour: ${startHour}, End Hour: ${endHour}`);
+    try{
+      const response = await fetch(`/job-update/${jobID}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ startHour, endHour })
+      });
+      if (response.ok) {
+        fetchData();
+        alert('Job details updated successfully!');
+      } else {
+        alert('Error updating job:', response.message);
+      }
+    }
+    catch (error) {
+      console.error('Error updating job data:', error);
+    }
+    
   };
 
   return (
