@@ -586,7 +586,7 @@ def reallocate_prisoner():
         print(f"Error reallocating prisoner: {e}")
         return jsonify({"success": False, "message": "Failed to Reallocate New Cell"}), 500
     
-@app.route('/job_details', methods=['POST'])
+@app.route('/job_details', methods=['GET'])
 @login_required
 def get_jobs():
     db = Connector()
