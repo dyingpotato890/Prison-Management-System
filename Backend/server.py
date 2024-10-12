@@ -645,7 +645,7 @@ def reallocate_prisoner():
 def get_jobs():
     db = Connector()
     try:
-        db.cursor.execute("SELECT * FROM JOBS")
+        db.cursor.execute("SELECT * FROM JOBS;")
         jobs = db.cursor.fetchall()
         
         if not jobs:
