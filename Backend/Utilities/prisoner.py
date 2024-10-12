@@ -89,3 +89,42 @@ class Prisoner:
         except Exception as e:
             print(f"Error deleting prisoner details: {e}")
             return False
+        
+    def checkPID(self, prisoner_id: int) -> bool:
+        self.db.cursor.execute("SELECT * FROM PRISONER WHERE PRISONER_ID = %s", (prisoner_id,))
+        prisoner = self.db.cursor.fetchone()
+    
+        return prisoner is not None
+        
+    def updateDetails(self, name: str, age: int, crime_id: int, release_date: str, prisoner_id: int):
+        update_query = "UPDATE PRISONER SET "
+        update_values = []
+        fields_to_update = []
+
+        if name is not None:
+            fields_to_update.append("NAME = %s")
+            update_values.append(name)
+        if age is not None:
+            fields_to_update.append("AGE = %s")
+            update_values.append(age)
+        if crime_id is not None:
+            fields_to_update.append("CRIME_ID = %s")
+            update_values.append(crime_id)
+        if release_date is not None:
+            fields_to_update.append("RELEASE_DATE = %s")
+            update_values.append(release_date)
+
+        if fields_to_update:
+            update_query += ", ".join(fields_to_update)
+            update_query += " WHERE PRISONER_ID = %s"
+
+            update_values.append(prisoner_id)
+
+            try:
+                self.db.cursor.execute(update_query, tuple(update_values))
+                self.db.conn.commit()
+                print("Prisoner details updated successfully.")
+            except Exception as e:
+                print(f"Error updating prisoner: {e}")
+        else:
+            print("No fields to update.")

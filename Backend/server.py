@@ -97,7 +97,7 @@ def get_prisoners():
             db.cursor.close()
             db.conn.close()
 
-@app.route('/prisoner_details/<int:prisoner_id>', methods=['GET'])
+@app.route('/prisoner-update/<int:prisoner_id>', methods=['GET'])
 @login_required
 def get_prisoner_details(prisoner_id):
     db = Connector()
@@ -138,6 +138,64 @@ def get_prisoner_details(prisoner_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+    finally:
+        if db.conn.is_connected():
+            db.cursor.close()
+            db.conn.close()
+
+@app.route('/prisoner-update/<int:prisoner_id>', methods=['GET'])
+@login_required
+def get_prisoner(prisoner_id):  # Use the prisoner_id from the URL
+    db = Connector()
+    p = Prisoner()
+    print("User authenticated, proceeding to fetch prisoner details.")  # Debugging line
+    
+    print(f"Received request to check prisoner ID: {prisoner_id}")  # Debugging line
+
+    try:
+        prisoner = p.checkPID(prisoner_id)
+        
+        print(f"Check result for prisoner ID {prisoner_id}: {prisoner}")  # Debugging line
+
+        if prisoner == 1:  # Assuming checkPID returns 1 if prisoner exists
+            return jsonify({"exists": True, "prisoner": prisoner}), 200
+        else:
+            return jsonify({"exists": False, "message": "Prisoner not found"}), 404
+        
+    except Exception as e:
+        print(f"Error occurred: {str(e)}")  # Debugging line
+        return jsonify({"error": str(e)}), 500
+    
+    finally:
+        if db.conn.is_connected():
+            db.cursor.close()
+            db.conn.close()
+
+
+@app.route('/prisoner-update/<int:prisoner_id>', methods=['PUT'])
+@login_required
+def update_prisoner(prisoner_id):  # Capture prisoner_id from the URL
+    db = Connector()
+    p = Prisoner()
+
+    data = request.get_json()
+    
+    print(f"Updating prisoner ID: {prisoner_id} with data: {data}")  # Debugging line
+
+    name = data.get('name')
+    age = data.get('age')
+    crime_id = data.get('crime_id')
+    release_date = data.get('release_date')
+
+    try:
+        p.updateDetails(name, age, crime_id, str(release_date), prisoner_id)
+        print(f"Prisoner {prisoner_id} updated successfully")  # Debugging line
+        return jsonify({"message": "Prisoner details updated successfully"}), 200
+    
+    except Exception as e:
+        print(f"Error occurred during update: {str(e)}")  # Debugging line
+        return jsonify({"error": str(e)}), 500
+    
     finally:
         if db.conn.is_connected():
             db.cursor.close()
