@@ -1,7 +1,7 @@
 from Utilities.connector import Connector
 
 class Job:
-    def __init__(self, db_connection) -> None:
+    def __init__(self) -> None:
         self.db = Connector()
 
     def addJob(self, job_desc: str, work_start: str, work_end: str) -> None:
@@ -33,6 +33,6 @@ class Job:
         self.db.conn.commit()
 
     def totalHours(self, prisoner_id: int) -> float:
-        self.db.cursor.execute("SELECT HOURS_WORKED FROM WORK WHERE PRISONER_ID = %s",(prisoner_id,))
+        self.db.cursor.execute("SELECT sum(HOURS_WORKED) FROM WORK WHERE PRISONER_ID = %s",(prisoner_id,))
         total_hours = self.db.cursor.fetchone()[0]
         return total_hours if total_hours else 0.0

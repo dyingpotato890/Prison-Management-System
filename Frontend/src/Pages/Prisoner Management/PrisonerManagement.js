@@ -70,7 +70,7 @@ const filteredData = useMemo(() => {
   // Fetch specific prisoner details when a row is clicked
   const fetchPrisonerDetails = async (prisonerId) => {
     try {
-      const response = await fetch(`/prisoner_details/${prisonerId}`);
+      const response = await fetch(`/prisoner-details/${prisonerId}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
