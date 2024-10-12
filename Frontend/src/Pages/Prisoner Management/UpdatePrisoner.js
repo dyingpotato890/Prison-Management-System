@@ -9,16 +9,63 @@ const UpdatePrisoner = ({ fetchData }) => {
   const [releaseDate, setReleaseDate] = useState('');
   const [step, setStep] = useState(1); // Step 1: Ask for ID, Step 2: Ask for other details
 
-  const handleIdSubmit = (e) => {
+  const handleIdSubmit = async (e) => {
     e.preventDefault();
-    setStep(2); // Move to step 2 after entering ID
+    
+    console.log(`Fetching details for prisoner ID: ${id}`);  // Debugging line
+    
+    try {
+      const response = await fetch(`/prisoner-update/${id}`);
+      const data = await response.json();
+  
+      console.log(`Response from server for prisoner ID ${id}:`, data);  // Debugging line
+  
+      if (response.ok) {
+        setStep(2); // Proceed to step 2 if prisoner exists
+        console.log(`Prisoner ID ${id} found. Moving to update details.`);  // Debugging line
+      } else {
+        alert('Prisoner not found!');
+        console.log(`Prisoner ID ${id} does not exist.`);  // Debugging line
+      }
+    } catch (error) {
+      console.error('Error fetching prisoner data:', error);
+    }
   };
-
-  const handleDetailsSubmit = (e) => {
+  
+  const handleDetailsSubmit = async (e) => {
     e.preventDefault();
-    // Update prisoner logic here
-    console.log('Updating prisoner with ID', id, 'to name', name, 'age', age, 'crime ID', crimeId, 'release date', releaseDate);
-  };
+    
+    const updatedDetails = {
+      prisoner_id: id,
+      name,
+      age,
+      crime_id: crimeId,
+      release_date: releaseDate
+    };
+  
+    console.log(`Submitting update for prisoner ID: ${id}`, updatedDetails);  // Debugging line
+  
+    try {
+      const response = await fetch(`/prisoner-update/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedDetails)
+      });
+  
+      const data = await response.json();
+      console.log(`Response from server after updating prisoner ID ${id}:`, data);  // Debugging line
+  
+      if (response.ok) {
+        alert('Prisoner details updated successfully!');
+      } else {
+        alert('Error updating prisoner:', data.message);
+      }
+    } catch (error) {
+      console.error('Error updating prisoner data:', error);
+    }
+  };  
 
   return (
     <div className="modal-content">
