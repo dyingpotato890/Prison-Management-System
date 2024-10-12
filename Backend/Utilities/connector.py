@@ -1,14 +1,11 @@
-import mysql.connector as mysql
+import psycopg2 as pg2
+import os
 
+url=os.environ.get('DB_URL')
 class Connector:
     def __init__(self) -> None:
-        self.conn = mysql.connect(
-            host = 'localhost',
-            user = 'root',
-            password = '',
-            database = 'PRISON_MANAGEMENT_SYSTEM',
-            charset = 'utf8'
-        )
+        self.conn = pg2.connect(url)
+        
 
         self.cursor = self.conn.cursor()
 

@@ -94,9 +94,8 @@ def get_prisoners():
         return jsonify({"error": str(e)}), 500
 
     finally:
-        if db.conn.is_connected():
-            db.cursor.close()
-            db.conn.close()
+        db.cursor.close()
+        db.conn.close()
 
 @app.route('/prisoner-details/<int:prisoner_id>', methods=['GET'])
 @login_required
@@ -140,7 +139,7 @@ def get_prisoner_details(prisoner_id):
         return jsonify({"error": str(e)}), 500
 
     finally:
-        if db.conn.is_connected():
+        if not db.conn.closed:
             db.cursor.close()
             db.conn.close()
 
@@ -168,7 +167,7 @@ def get_prisoner(prisoner_id):  # Use the prisoner_id from the URL
         return jsonify({"error": str(e)}), 500
     
     finally:
-        if db.conn.is_connected():
+        if not db.conn.closed:
             db.cursor.close()
             db.conn.close()
 
@@ -202,7 +201,7 @@ def update_prisoner(prisoner_id):
         return jsonify({"error": str(e)}), 500
     
     finally:
-        if db.conn.is_connected():
+        if not db.conn.closed:
             db.cursor.close()
             db.conn.close()
     
@@ -247,9 +246,8 @@ def get_visitors():
         return jsonify({"error": str(e)}), 500
 
     finally:
-        if db.conn.is_connected():
-            db.cursor.close()
-            db.conn.close()
+        db.cursor.close()
+        db.conn.close()
 
 @app.route('/add_prisoner', methods=['POST'])
 @login_required
@@ -298,9 +296,8 @@ def add_prisoner():
         return jsonify({"message": "Failed to add prisoner"}), 500
 
     finally:
-        if db.conn.is_connected():
-            db.cursor.close()
-            db.conn.close()
+        db.cursor.close()
+        db.conn.close()
 
 @app.route('/delete-prisoner', methods=['DELETE'])
 @login_required
@@ -329,9 +326,8 @@ def delete_prisoner():
         return jsonify({"message": "Failed to Delete Prisoner"}), 500
 
     finally:
-        if db.conn.is_connected():
-            db.cursor.close()
-            db.conn.close()
+        db.cursor.close()
+        db.conn.close()
 
 @app.route('/delete-prisoner-details', methods=['DELETE'])
 @login_required
@@ -357,9 +353,8 @@ def delete_prisoner_details():
         return jsonify({"message": "Failed to Delete Prisoner"}), 500
 
     finally:
-        if db.conn.is_connected():
-            db.cursor.close()
-            db.conn.close()
+        db.cursor.close()
+        db.conn.close()
 
 @app.route('/add_visitor', methods=['POST'])
 @login_required
@@ -389,9 +384,8 @@ def add_visitor():
         return jsonify({"message": "Failed to add visitor"}), 500
 
     finally:
-        if db.conn.is_connected():
-            db.cursor.close()
-            db.conn.close()
+        db.cursor.close()
+        db.conn.close()
 
 
 @app.route('/delete_visitor', methods=['DELETE'])
@@ -423,9 +417,8 @@ def delete_visitor():
         return jsonify({"message": "Failed to delete visitor"}), 500
 
     finally:
-        if db.conn.is_connected():
-            db.cursor.close()
-            db.conn.close()
+        db.cursor.close()
+        db.conn.close()
 
 # Staff and user related routes
 @app.route('/staff', methods=['GET'])
@@ -525,9 +518,8 @@ def get_crimes():
         return jsonify({"error": str(e)}), 500
 
     finally:
-        if db.conn.is_connected():
-            db.cursor.close()
-            db.conn.close()
+        db.cursor.close()
+        db.conn.close()
 
 @app.route('/add_crime', methods=['POST'])
 @login_required
@@ -600,9 +592,8 @@ def get_cells():
         return jsonify({"error": str(e)}), 500
 
     finally:
-        if db.conn.is_connected():
-            db.cursor.close()
-            db.conn.close()
+        db.cursor.close()
+        db.conn.close()
 
 @app.route('/add_cell', methods=['POST'])
 @login_required
@@ -683,7 +674,7 @@ def get_jobs():
         return jsonify({"error": str(e)}), 500
 
     finally:
-        if db.conn.is_connected():
+        if not db.conn.closed:
             db.cursor.close()
             db.conn.close()
 
@@ -764,7 +755,7 @@ def addWorkHours():
         print(f"Error adding work hours: {e}")
         return jsonify({"message": "Failed to add hours"}), 500
     finally:
-        if work.db.conn.is_connected():
+        if not work.db.conn.closed:
             work.db.cursor.close()
             work.db.conn.close()
     
@@ -782,7 +773,7 @@ def deleteWork():
         print(f"Error deleting work: {e}")
         return jsonify({"message": "Failed to delete work"}), 500
     finally:
-        if work.db.conn.is_connected():
+        if not work.db.conn.closed:
             work.db.cursor.close()
             work.db.conn.close()
 
