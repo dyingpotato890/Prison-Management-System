@@ -15,7 +15,7 @@ function WorkDetails() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('/Work-details');
+            const response = await axios.get('/work-details');
             setData(response.data);
         } catch (error) {
             setError("Error fetching data. Please try again.");
@@ -30,7 +30,7 @@ function WorkDetails() {
 
     const columns = useMemo(() => [
         { Header: "Prisoner ID", accessor: "prisoner_id" },
-        { Header: "Job ID", accessor: "job_id" },
+        { Header: "Job Description", accessor: "job_desc" },
         { Header: "Hours Worked", accessor: "working-hours" },
    
     ], []);

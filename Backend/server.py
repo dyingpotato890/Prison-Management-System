@@ -8,6 +8,7 @@ from Utilities.crime import Crime
 from Utilities.staff import Staff
 from Utilities.visitor import Visitor
 from Utilities.cell import Cells
+from Utilities.work import Work
 
 app = Flask(__name__)
 CORS(app)
@@ -617,6 +618,17 @@ def get_jobs():
         if db.conn.is_connected():
             db.cursor.close()
             db.conn.close()
+
+@app.route('/work-details', methods=['GET'])
+@login_required
+def getWork():
+    work = Work()
+    try:
+        work_details = work.getWork()
+        return jsonify(work_details)
+    except Exception as e:
+        print(f"Error getting work details: {e}")
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug = True)

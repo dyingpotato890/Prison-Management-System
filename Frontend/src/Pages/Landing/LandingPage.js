@@ -102,7 +102,7 @@ function LandingPage() {
           Job Management
         </button>
         <button 
-          onClick={() => setActiveComponent('jobmanagement')} 
+          onClick={() => setActiveComponent('workmanagement')} 
           className={`action-btn ${activeComponent === 'workmanagement' ? 'active' : ''}`}>
           Work Management
         </button>
