@@ -9,6 +9,7 @@ from Utilities.staff import Staff
 from Utilities.visitor import Visitor
 from Utilities.cell import Cells
 from Utilities.work import Work
+from Utilities.jobs import Job
 
 app = Flask(__name__)
 CORS(app)
@@ -728,6 +729,21 @@ def deleteWork():
         if work.db.conn.is_connected():
             work.db.cursor.close()
             work.db.conn.close()
+
+@app.route('/total-work-hours', methods=['POST'])
+@login_required
+def totalWork():
+    j = Job()
+
+    data = request.get_json()
+    prisoner_id = data.get('prisoner_id')
+
+    try:
+        hours = j.totalHours(prisoner_id)
+        return jsonify({"total_hours": hours}), 200
+    except Exception as e:
+        print(f"Error fetching total work hours: {e}")
+        return jsonify({"message": "Failed to fetch work hours"}), 500
 
 if __name__ == "__main__":
     app.run(debug = True)

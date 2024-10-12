@@ -1,17 +1,31 @@
 import React, { useState } from 'react';
 
-
 const GetTotalHours = () => {
   const [prisonerID, setPrisonerID] = useState('');
   const [totalHours, setTotalHours] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Logic to calculate or fetch total hours based on prisoner ID
+    try {
+      const response = await fetch('/total-work-hours', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prisoner_id: prisonerID }), // Send prisoner ID as JSON
+      });
 
-    const fetchedHours = 40; // This should be replaced with actual logic to calculate total hours
-    setTotalHours(fetchedHours);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      setTotalHours(data.total_hours); // Set the fetched total hours
+    } catch (error) {
+      console.error("Error fetching total hours:", error);
+      setTotalHours(''); // Clear previous hours on error
+    }
   };
 
   return (
