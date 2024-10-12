@@ -3,22 +3,24 @@ import '../Modal/Modal';
 import axios from 'axios';
 
 const AddWork = ({ fetchData }) => {
-  const [WorkID, setId] = useState('');
-  const [desc, setDesc] = useState('');
+  const [jobID, setId] = useState('');
+  const [prisonerID, setPID] = useState('');
+  const [addHours, setHours] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const WorkData = { WorkID, desc };
+    const WorkData = { jobID, prisonerID, addHours };
 
     try {
-      const response = await axios.post('/add_Work', WorkData);
+      const response = await axios.post('/add_work', WorkData);
       if (response.status === 200) {
         fetchData();
         alert('Work added successfully!');
         // Clear form fields after success
         setId('');
-        setDesc('');
+        setPID('');
+        setHours('');
       } else {
         alert('Failed to add Work.');
       }
@@ -32,24 +34,31 @@ const AddWork = ({ fetchData }) => {
     <div className="modal-content">
       <h2>Add Work</h2>
       <form onSubmit={handleSubmit}>
-        <label>Work ID:</label>
+        <label>Job ID:</label>
         <input
           type="number"
-          value={WorkID}
+          value={jobID}
           onChange={(e) => setId(e.target.value)}
-          placeholder="Enter Work ID"
+          placeholder="Enter Job ID"
         />
 
-
-        <label>Work Description:</label>
+        <label>Prisoner ID:</label>
         <input
-          type="text"
-          value={desc}
-          onChange={(e) => setDesc(e.target.value)}
-          placeholder="Work Description"
+          type="number"
+          value={prisonerID}
+          onChange={(e) => setPID(e.target.value)}
+          placeholder="Enter Prisoner ID"
         />
+        
 
-
+        <label>Add Hours:</label>
+        <input
+          type="number"
+          value={addHours}
+          onChange={(e) => setHours(e.target.value)}
+          placeholder="Enter Hours To Be Added"
+        />
+        
         <button type="submit">Add</button>
       </form>
     </div>

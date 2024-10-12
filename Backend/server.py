@@ -630,5 +630,20 @@ def getWork():
         print(f"Error getting work details: {e}")
         return jsonify({"error": str(e)}), 500
 
+@app.route('/add_work', methods=['POST'])
+@login_required
+def addWorkHours():
+    work = Work()
+    data = request.get_json()
+    jobID = data.get('jobID')
+    prisonerID = data.get('prisonerID')
+    hours = data.get('addHours')
+    try:
+        work.addHours(jobID, prisonerID, hours)
+        return jsonify({"message": "Hours added successfully!"}), 200
+    except Exception as e:
+        print(f"Error adding work hours: {e}")
+        return jsonify({"message": "Failed to add hours"}), 500
+
 if __name__ == "__main__":
     app.run(debug = True)
