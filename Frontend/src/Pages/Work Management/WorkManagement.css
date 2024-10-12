@@ -158,6 +158,10 @@
     color: white;
   }
   
+  .Total{
+    background-color: #007bff;
+    color: white;
+  }
   /* Button hover effect */
   .Operations button:hover {
     opacity: 0.8;

@@ -4,6 +4,7 @@ import axios from 'axios'; // Make sure to install axios
 import './JobManagement.css'; // Import the CSS file
 import AddJob from "./AddJob";
 import DeleteJob from "./DeleteJOb.js";
+import UpdateJob from "./UpdateJob.js"
 import Modal from "../Modal/Modal";
 
 function JobDetails() {
@@ -94,12 +95,14 @@ function JobDetails() {
             <div className="Operations">
                 <button className="Add" onClick={() => handleOpenModal('add')}>Add Job Details</button>
                 <button className="Delete" onClick={() => handleOpenModal('delete')}>Delete Job Details</button>
+                <button className="Update" onClick={() => handleOpenModal('update')}>Update Job Details</button>           
             </div>
 
             {showModal && (
                 <Modal onClose={handleCloseModal}>
                     {activeOperation === 'add' && <div><AddJob fetchData={fetchData}/></div>}
                     {activeOperation === 'delete' && <div><DeleteJob fetchData={fetchData}/></div>}
+                    {activeOperation === 'update' && <div><UpdateJob fetchData={fetchData}/></div>}
                 </Modal>
             )}
         </div>

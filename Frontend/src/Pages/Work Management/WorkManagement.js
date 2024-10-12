@@ -4,6 +4,7 @@ import axios from 'axios';
 import './WorkManagement.css';
 import AddWork from "./AddWork";
 import DeleteWork from "./DeleteWork.js";
+import TotalWork from "./TotalWork.js";
 import Modal from "../Modal/Modal";
 
 function WorkDetails() {
@@ -93,12 +94,14 @@ function WorkDetails() {
             <div className="Operations">
                 <button className="Add" onClick={() => handleOpenModal('add')}>Add Work Details</button>
                 <button className="Delete" onClick={() => handleOpenModal('delete')}>Delete Work Details</button>
+                <button className="Total" onClick={() => handleOpenModal('totalhrs')}>Get Total Hours</button>
             </div>
 
             {showModal && (
                 <Modal onClose={handleCloseModal}>
                     {activeOperation === 'add' && <div><AddWork fetchData={fetchData}/></div>}
                     {activeOperation === 'delete' && <div><DeleteWork fetchData={fetchData}/></div>}
+                    {activeOperation === 'totalhrs' && <div><TotalWork fetchData={fetchData}/></div>}
                 </Modal>
             )}
         </div>

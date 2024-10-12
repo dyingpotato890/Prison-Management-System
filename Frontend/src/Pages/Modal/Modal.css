@@ -1,4 +1,7 @@
-
+.bold {
+    font-weight: bold;
+  }
+  
 .modal-backdrop {
     position: fixed;
     top: 0;
@@ -99,4 +102,19 @@
     width: 30%;
 }
 
+.modal .update-job-container{
+    min-height:150px;
+    padding-top: 5%;
+    
+}
+
+.modal .total-hours-container{
+    min-height: 130px ;
+    padding-top: 5%;
+}
+
+.modal .Totalhrs{
+    padding-top: 5px;
+    border-top: 10%;
+}
 
