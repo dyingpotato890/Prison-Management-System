@@ -46,7 +46,7 @@ const UpdatePrisoner = ({ fetchData }) => {
     console.log(`Submitting update for prisoner ID: ${id}`, updatedDetails);  // Debugging line
   
     try {
-      const response = await fetch(`http://localhost:5000/prisoner-update/${id}`, {
+      const response = await fetch(`/prisoner-update/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
