@@ -101,12 +101,30 @@ class Prisoner:
         update_values = []
         fields_to_update = []
 
-        if name is not None:
-            fields_to_update.append("NAME = %s")
-            update_values.append(name)
+        if name != '':
+            self.db.cursor.execute("""
+                                UPDATE 
+                                    PRISONER_DETAILS PD
+                                SET 
+                                    PD.NAME = %s 
+                                WHERE 
+                                    PD.AADHAR_NUMBER = (
+                                        SELECT P.AADHAR_NUMBER 
+                                        FROM PRISONER P 
+                                        WHERE P.PRISONER_ID = %s)""", (name, prisoner_id))
+            self.db.conn.commit()
         if age is not None:
-            fields_to_update.append("AGE = %s")
-            update_values.append(age)
+            self.db.cursor.execute("""
+                                UPDATE 
+                                    PRISONER_DETAILS PD
+                                SET 
+                                    PD.AGE = %s 
+                                WHERE 
+                                    PD.AADHAR_NUMBER = (
+                                        SELECT P.AADHAR_NUMBER 
+                                        FROM PRISONER P 
+                                        WHERE P.PRISONER_ID = %s)""", (age, prisoner_id))
+            self.db.conn.commit()
         if crime_id is not None:
             fields_to_update.append("CRIME_ID = %s")
             update_values.append(crime_id)

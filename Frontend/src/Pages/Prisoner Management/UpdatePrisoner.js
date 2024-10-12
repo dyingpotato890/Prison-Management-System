@@ -11,21 +11,16 @@ const UpdatePrisoner = ({ fetchData }) => {
 
   const handleIdSubmit = async (e) => {
     e.preventDefault();
-    
-    console.log(`Fetching details for prisoner ID: ${id}`);  // Debugging line
-    
+        
     try {
       const response = await fetch(`/prisoner-update/${id}`);
       const data = await response.json();
   
-      console.log(`Response from server for prisoner ID ${id}:`, data);  // Debugging line
   
       if (response.ok) {
         setStep(2); // Proceed to step 2 if prisoner exists
-        console.log(`Prisoner ID ${id} found. Moving to update details.`);  // Debugging line
       } else {
         alert('Prisoner not found!');
-        console.log(`Prisoner ID ${id} does not exist.`);  // Debugging line
       }
     } catch (error) {
       console.error('Error fetching prisoner data:', error);
@@ -42,9 +37,7 @@ const UpdatePrisoner = ({ fetchData }) => {
       crime_id: crimeId,
       release_date: releaseDate
     };
-  
-    console.log(`Submitting update for prisoner ID: ${id}`, updatedDetails);  // Debugging line
-  
+    
     try {
       const response = await fetch(`/prisoner-update/${id}`, {
         method: 'PUT',
@@ -55,7 +48,6 @@ const UpdatePrisoner = ({ fetchData }) => {
       });
   
       const data = await response.json();
-      console.log(`Response from server after updating prisoner ID ${id}:`, data);  // Debugging line
   
       if (response.ok) {
         alert('Prisoner details updated successfully!');

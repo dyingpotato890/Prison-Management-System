@@ -97,7 +97,7 @@ def get_prisoners():
             db.cursor.close()
             db.conn.close()
 
-@app.route('/prisoner-update/<int:prisoner_id>', methods=['GET'])
+@app.route('/prisoner-details/<int:prisoner_id>', methods=['GET'])
 @login_required
 def get_prisoner_details(prisoner_id):
     db = Connector()
@@ -170,7 +170,6 @@ def get_prisoner(prisoner_id):  # Use the prisoner_id from the URL
         if db.conn.is_connected():
             db.cursor.close()
             db.conn.close()
-
 
 @app.route('/prisoner-update/<int:prisoner_id>', methods=['PUT','GET'])
 @login_required
