@@ -172,12 +172,17 @@ def get_prisoner(prisoner_id):  # Use the prisoner_id from the URL
             db.conn.close()
 
 
-@app.route('/prisoner-update/<int:prisoner_id>', methods=['PUT'])
+@app.route('/prisoner-update/<int:prisoner_id>', methods=['PUT','GET'])
 @login_required
-def update_prisoner(prisoner_id):  # Capture prisoner_id from the URL
+def update_prisoner(prisoner_id):
+    # Capture prisoner_id from the URL
     db = Connector()
     p = Prisoner()
-
+    if request.method == 'GET':
+        if p.checkPID(prisoner_id):
+            return jsonify({"exists": True, "prisoner": prisoner_id}), 200
+        else:
+            return jsonify({"exists": False, "message": "Prisoner not found"}), 404
     data = request.get_json()
     
     print(f"Updating prisoner ID: {prisoner_id} with data: {data}")  # Debugging line

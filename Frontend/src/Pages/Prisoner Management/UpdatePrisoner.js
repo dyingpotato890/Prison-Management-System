@@ -15,12 +15,12 @@ const UpdatePrisoner = ({ fetchData }) => {
     console.log(`Fetching details for prisoner ID: ${id}`);  // Debugging line
     
     try {
-      const response = await fetch(`http://localhost:5000/prisoner-update/${id}`);
+      const response = await fetch(`/prisoner-update/${id}`);
       const data = await response.json();
   
       console.log(`Response from server for prisoner ID ${id}:`, data);  // Debugging line
   
-      if (data.exists) {
+      if (response.ok) {
         setStep(2); // Proceed to step 2 if prisoner exists
         console.log(`Prisoner ID ${id} found. Moving to update details.`);  // Debugging line
       } else {
