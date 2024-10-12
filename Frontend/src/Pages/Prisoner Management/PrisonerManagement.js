@@ -14,6 +14,8 @@ function Prisoner_Management() {
   const [selectedPrisoner, setSelectedPrisoner] = useState(null); // State for selected prisoner details
   const [searchTerm, setSearchTerm] = useState(''); // Search term state
   const [searchBy, setSearchBy] = useState('id'); // Either 'name' or 'id'
+  const [currentlyIncarcerated, setCurrentlyIncarcerated] = useState(true); // Initial state can be true or false
+
 
   // Fetch prisoner data
   const fetchData = async () => {
@@ -136,16 +138,34 @@ const filteredData = useMemo(() => {
   return (
     <div className="App">
       <div className="table-container">
+
         <h1>Prisoner Table</h1>
 
         {/* Search Bar */}
-        <input
-          type="text"
-          placeholder={`Search by ${searchBy === 'id' ? 'ID' : 'Name'}...`}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-input"
-        />
+        <div className="search-container">
+          <div className="searchbar">
+          <input
+              type="text"
+              placeholder={`Search by ${searchBy === 'id' ? 'ID' : 'Name'}...`}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+            />
+          </div>
+       
+
+          {/* Currently Incarcerated Checkbox */}
+          <div className="checkbox-container">
+            <input
+              type="checkbox"
+              id="currentlyIncarcerated"
+              checked={currentlyIncarcerated} // Set initial value based on state
+              onChange={() => setCurrentlyIncarcerated(!currentlyIncarcerated)} // Toggle checkbox state
+            />
+            <label htmlFor="currentlyIncarcerated">Currently Incarcerated</label>
+          </div>
+        </div>
+
        
 
       

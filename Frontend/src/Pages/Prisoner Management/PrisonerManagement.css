@@ -236,3 +236,51 @@
   border-color: #007bff;
   /* Border changes to match the background */
 }
+/* Search container adjustments */
+.search-container {
+  display: flex; 
+  align-items: center; /* Align items vertically in the center */
+  margin-bottom: 5px; /* Space below the search container */
+  color: #252320;
+  width: 100%; /* Set a width for the search container */
+  margin-left: 0%; /* Center the container */
+  height: 5%;
+}
+
+.searchbar{
+  width:40%;
+  margin-bottom: 0.7%;
+}
+/* Search input styles */
+.searchbar input[type="text"] {
+  font-size: 16px; /* Font size for the input */
+  border: 1px solid #ccc; /* Border styling */
+  border-radius: 10px; /* Rounded corners */
+  border-left: 0%;
+  margin-left: 0%;
+  height:70%;
+  width:30%
+}
+
+/* Checkbox container styling */
+.checkbox-container {
+  margin-left: 10px; /* Space between search input and checkbox */
+  padding-left: 30px;
+  align-items: center; /* Align checkbox and label vertically */
+  display: flex; /* Use flex to keep items in line */
+}
+
+/* Checkbox styling */
+.checkbox-container input[type="checkbox"] {
+  width: 20px; /* Size of the checkbox */
+  height: 20px; /* Size of the checkbox */
+  margin-right: 8px; /* Space between checkbox and label */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+/* Label styling */
+.checkbox-container label {
+  font-size: 18px; /* Font size of the label */
+  color: #252320; /* Color of the label text */
+  cursor: pointer; /* Change cursor to pointer for the label */
+}
