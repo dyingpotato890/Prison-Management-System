@@ -5,7 +5,7 @@ import PrisonerManagement from '../Prisoner Management/PrisonerManagement';
 import VisitorDetails from "../Visitor Management/VisitorTable";
 import ErrorPage from "../Error Page/ErrorPage";
 import StaffDetails from "../Staff Management/StaffManagement";
-import CrimeDetails from "../Cell Management/CellManagement";
+import CrimeDetails from "../Crime Management/CrimeDetails";
 import logout_icon from "../../Components/Assets/logout.svg"
 import CellDetails from "../Cell Management/CellManagement";
 import JobDetails from "../Job Management/JobManagement";
