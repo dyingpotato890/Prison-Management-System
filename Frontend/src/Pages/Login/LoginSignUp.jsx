@@ -38,6 +38,7 @@ const LoginSignUp = () => {
 
     try {
       const response = await fetch('https://prison-management-system-bmxy.onrender.com/login', {
+        mode: 'no-cors',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

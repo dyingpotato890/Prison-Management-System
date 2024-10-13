@@ -19,6 +19,7 @@ function LandingPage() {
   const goto = async () => {
     try {
       const response = await fetch('https://prison-management-system-bmxy.onrender.com/logout', {
+        mode: 'no-cors',
         method: 'GET',
         credentials: 'include' // Include credentials for authentication
       });
@@ -36,6 +37,7 @@ function LandingPage() {
   const checkLogin = async () => {
     try {
       const response = await fetch('https://prison-management-system-bmxy.onrender.com/check_login', {
+        mode: 'no-cors',
         method: 'GET',
         credentials: 'include' // Include credentials for authentication
       });
