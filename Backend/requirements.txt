@@ -4,9 +4,11 @@ colorama==0.4.6
 Flask==3.0.3
 Flask-Cors==5.0.0
 Flask-Login==0.6.3
+gunicorn==23.0.0
 itsdangerous==2.2.0
 Jinja2==3.1.4
 MarkupSafe==2.1.5
 mysql-connector-python==9.0.0
+packaging==24.1
 psycopg2==2.9.9
 Werkzeug==3.0.4
