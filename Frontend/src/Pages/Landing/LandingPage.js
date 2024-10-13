@@ -18,7 +18,7 @@ function LandingPage() {
   // Function to handle sign out and redirect to login
   const goto = async () => {
     try {
-      const response = await fetch('/logout', {
+      const response = await fetch('https://prison-management-system-bmxy.onrender.com/logout', {
         method: 'GET',
         credentials: 'include' // Include credentials for authentication
       });
@@ -35,7 +35,7 @@ function LandingPage() {
 
   const checkLogin = async () => {
     try {
-      const response = await fetch('/check_login', {
+      const response = await fetch('https://prison-management-system-bmxy.onrender.com/check_login', {
         method: 'GET',
         credentials: 'include' // Include credentials for authentication
       });
