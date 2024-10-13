@@ -15,7 +15,7 @@ const AddStaff = ({ fetchData }) => {
     const staffData = { id, name, age, phonenumber, role };
 
     try {
-      const response = await axios.post('/add_staff', staffData);
+      const response = await axios.post('https://prison-management-system-bmxy.onrender.com/add_staff', staffData);
       if (response.status === 200) {
         fetchData();
         alert('Staff added successfully!');

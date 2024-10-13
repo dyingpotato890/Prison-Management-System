@@ -16,7 +16,7 @@ function StaffDetails() {
     const [showModal, setShowModal] = useState(false); // State to control modal visibility
     const fetchData = async () => {
             try {
-                const response = await axios.get('/staff');
+                const response = await axios.get('https://prison-management-system-bmxy.onrender.com/staff');
                 setData(response.data);
             } catch (error) {
                 setError("Error fetching data. Please try again.");

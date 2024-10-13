@@ -9,7 +9,7 @@ const DeleteStaff= ({ fetchData }) => {
     e.preventDefault();
     
     try {
-      const response = await fetch('/remove_staff', {
+      const response = await fetch('https://prison-management-system-bmxy.onrender.com/remove_staff', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
