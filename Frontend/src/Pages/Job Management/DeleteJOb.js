@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import '../Modal/Modal';
 
 const DeleteJob = ({ fetchData }) => {
-  const [JobID, setJobID] = useState('');
+  const [jobID, setJobID] = useState('');
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
@@ -14,7 +14,7 @@ const DeleteJob = ({ fetchData }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ JobID }),
+        body: JSON.stringify({ jobID }),
       });
 
       if (response.ok) {
@@ -36,7 +36,7 @@ const DeleteJob = ({ fetchData }) => {
         <label>Job ID:</label>
         <input
           type="text"
-          value={JobID}
+          value={jobID}
           onChange={(e) => setJobID(e.target.value)}
           placeholder="Enter Job ID of Job to Delete"
         />

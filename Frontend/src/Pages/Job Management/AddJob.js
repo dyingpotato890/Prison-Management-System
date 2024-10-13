@@ -5,11 +5,13 @@ import axios from 'axios';
 const AddJob = ({ fetchData }) => {
   const [jobID, setId] = useState('');
   const [desc, setDesc] = useState('');
+  const [startHour, setStartHour] = useState('');
+  const [endHour, setEndHour] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const jobData = { jobID, desc };
+    const jobData = { jobID, desc, startHour, endHour };
 
     try {
       const response = await axios.post('/add_job', jobData);
@@ -49,6 +51,21 @@ const AddJob = ({ fetchData }) => {
           placeholder="Job Description"
         />
 
+        <label>Start Hour:</label>
+        <input
+          type="time"
+          value={startHour}
+          onChange={(e) => setStartHour(e.target.value)}
+          placeholder="Start Hour"
+          />
+
+        <label>End Hour:</label>
+        <input
+          type="time"
+          value={endHour}
+          onChange={(e) => setEndHour(e.target.value)}
+          placeholder="End Hour"
+          />
 
         <button type="submit">Add</button>
       </form>

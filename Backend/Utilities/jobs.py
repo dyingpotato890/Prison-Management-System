@@ -4,10 +4,10 @@ class Job:
     def __init__(self) -> None:
         self.db = Connector()
 
-    def addJob(self, job_desc: str, work_start: str, work_end: str) -> None:
+    def addJob(self, job_id: int, job_desc: str, work_start: str, work_end: str) -> None:
         self.db.cursor.execute(
-            "INSERT INTO JOBS (JOB_DESC, WORK_START, WORK_END) VALUES (%s, %s, %s)",
-            (job_desc, work_start, work_end))
+            "INSERT INTO JOBS VALUES (%s, %s, %s, %s)",
+            (job_id, job_desc, work_start, work_end))
         self.db.conn.commit()
 
     def updateJob(self, job_id: int, work_start: str, work_end: str) -> None:

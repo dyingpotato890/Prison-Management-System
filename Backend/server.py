@@ -393,6 +393,7 @@ def add_visitor():
             db.cursor.close()
             db.conn.close()
 
+
 @app.route('/delete_visitor', methods=['DELETE'])
 @login_required
 def delete_visitor():
@@ -426,6 +427,7 @@ def delete_visitor():
             db.cursor.close()
             db.conn.close()
 
+# Staff and user related routes
 @app.route('/staff', methods=['GET'])
 @login_required
 def get_staff():
@@ -500,7 +502,8 @@ def remove_user():
     except Exception as e:
         print(f"Error removing user: {e}")
         return jsonify({"message": "Failed to remove user"}), 500
-    
+
+# Crime related routes    
 @app.route('/crime-details', methods=['GET'])
 @login_required
 def get_crimes():
@@ -558,7 +561,8 @@ def deleteCrime():
     except Exception as e:
         print(f"Error deleting crime: {e}")
         return jsonify({"message": "Failed to delete crime"}), 500
-    
+
+#Cell related routes    
 @app.route('/cells', methods = ['GET'])
 @login_required
 def get_cells():
@@ -649,7 +653,8 @@ def reallocate_prisoner():
     except Exception as e:
         print(f"Error reallocating prisoner: {e}")
         return jsonify({"success": False, "message": "Failed to Reallocate New Cell"}), 500
-    
+
+# Job related routes    
 @app.route('/job_details', methods=['GET'])
 @login_required
 def get_jobs():
@@ -682,6 +687,40 @@ def get_jobs():
             db.cursor.close()
             db.conn.close()
 
+@app.route('/add_job', methods=['POST'])
+@login_required
+def add_job():
+    job=Job()
+    data = request.get_json()
+    job_id = data.get('jobID')
+    job_desc = data.get('desc')
+    work_start = data.get('startHour')
+    work_end = data.get('endHour')
+    if not all([job_id, job_desc, work_start, work_end]):
+        return jsonify({'message': 'All fields are required'}), 400
+    try:
+        job.addJob(job_id, job_desc, work_start, work_end)
+        return jsonify({"message": "Job added successfully!"}), 200
+    except Exception as e:
+        print(f"Error adding job: {e}")
+        return jsonify({"message": "Failed to add job"}), 500
+
+@app.route('/delete_job', methods=['DELETE'])
+@login_required
+def delete_job():
+    job=Job()
+    data = request.get_json()
+    job_id = data.get('jobID')
+    if not job_id:
+        return jsonify({'message': 'Job ID is required'}), 400
+    try:
+        job.deleteJob(job_id)
+        return jsonify({'message': 'Job deleted successfully!'}), 200
+    except Exception as e:
+        print(f"Error deleting job: {e}")
+        return jsonify({"message": "Failed to delete job"}), 500
+    
+    
 @app.route('/job-update/<int:job_id>', methods=['PUT'])
 @login_required
 def update_job(job_id):
@@ -698,7 +737,7 @@ def update_job(job_id):
     except Exception as e:
         print(f"Error updating job: {e}")
         return jsonify({"message": "Failed to update job"}), 500
-
+        
 @app.route('/work-details', methods=['GET'])
 @login_required
 def getWork():
