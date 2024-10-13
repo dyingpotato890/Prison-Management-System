@@ -10,10 +10,11 @@ from Utilities.visitor import Visitor
 from Utilities.cell import Cells
 from Utilities.work import Work
 from Utilities.jobs import Job
+import os
 
 app = Flask(__name__)
 CORS(app)
-app.config['SECRET_KEY']='192b9bdd22ab9ed4d12e236c78afcb9a393ec15f71bbf5dc987d54727423bcbf'
+app.config['SECRET_KEY']=os.environ.get('SECRET_KEY')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
