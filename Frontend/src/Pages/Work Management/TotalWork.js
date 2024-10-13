@@ -8,7 +8,7 @@ const GetTotalHours = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('/total-work-hours', {
+      const response = await fetch('https://prison-management-system-bmxy.onrender.com/total-work-hours', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

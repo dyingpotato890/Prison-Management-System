@@ -13,7 +13,7 @@ const AddWork = ({ fetchData }) => {
     const WorkData = { jobID, prisonerID, addHours };
 
     try {
-      const response = await axios.post('/add_work', WorkData);
+      const response = await axios.post('https://prison-management-system-bmxy.onrender.com/add_work', WorkData);
       if (response.status === 200) {
         fetchData();
         alert('Work added successfully!');

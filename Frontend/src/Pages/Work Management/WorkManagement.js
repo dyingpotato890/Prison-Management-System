@@ -16,7 +16,7 @@ function WorkDetails() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('/work-details');
+            const response = await axios.get('https://prison-management-system-bmxy.onrender.com/work-details');
             setData(response.data);
         } catch (error) {
             setError("Error fetching data. Please try again.");
