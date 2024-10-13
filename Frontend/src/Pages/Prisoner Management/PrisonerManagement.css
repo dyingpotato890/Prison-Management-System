@@ -245,11 +245,13 @@
   width: 100%; /* Set a width for the search container */
   margin-left: 0%; /* Center the container */
   height: 5%;
+  justify-content:space-between;
 }
 
 .searchbar{
   width:40%;
   margin-bottom: 0.7%;
+  margin-right: 30%;
 }
 /* Search input styles */
 .searchbar input[type="text"] {
@@ -259,7 +261,7 @@
   border-left: 0%;
   margin-left: 0%;
   height:70%;
-  width:30%
+  width:30%;
 }
 
 /* Checkbox container styling */
