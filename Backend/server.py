@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, session, redirect
 from flask_cors import CORS
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from datetime import date
 from Utilities.user import User
 from Utilities.connector import Connector
 from Utilities.prisoner import Prisoner
@@ -58,7 +59,10 @@ def check_login():
 def get_prisoners():
     db = Connector()
     try:
-        db.cursor.execute("""
+        # Get query parameter for currently incarcerated filtering
+        currentlyIncarcerated = request.args.get('currentlyIncarcerated', 'false').lower() == 'true'
+
+        query = """
             SELECT 
                 p.prisoner_id, 
                 pd.name, 
@@ -71,11 +75,15 @@ def get_prisoners():
                 crime c
             WHERE
                 pd.aadhar_number = p.aadhar_number
-                and
-                c.crime_id = p.crime_id
-            ORDER BY
-                p.prisoner_id
-        """)
+                AND c.crime_id = p.crime_id
+        """
+
+        if currentlyIncarcerated:
+            query += " AND (p.release_date >= CURDATE() OR p.release_date IS NULL)"
+
+        query += " ORDER BY p.prisoner_id"
+
+        db.cursor.execute(query)
         prisoners = db.cursor.fetchall()
 
         prisoner_list = []
@@ -85,7 +93,7 @@ def get_prisoners():
                 "name": prisoner[1],
                 "description": prisoner[2],
                 "enter_date": str(prisoner[3]),
-                "release_date": str(prisoner[4])
+                "release_date": str(prisoner[4]) if prisoner[4] else None
             })
 
         return jsonify(prisoner_list)
@@ -146,25 +154,19 @@ def get_prisoner_details(prisoner_id):
 
 @app.route('/prisoner-update/<int:prisoner_id>', methods=['GET'])
 @login_required
-def get_prisoner(prisoner_id):  # Use the prisoner_id from the URL
+def get_prisoner(prisoner_id):
     db = Connector()
     p = Prisoner()
-    print("User authenticated, proceeding to fetch prisoner details.")  # Debugging line
     
-    print(f"Received request to check prisoner ID: {prisoner_id}")  # Debugging line
-
     try:
         prisoner = p.checkPID(prisoner_id)
         
-        print(f"Check result for prisoner ID {prisoner_id}: {prisoner}")  # Debugging line
-
-        if prisoner == 1:  # Assuming checkPID returns 1 if prisoner exists
+        if prisoner == 1:
             return jsonify({"exists": True, "prisoner": prisoner}), 200
         else:
             return jsonify({"exists": False, "message": "Prisoner not found"}), 404
         
     except Exception as e:
-        print(f"Error occurred: {str(e)}")  # Debugging line
         return jsonify({"error": str(e)}), 500
     
     finally:
@@ -175,7 +177,6 @@ def get_prisoner(prisoner_id):  # Use the prisoner_id from the URL
 @app.route('/prisoner-update/<int:prisoner_id>', methods=['PUT','GET'])
 @login_required
 def update_prisoner(prisoner_id):
-    # Capture prisoner_id from the URL
     db = Connector()
     p = Prisoner()
     if request.method == 'GET':
@@ -185,8 +186,6 @@ def update_prisoner(prisoner_id):
             return jsonify({"exists": False, "message": "Prisoner not found"}), 404
     data = request.get_json()
     
-    print(f"Updating prisoner ID: {prisoner_id} with data: {data}")  # Debugging line
-
     name = data.get('name')
     age = data.get('age')
     crime_id = data.get('crime_id')
@@ -194,11 +193,9 @@ def update_prisoner(prisoner_id):
 
     try:
         p.updateDetails(name, age, crime_id, str(release_date), prisoner_id)
-        print(f"Prisoner {prisoner_id} updated successfully")  # Debugging line
         return jsonify({"message": "Prisoner details updated successfully"}), 200
     
     except Exception as e:
-        print(f"Error occurred during update: {str(e)}")  # Debugging line
         return jsonify({"error": str(e)}), 500
     
     finally:
@@ -644,11 +641,8 @@ def reallocate_prisoner():
     newCellNo = data.get('newCellNo')
 
     try:
-        # Call the reallocateCell method and capture the response
         response = c.reallocateCell(prisoner_id=prisonerId, new_cell_number=newCellNo)
-
-        # Return the response directly
-        return jsonify(response), 200  # Properly return the JSON response
+        return jsonify(response), 200
 
     except Exception as e:
         print(f"Error reallocating prisoner: {e}")
@@ -691,11 +685,13 @@ def get_jobs():
 @login_required
 def add_job():
     job=Job()
+
     data = request.get_json()
     job_id = data.get('jobID')
     job_desc = data.get('desc')
     work_start = data.get('startHour')
     work_end = data.get('endHour')
+
     if not all([job_id, job_desc, work_start, work_end]):
         return jsonify({'message': 'All fields are required'}), 400
     try:
@@ -719,7 +715,6 @@ def delete_job():
     except Exception as e:
         print(f"Error deleting job: {e}")
         return jsonify({"message": "Failed to delete job"}), 500
-    
     
 @app.route('/job-update/<int:job_id>', methods=['PUT'])
 @login_required
@@ -800,7 +795,6 @@ def totalWork():
     except Exception as e:
         print(f"Error fetching total work hours: {e}")
         return jsonify({"message": "Failed to fetch work hours"}), 500
-
 
 if __name__ == "__main__":
     app.run(debug = True)

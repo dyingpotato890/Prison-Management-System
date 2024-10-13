@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useTable, useGlobalFilter } from 'react-table';
+import { useTable } from 'react-table';
 import './PrisonerManagement.css';
 import UpdatePrisoner from "./UpdatePrisoner";
 import AddPrisoner from "./AddPrisoner";
@@ -16,13 +16,12 @@ function Prisoner_Management() {
   const [searchBy, setSearchBy] = useState('id'); // Either 'name' or 'id'
   const [currentlyIncarcerated, setCurrentlyIncarcerated] = useState(true); // Initial state can be true or false
 
-
   // Fetch prisoner data
   const fetchData = async () => {
     setLoading(true); // Set loading to true
     setError(null); // Clear previous errors
     try {
-      const response = await fetch(`/prisoners`);
+      const response = await fetch(`/prisoners?currentlyIncarcerated=${currentlyIncarcerated}`); // Add query parameter
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -39,33 +38,36 @@ function Prisoner_Management() {
     fetchData(); // Fetch data on component mount
   }, []);
 
-  // Filter data based on search term, allowing progressive filtering
+  // Add another useEffect that listens to changes in `currentlyIncarcerated` and triggers fetchData
+  useEffect(() => {
+    fetchData(); // Fetch data when `currentlyIncarcerated` changes
+  }, [currentlyIncarcerated]);
+
   // Filter data based on search term
-// Filter data based on search term
-const filteredData = useMemo(() => {
-  if (!searchTerm) return data; // If no search term, return all data
+  const filteredData = useMemo(() => {
+    if (!searchTerm) return data; // If no search term, return all data
 
-  return data.filter((prisoner) => {
-    const prisonerId = parseInt(prisoner.prisoner_id, 10); // Convert prisoner_id to a number
+    return data.filter((prisoner) => {
+      const prisonerId = parseInt(prisoner.prisoner_id, 10); // Convert prisoner_id to a number
 
-    if (searchBy === 'id') {
-      const searchId = parseInt(searchTerm, 10); // Convert searchTerm to a number
+      if (searchBy === 'id') {
+        const searchId = parseInt(searchTerm, 10); // Convert searchTerm to a number
 
-      // If searchTerm is less than 10, show only the exact match
-      if (searchId < 10) {
-        return prisonerId === searchId; // Exact match for IDs less than 10
+        // If searchTerm is less than 10, show only the exact match
+        if (searchId < 10) {
+          return prisonerId === searchId; // Exact match for IDs less than 10
+        }
+
+        // If searchTerm is greater than or equal to 10, show only IDs greater than or equal to 10
+        return prisonerId >= 10 && prisonerId.toString().startsWith(searchTerm);
+      } else if (searchBy === 'name') {
+        // Match if the name contains the search term, ignoring case
+        return prisoner.name.toLowerCase().startsWith(searchTerm.toLowerCase());
       }
 
-      // If searchTerm is greater than or equal to 10, show only IDs greater than or equal to 10
-      return prisonerId >= 10 && prisonerId.toString().startsWith(searchTerm);
-    } else if (searchBy === 'name') {
-      // Match if the name contains the search term, ignoring case
-      return prisoner.name.toLowerCase().startsWith(searchTerm.toLowerCase());
-    }
-
-    return true;
-  });
-}, [data, searchTerm, searchBy]);
+      return true;
+    });
+  }, [data, searchTerm, searchBy]);
 
   // Fetch specific prisoner details when a row is clicked
   const fetchPrisonerDetails = async (prisonerId) => {
@@ -166,10 +168,6 @@ const filteredData = useMemo(() => {
           </div>
         </div>
 
-       
-
-      
-
         {loading ? (
           <p>Loading...</p>
         ) : error ? (
@@ -223,17 +221,14 @@ const filteredData = useMemo(() => {
         <h1>Selected Prisoner Details</h1>
         {selectedPrisoner ? (
           <ul className="prisoner-list">
-            <li><strong>Prisoner ID:</strong> {selectedPrisoner.prisoner_id}</li>
-            <li><strong>Aadhar Number:</strong> {selectedPrisoner.aadhar_number}</li>
+            <li><strong>PRISONER ID:</strong> {selectedPrisoner.prisoner_id}</li>
             <li><strong>Name:</strong> {selectedPrisoner.name}</li>
-            <li><strong>Age:</strong> {selectedPrisoner.age}</li>
-            <li><strong>Convictions:</strong> {selectedPrisoner.convictions}</li>
-            <li><strong>Crime ID:</strong> {selectedPrisoner.crime_id}</li>
-            <li><strong>Enter Date:</strong> {selectedPrisoner.enter_date}</li>
-            <li><strong>Release Date:</strong> {selectedPrisoner.release_date}</li>
+            <li><strong>CRIME:</strong> {selectedPrisoner.description}</li>
+            <li><strong>ENTER DATE:</strong> {selectedPrisoner.enter_date}</li>
+            <li><strong>RELEASE DATE:</strong> {selectedPrisoner.release_date}</li>
           </ul>
         ) : (
-          <p className="para1">Please select a prisoner to view details</p>
+          <p>No prisoner selected</p>
         )}
       </div>
     </div>
