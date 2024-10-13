@@ -37,7 +37,7 @@ const LoginSignUp = () => {
     const data = { username, password };
 
     try {
-      const response = await fetch('/login', {
+      const response = await fetch('https://prison-management-system-bmxy.onrender.com/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

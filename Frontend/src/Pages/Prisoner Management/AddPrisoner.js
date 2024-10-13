@@ -17,7 +17,7 @@ const AddPrisoner = ({ fetchData }) => { //testing
     const prisonerData = { id, name, age, aadhar, crimeId, entryDate, releaseDate };
 
     try {
-      const response = await axios.post('/add_prisoner', prisonerData);
+      const response = await axios.post('https://prison-management-system-bmxy.onrender.com/add_prisoner', prisonerData);
       if (response.status === 200) {
         fetchData();
         alert('Prisoner added successfully!');

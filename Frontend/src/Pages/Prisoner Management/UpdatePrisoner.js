@@ -39,7 +39,7 @@ const UpdatePrisoner = ({ fetchData }) => {
     };
     
     try {
-      const response = await fetch(`/prisoner-update/${id}`, {
+      const response = await fetch(`https://prison-management-system-bmxy.onrender.com/prisoner-update/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

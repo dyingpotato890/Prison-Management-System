@@ -21,7 +21,7 @@ function Prisoner_Management() {
     setLoading(true); // Set loading to true
     setError(null); // Clear previous errors
     try {
-      const response = await fetch(`/prisoners?currentlyIncarcerated=${currentlyIncarcerated}`); // Add query parameter
+      const response = await fetch(`https://prison-management-system-bmxy.onrender.com/prisoners?currentlyIncarcerated=${currentlyIncarcerated}`); // Add query parameter
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -72,7 +72,7 @@ function Prisoner_Management() {
   // Fetch specific prisoner details when a row is clicked
   const fetchPrisonerDetails = async (prisonerId) => {
     try {
-      const response = await fetch(`/prisoner-details/${prisonerId}`);
+      const response = await fetch(`https://prison-management-system-bmxy.onrender.com/prisoner-details/${prisonerId}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
