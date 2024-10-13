@@ -31,9 +31,9 @@ function WorkDetails() {
 
     const columns = useMemo(() => [
         { Header: "Prisoner ID", accessor: "prisoner_id" },
+        { Header: "Job ID", accessor: "job_id" },
         { Header: "Job Description", accessor: "job_desc" },
         { Header: "Hours Worked", accessor: "working-hours" },
-   
     ], []);
     
 

@@ -5,19 +5,25 @@ class Work:
         self.db = Connector()
 
     def getWork(self):
-        self.db.cursor.execute("""SELECT j.job_desc,
-                               w.prisoner_id,
-                               w.hours_worked
-                               from work w, jobs j
-                               where w.jobid = j.jobid;
+        self.db.cursor.execute("""SELECT 
+                                    j.jobid,
+                                    j.job_desc,
+                                    w.prisoner_id,
+                                    w.hours_worked
+                                FROM
+                                    work w,
+                                    jobs j
+                                WHERE 
+                                    w.jobid = j.jobid;
                                """)
         work_data = self.db.cursor.fetchall()
         work_details = []
         for work in work_data:
             work_details.append({
-                "job_desc": work[0],
-                "prisoner_id": work[1],
-                "working-hours": work[2]
+                "job_id": work[0],
+                "job_desc": work[1],
+                "prisoner_id": work[2],
+                "working-hours": work[3]
             })
         return work_details
     
