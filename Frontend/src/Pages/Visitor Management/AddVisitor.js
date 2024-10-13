@@ -13,7 +13,7 @@ const AddVisitor = ({ fetchData }) => {
     const visitorData = { name, phoneNumber, prisonerId, date, time };
 
     try {
-      const response = await fetch('/add_visitor', {
+      const response = await fetch('https://prison-management-system-bmxy.onrender.com/add_visitor', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

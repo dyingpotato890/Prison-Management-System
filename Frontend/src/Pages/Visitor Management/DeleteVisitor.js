@@ -11,7 +11,7 @@ const DeleteVisitor = ({ fetchData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const response = await fetch('/delete_visitor', {
+    const response = await fetch('https://prison-management-system-bmxy.onrender.com/delete_visitor', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

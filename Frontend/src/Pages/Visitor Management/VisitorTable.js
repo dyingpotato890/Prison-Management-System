@@ -15,7 +15,7 @@ function VisitorDetails() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('/visitors');
+            const response = await axios.get('https://prison-management-system-bmxy.onrender.com/visitors');
             setData(response.data);
         } catch (error) {
             setError("Error fetching data. Please try again.");
