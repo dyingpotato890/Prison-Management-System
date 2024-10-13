@@ -223,7 +223,7 @@ function Prisoner_Management() {
           <ul className="prisoner-list">
             <li><strong>PRISONER ID:</strong> {selectedPrisoner.prisoner_id}</li>
             <li><strong>Name:</strong> {selectedPrisoner.name}</li>
-            <li><strong>CRIME:</strong> {selectedPrisoner.description}</li>
+            <li><strong>CRIME:</strong> {selectedPrisoner.crime_id}</li>
             <li><strong>ENTER DATE:</strong> {selectedPrisoner.enter_date}</li>
             <li><strong>RELEASE DATE:</strong> {selectedPrisoner.release_date}</li>
           </ul>

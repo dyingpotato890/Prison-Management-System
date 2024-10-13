@@ -71,7 +71,8 @@ function CellDetails() {
     const handleAddCell = async () => {
         try {
             const response = await axios.post('/add_cell'); // Adjust according to your backend requirements
-            alert(response.data.message); // Success message
+            alert(response.data.message);
+            fetchData()// Success message
             setData(prevData => [...prevData, response.data.newCell]); // Update the table data if the response contains new cell info
         } catch (error) {
             console.error("Error adding cell:", error);
