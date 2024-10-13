@@ -222,8 +222,10 @@ function Prisoner_Management() {
         {selectedPrisoner ? (
           <ul className="prisoner-list">
             <li><strong>PRISONER ID:</strong> {selectedPrisoner.prisoner_id}</li>
-            <li><strong>Name:</strong> {selectedPrisoner.name}</li>
-            <li><strong>CRIME:</strong> {selectedPrisoner.crime_id}</li>
+            <li><strong>NAME:</strong> {selectedPrisoner.name}</li>
+            <li><strong>AGE:</strong> {selectedPrisoner.age}</li>
+            <li><strong>AADHAR NUMBER:</strong> {selectedPrisoner.aadhar_number}</li>
+            <li><strong>CRIME ID:</strong> {selectedPrisoner.crime_id}</li>
             <li><strong>ENTER DATE:</strong> {selectedPrisoner.enter_date}</li>
             <li><strong>RELEASE DATE:</strong> {selectedPrisoner.release_date}</li>
           </ul>
