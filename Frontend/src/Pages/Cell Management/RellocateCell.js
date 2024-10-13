@@ -14,7 +14,7 @@ function ReallocateCell({ fetchData }) {
         setSuccessMessage('');
     
         try {
-            const response = await axios.post('/reallocate_prisoner', {
+            const response = await axios.post('https://prison-management-system-bmxy.onrender.com/reallocate_prisoner', {
                 prisonerId: prisonerId,
                 newCellNo: newCellNo
             });

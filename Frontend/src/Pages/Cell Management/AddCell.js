@@ -10,7 +10,7 @@ const AddCell = (fetchData) => {
     const cellData = {CellName,  prisonerId};
 
     try {
-      const response = await fetch('/add_cell', {
+      const response = await fetch('https://prison-management-system-bmxy.onrender.com/add_cell', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

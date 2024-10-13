@@ -9,7 +9,7 @@ const DeleteCell = ({ fetchData }) => {
     e.preventDefault();
     
     try {
-      const response = await fetch('/delete_cell', {
+      const response = await fetch('https://prison-management-system-bmxy.onrender.com/delete_cell', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -12,7 +12,7 @@ const AddCrime = ({ fetchData }) => {
     const crimeData = { crimeID, desc };
 
     try {
-      const response = await axios.post('/add_crime', crimeData);
+      const response = await axios.post('https://prison-management-system-bmxy.onrender.com/add_crime', crimeData);
       if (response.status === 200) {
         fetchData();
         alert('Crime added successfully!');

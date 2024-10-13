@@ -14,7 +14,7 @@ function CellDetails() {
     const [activeOperation, setActiveOperation] = useState(null);
     const fetchData = async () => {
         try {
-            const response = await axios.get('/cells');
+            const response = await axios.get('https://prison-management-system-bmxy.onrender.com/cells');
             setData(response.data);
         } catch (error) {
             setError("Error fetching data. Please try again.");
