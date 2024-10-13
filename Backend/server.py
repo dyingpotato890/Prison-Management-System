@@ -14,7 +14,7 @@ from Utilities.jobs import Job
 import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app,supports_credentials=True)
 app.config['SECRET_KEY']=os.environ.get('SECRET_KEY')
 app.config['SESSION_COOKIE_SAMESITE'] = "None"
 
