@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, session, redirect
+from flask import Flask, request, jsonify, send_from_directory, session, redirect
 from flask_cors import CORS
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from datetime import date
@@ -14,7 +14,7 @@ from Utilities.jobs import Job
 import os
 
 app = Flask(__name__)
-CORS(app,supports_credentials=True)
+CORS(app,supports_credentials=True,)
 app.config['SECRET_KEY']=os.environ.get('SECRET_KEY')
 app.config['SESSION_COOKIE_SAMESITE'] = "None"
 
@@ -29,6 +29,15 @@ def load_user(user_id):
 @login_manager.unauthorized_handler
 def unauthorized():
     return jsonify({"message": "Unauthorized"}), 401
+
+frontend_folder=os.path.join(os.getcwd(),"..","Frontend","build")
+
+@app.route('/',defaults={'filename':''})
+@app.route('/<path:filename>')
+def index():
+    if not filename:
+        filename='index.html'
+    return send_from_directory(frontend_folder,filename)
 
 @app.route('/login', methods=['POST'])
 def login():
