@@ -13,7 +13,7 @@ const UpdatePrisoner = ({ fetchData }) => {
     e.preventDefault();
         
     try {
-      const response = await fetch(`/prisoner-update/${id}`);
+      const response = await fetch(`https://prison-management-system-bmxy.onrender.com/prisoner-update/${id}`);
       const data = await response.json();
   
   

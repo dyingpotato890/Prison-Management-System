@@ -15,7 +15,7 @@ const UpdateJob = ({ fetchData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      const response = await fetch(`/job-update/${jobID}`, {
+      const response = await fetch(`https://prison-management-system-bmxy.onrender.com/job-update/${jobID}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
