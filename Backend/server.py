@@ -440,13 +440,21 @@ def get_staff():
 @login_required
 def add_staff():
     staff=Staff()
+    db = Connector()
+
     data = request.get_json()
-    staff_id = data.get('id')
     staff_name = data.get('name')
     age = data.get('age')
     phone_number = data.get('phonenumber')
     role = data.get('role')
+
     try:
+        db.cursor.execute("SELECT STAFF_ID FROM STAFF ORDER BY STAFF_ID DESC LIMIT 1")
+        staff_id = db.cursor.fetchone()
+        if staff_id is not None:
+            staff_id = staff_id[0] + 1
+        else:
+            staff_id = 1
         staff.add_staff(staff_id,staff_name,age,phone_number,role)
         return jsonify({"message": "Staff added successfully!"}), 200
     except Exception as e:

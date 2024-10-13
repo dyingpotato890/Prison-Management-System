@@ -38,13 +38,6 @@ const AddStaff = ({ fetchData }) => {
     <div className="modal-content">
       <h2>Add Staff</h2>
       <form onSubmit={handleSubmit}>
-        <label>ID:</label>
-        <input
-          type="number"
-          value={id}
-          onChange={(e) => setId(e.target.value)}
-          placeholder="Enter ID"
-        />
         <label>Name:</label>
         <input
           type="text"
@@ -70,12 +63,33 @@ const AddStaff = ({ fetchData }) => {
         />
 
         <label>Role:</label>
-        <input
-          type="text"
+        <select
           value={role}
           onChange={(e) => setRole(e.target.value)}
-          placeholder="Enter Role"
-        />
+        >
+          <option value="">Select Role</option>
+          <option value="Warden">Warden</option>
+          <option value="Deputy Warden">Deputy Warden</option>
+          <option value="Chief Security Officer">Chief Security Officer</option>
+          <option value="Medical Officer">Medical Officer</option>
+          <option value="Administrative Officer">Administrative Officer</option>
+          <option value="Rehabilitation Officer">Rehabilitation Officer</option>
+          <option value="Education Coordinator">Education Coordinator</option>
+          <option value="Case Manager">Case Manager</option>
+          <option value="Program Director">Program Director</option>
+          <option value="Parole Officer">Parole Officer</option>
+          <option value="Food Service Manager">Food Service Manager</option>
+          <option value="Maintenance Supervisor">Maintenance Supervisor</option>
+          <option value="Chaplain">Chaplain</option>
+          <option value="Recreation Specialist">Recreation Specialist</option>
+          <option value="IT Specialist">IT Specialist</option>
+          <option value="Human Resources Manager">Human Resources Manager</option>
+          <option value="Training Officer">Training Officer</option>
+          <option value="Legal Advisor">Legal Advisor</option>
+          <option value="Financial Officer">Financial Officer</option>
+          <option value="Library Technician">Library Technician</option>
+          <option value="Correctional Officer">Correctional Officer</option>
+        </select>
 
         <button type="submit">Add</button>
       </form>
