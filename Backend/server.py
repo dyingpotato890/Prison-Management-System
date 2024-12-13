@@ -11,6 +11,7 @@ from Utilities.visitor import Visitor
 from Utilities.cell import Cells
 from Utilities.work import Work
 from Utilities.jobs import Job
+from Utilities.views import Views
 
 app = Flask(__name__)
 CORS(app)
@@ -57,78 +58,20 @@ def check_login():
 @app.route('/prisoners', methods=['GET'])
 @login_required
 def get_prisoners():
-    db = Connector()
+    v = Views()
     try:
-        # Get query parameter for currently incarcerated filtering
-        currentlyIncarcerated = request.args.get('currentlyIncarcerated', 'false').lower() == 'true'
-
-        query = """
-            SELECT 
-                p.prisoner_id, 
-                pd.name, 
-                c.description, 
-                p.enter_date, 
-                p.release_date 
-            FROM 
-                prisoner p,
-                prisoner_details pd,
-                crime c
-            WHERE
-                pd.aadhar_number = p.aadhar_number
-                AND c.crime_id = p.crime_id
-        """
-
-        if currentlyIncarcerated:
-            query += " AND (p.release_date >= CURDATE() OR p.release_date IS NULL)"
-
-        query += " ORDER BY p.prisoner_id"
-
-        db.cursor.execute(query)
-        prisoners = db.cursor.fetchall()
-
-        prisoner_list = []
-        for prisoner in prisoners:
-            prisoner_list.append({
-                "prisoner_id": prisoner[0],
-                "name": prisoner[1],
-                "description": prisoner[2],
-                "enter_date": str(prisoner[3]),
-                "release_date": str(prisoner[4]) if prisoner[4] else None
-            })
-
+        prisoner_list = v.viewPrisoners()
         return jsonify(prisoner_list)
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-    finally:
-        if db.conn.is_connected():
-            db.cursor.close()
-            db.conn.close()
-
 @app.route('/prisoner-details/<int:prisoner_id>', methods=['GET'])
 @login_required
 def get_prisoner_details(prisoner_id):
-    db = Connector()
+    v = Views()
     try:
-        db.cursor.execute("""
-            SELECT 
-                p.prisoner_id, 
-                pd.name, 
-                pd.age, 
-                pd.number_of_convictions, 
-                p.aadhar_number, 
-                p.crime_id, 
-                p.enter_date, 
-                p.release_date 
-            FROM 
-                prisoner p 
-            JOIN 
-                prisoner_details pd ON p.aadhar_number = pd.aadhar_number
-            WHERE 
-                p.prisoner_id = %s
-        """, (prisoner_id,))
-        prisoner_details = db.cursor.fetchone()
+        prisoner_details = v.viewPrisonerDetails(prisoner_id)
 
         if prisoner_details:
             return jsonify({
@@ -146,11 +89,6 @@ def get_prisoner_details(prisoner_id):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-    finally:
-        if db.conn.is_connected():
-            db.cursor.close()
-            db.conn.close()
 
 @app.route('/prisoner-update/<int:prisoner_id>', methods=['GET'])
 @login_required
@@ -206,47 +144,13 @@ def update_prisoner(prisoner_id):
 @app.route('/visitors', methods=['GET'])
 @login_required
 def get_visitors():
-    db = Connector()
+    v = Views()
     try:
-        db.cursor.execute("""
-            SELECT 
-                vd.visitor_name,
-                vd.phone_number, 
-                pd.name,
-                vd.date,
-                vd.time
-            FROM 
-                visitor_details vd,
-                prisoner_details pd,
-                prisoner p
-            WHERE
-                vd.prisoner_id = p.prisoner_id
-                and
-                p.aadhar_number = pd.aadhar_number
-            ORDER BY
-                vd.date desc, vd.time
-        """)
-        visitors = db.cursor.fetchall()
-
-        visitor_list = []
-        for visitor in visitors:
-            visitor_list.append({
-                "visitor_name": visitor[0],
-                "phone_number": visitor[1],
-                "prisoner_name": visitor[2],
-                "date": str(visitor[3]),
-                "time": str(visitor[4])
-            })
-
+        visitor_list = v.viewVisitors()
         return jsonify(visitor_list)
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-    finally:
-        if db.conn.is_connected():
-            db.cursor.close()
-            db.conn.close()
 
 @app.route('/add_prisoner', methods=['POST'])
 @login_required
@@ -428,9 +332,9 @@ def delete_visitor():
 @app.route('/staff', methods=['GET'])
 @login_required
 def get_staff():
-    staff=Staff()
+    v = Views()
     try:
-        staff_list=staff.view_staff()
+        staff_list = v.viewStaff()
         return jsonify(staff_list)
     except Exception as e:
         print(f"Error getting staff: {e}")
@@ -512,27 +416,13 @@ def remove_user():
 @app.route('/crime-details', methods=['GET'])
 @login_required
 def get_crimes():
-    db = Connector()
+    v = Views()
     try:
-        db.cursor.execute("SELECT * FROM crime")
-        crimes = db.cursor.fetchall()
-
-        crimes_list = []
-        for crime in crimes:
-            crimes_list.append({
-                "crime_id": crime[0],
-                "crime_description": crime[1],
-            })
-
+        crimes_list = v.viewCrimes()
         return jsonify(crimes_list)
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-    finally:
-        if db.conn.is_connected():
-            db.cursor.close()
-            db.conn.close()
 
 @app.route('/add_crime', methods=['POST'])
 @login_required
@@ -571,43 +461,13 @@ def deleteCrime():
 @app.route('/cells', methods = ['GET'])
 @login_required
 def get_cells():
-    db = Connector()
+    v = Views()
     try:
-        db.cursor.execute("""
-            SELECT 
-                c.cell_number, 
-                c.vacant, 
-                c.prisoner_id, 
-                pd.name
-            FROM 
-                cells c
-            LEFT JOIN 
-                prisoner p ON c.prisoner_id = p.prisoner_id
-            LEFT JOIN 
-                prisoner_details pd ON pd.aadhar_number = p.aadhar_number
-            ORDER BY 
-                c.cell_number;
-        """)
-        cells = db.cursor.fetchall()
-
-        cells_list = []
-        for crime in cells:
-            cells_list.append({
-                "cell_no": crime[0],
-                "vacant": crime[1],
-                "prisoner_id": crime[2],
-                "name": crime[3]
-            })
-
+        cells_list = v.viewCells()
         return jsonify(cells_list)
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-    finally:
-        if db.conn.is_connected():
-            db.cursor.close()
-            db.conn.close()
 
 @app.route('/add_cell', methods=['POST'])
 @login_required
@@ -649,7 +509,7 @@ def reallocate_prisoner():
     newCellNo = data.get('newCellNo')
 
     try:
-        response = c.reallocateCell(prisoner_id=prisonerId, new_cell_number=newCellNo)
+        response = c.reallocateCell(prisoner_id = prisonerId, new_cell_number = newCellNo)
         return jsonify(response), 200
 
     except Exception as e:
@@ -660,34 +520,14 @@ def reallocate_prisoner():
 @app.route('/job_details', methods=['GET'])
 @login_required
 def get_jobs():
-    db = Connector()
+    v = Views()
     try:
-        db.cursor.execute("SELECT * FROM JOBS")
-        jobs = db.cursor.fetchall()
-        
-        if not jobs:
-            print("No jobs found in the database.")
-            return jsonify({"error": "No jobs found"}), 404
-        
-        jobs_list = []
-        for job in jobs:
-            jobs_list.append({
-                "job_id": job[0],
-                "job_desc": job[1],
-                "work_start": str(job[2]),
-                "work_end": str(job[3])
-            })
-
+        jobs_list = v.viewJobs()
         return jsonify(jobs_list)
 
     except Exception as e:
         print(f"Error while fetching jobs: {str(e)}")
         return jsonify({"error": str(e)}), 500
-
-    finally:
-        if db.conn.is_connected():
-            db.cursor.close()
-            db.conn.close()
 
 @app.route('/add_job', methods=['POST'])
 @login_required
@@ -744,9 +584,9 @@ def update_job(job_id):
 @app.route('/work-details', methods=['GET'])
 @login_required
 def getWork():
-    work = Work()
+    v = Views()
     try:
-        work_details = work.getWork()
+        work_details = v.viewWork()
         return jsonify(work_details)
     except Exception as e:
         print(f"Error getting work details: {e}")
