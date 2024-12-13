@@ -1,0 +1,200 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{cite}
+\usepackage{framed}
+\usepackage{a4wide}
+\usepackage{float}
+\usepackage{epsfig}
+\usepackage{longtable}
+\usepackage{enumerate}
+\usepackage{afterpage}
+\usepackage{multirow}
+\usepackage{ragged2e}
+\usepackage{gensymb}
+\usepackage{amsfonts} 
+\usepackage[left=3.5cm,top=1.5cm,right=3cm,bottom=4cm]{geometry}
+\usepackage{setspace}           
+\usepackage{float}
+\usepackage{txfonts}
+\usepackage{lipsum}
+
+\newcommand{\Usefont}[1]{\fontfamily{#1}\selectfont}
+
+\usepackage{lscape} % for landscape tables
+\renewcommand{\baselinestretch}{1.7} 
+
+\usepackage{blindtext}
+\usepackage{xpatch}
+\usepackage{url}
+\usepackage{leqno}
+\usepackage{subcaption}
+
+\linespread{1.5}
+\usepackage[intoc, english]{nomencl}
+\hyphenpenalty=5000
+\tolerance=1000
+\usepackage[nottoc]{tocbibind}
+\bibliographystyle{IEEEtran}
+\renewcommand{\bibname}{References}
+
+%*******************************************************************
+%                        Header and Footer   
+% This is not required in Technical reports submitted to CET ECE department.
+% Please leave it commented                       
+%*******************************************************************
+%\pagestyle{fancy}
+%\fancyhead{}
+%\header and footer section
+%\renewcommand\headrulewidth{0.1pt}
+%\fancyhead[L]{\footnotesize \leftmark}
+%\fancyhead[R]{\footnotesize \thepage}
+%\renewcommand\headrulewidth{0pt}
+%\fancyfoot[R]{\small College of Engineering Trivandrum}
+%\renewcommand\footrulewidth{0.1pt}
+%\fancyfoot[C]{2020 - 2021}
+%\fancyfoot[L]{\small Title of the Seminar/Project}
+%*******************************************************************
+
+
+%*********************Figures*****************************
+% Save all figures in the folder figures and include them in your 
+% report using the command \includegraphics{figure-name}
+
+\graphicspath{{figures/}}
+
+% figure files can be in jpeg,jpg, png or pdf formats
+%*******************************************************************
+
+
+\begin{document}
+	
+	
+%****The entries in this section are to be filled in by the student with appropriate values *************
+% These values are used thoroughout the report 
+% please fill in the appropriate values in the brackets {}
+
+\gdef \title{Prison Management System} % Project title
+%\gdef \author{Student Name}	 %student name
+\gdef \dept{Computer Science and Engineering} %Department
+\gdef \degree{Bachelor of Technology} %degree
+\gdef \branch{Computer Science and Engineering} %branch
+\gdef \college{Model Engineering College} % Name of the College
+\gdef \collegeplace{Thrikkakara} % Location of the College
+\gdef \studentA{Nihar Niranjan S } %Project batch member 1
+\gdef \studentAroll{MDL22CS142} % Project batch member 1 ktu id
+
+\gdef \studentB{Nikith T Rajan } %Project batch member 2
+\gdef \studentBroll{MDL22CS147} % Project batch member 2 ktu id
+
+\gdef \studentC{Niranjay Ajayan } %Project batch member 3
+\gdef \studentCroll{MDL22CS148} % Project batch member 3 ktu id
+
+\gdef \studentD{Varun Raj R } %Project batch member 4
+\gdef \studentDroll{MDL22CS188} % Project batch member 4 ktu id
+
+\gdef \guide{Dr. Sony P} %Project guide
+\gdef \guidedes{Assistant Professor}%project guide designation
+
+\gdef \guideco{Prof. Project coguide} %Project coguide
+\gdef \guidecodes{Assistant Professor}%project coguide designation
+
+\gdef \guideext{Prof. Project ext guide} %Project external organisation guide
+\gdef \guideextdes{Engineer/Scientist}%project external guide designation
+\gdef \guideextorg{External guide organization} % Project external guide organization
+
+\gdef \projcordinatorA{Prof. Project coordinator}% Project coordinator 1 
+\gdef \projcordinatorAdes{Assistant Professor}% Project coordinator 1 designation
+
+\gdef \projcordinatorB{Prof. Project coordinator 2} % Project coordinator 2 
+\gdef \projcordinatorBdes{Assistant Professor}% Seminar coordinator 2 designation
+
+\gdef \hod{Dr. Binu VP} %Head of Department
+\gdef \hoddes{Head Of The Department} %HOD designation
+
+\gdef \acadyear{2024 - 25} % Academic year
+\gdef \month{November 2024} %Month of Report submission
+\gdef \date{08-11-2024} %Date of signing the declaration
+
+%*******************************************************************
+% The font pages. The source tex files are there in the folder
+\include{coverpage} %Unless essential Do not edit this tex file
+
+
+%****************************Mission and vision***************************
+% The font pages. The source tex files are there in the folder
+%\include{Department Vision and Mission.tex} %Unless essential Do not edit this tex file
+
+
+
+%%********************Certificate*******************
+
+% To print name of only the project coordinator 1 in the certificate page
+\include{certificate1} 
+
+% To print names of both the project coordinators in the certificate page
+%\include{certificate2} %Please uncomment this and comment the previous line
+\pagenumbering{roman} 
+%%***************************************************
+
+\include{acknowledgement}
+% \include{declaration} %Unless essential Do not edit this tex file
+
+
+
+%%****************************Abstract***********************
+\include{abstract} % Please type in the abstract in this tex file abstract.tex
+
+%%**********************Table of Contents***********************
+\tableofcontents
+\listoffigures
+\cleardoublepage
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+
+
+%%********************************Problem Statement***********************
+\chapter{Introduction}
+\section{Proposed Project}
+
+\subsection{Problem Statement}
+
+The management of prisons is a critical aspect of maintaining order, security, and rehabilitation within correctional facilities. Traditional prison management systems often face challenges in handling large volumes of data, ensuring proper allocation of resources, and maintaining efficiency in operations. Manual tracking of prisoners, staff, tasks, visitors, and incidents can lead to errors, delays, and difficulties in decision-making. Moreover, the lack of integrated and automated solutions makes it difficult to streamline prison operations and ensure smooth coordination between different departments within a facility.\\
+
+\subsection{Proposed Solution}
+
+The Prison Management System aims to address these challenges by providing an automated, digital platform for managing various aspects of prison operations. This system will enable efficient handling of prisoner information, including their personal details, crimes, and status, and will also facilitate the management of staff, visitors, cell allocation, and tasks. The objective is to reduce manual efforts, minimize errors, and provide real-time updates for better decision-making. Furthermore, the system will generate essential reports and allow for easy tracking of incidents, ensuring a higher level of security and accountability.
+
+By integrating all operational aspects into a single system, the Prison Management System will improve efficiency, reduce administrative overhead, and provide an organized and secure environment for both prisoners and staff members.\\
+
+
+\include{moduledesc}
+\include{techstack}
+\include{constraints}
+\include{lastsec}
+
+\include{diagrams}
+
+\include{testing}
+
+\include{screenshot}
+
+\include{conc}
+
+\include{futurescope}
+%%********************References**********
+%%****This template uses IEEE bibliography style
+
+ \begin{thebibliography}{99}
+    \bibitem{yong2017} Yong, J., \& Liu, X., \emph{A Smart Prison Management System Based on Internet of Things}, \textit{International Journal of Smart Home}, vol. 11, no. 6, pp. 1--10, 2017.
+
+    \bibitem{pennefather2018} Pennefather, S., \& MacFarlane, A., \emph{Automated Prison Management: Bridging the Gap Between Traditional and Modern Security Systems}, \textit{Journal of Criminal Justice}, vol. 55, pp. 45--58, 2018.
+
+    \bibitem{reactdocs} React Team, \emph{React - A JavaScript library for building user interfaces}, \textit{React Documentation}, [Online]. Available: https://reactjs.org/docs/getting-started.html. [Accessed: Nov. 8, 2024].
+
+    \bibitem{flaskdocs} Flask Team, \emph{Flask - A micro web framework written in Python}, \textit{Flask Documentation}, [Online]. Available: https://flask.palletsprojects.com/en/2.2.x/. [Accessed: Nov. 8, 2024].
+\end{thebibliography}
+
+\end{document}
