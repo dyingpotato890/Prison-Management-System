@@ -12,6 +12,7 @@ class User(UserMixin):
         h = hashlib.new("sha256")
         h.update(bytes(password, 'utf-8'))
         return h.hexdigest()
+    
     @staticmethod
     def get(user_id):
         db = Connector()
